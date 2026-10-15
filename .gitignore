@@ -1,0 +1,21 @@
+# Local secrets (keep configuration templates)
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# Dependencies, generated files, and local environments
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+dist/
+build/
+
+# Local editor and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

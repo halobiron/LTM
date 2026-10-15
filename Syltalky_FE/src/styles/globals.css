@@ -1,0 +1,81 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  background: #07090F;
+  color: #E8EAF0;
+  -webkit-font-smoothing: antialiased;
+}
+
+input, textarea, select, button {
+  font-family: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* AI Summary markdown */
+.ai-summary-md { color: rgba(255,255,255,0.78); font-size: 14px; }
+.ai-summary-md h1, .ai-summary-md h2, .ai-summary-md h3 {
+  color: #E8EAF0; font-weight: 700; margin: 18px 0 8px;
+}
+.ai-summary-md h1 { font-size: 18px; }
+.ai-summary-md h2 { font-size: 16px; }
+.ai-summary-md h3 { font-size: 14px; }
+.ai-summary-md p { margin: 0 0 10px; line-height: 1.75; }
+.ai-summary-md ul, .ai-summary-md ol { padding-left: 20px; margin: 0 0 10px; }
+.ai-summary-md li { margin-bottom: 6px; line-height: 1.75; }
+.ai-summary-md li::marker { color: #A78BFA; }
+.ai-summary-md strong { color: #E8EAF0; font-weight: 700; }
+.ai-summary-md em { color: rgba(255,255,255,0.6); font-style: italic; }
+.ai-summary-md code {
+  background: rgba(167,139,250,0.12); color: #A78BFA;
+  padding: 2px 6px; border-radius: 5px; font-size: 12px; font-family: monospace;
+}
+.ai-summary-md blockquote {
+  border-left: 3px solid rgba(167,139,250,0.4);
+  padding-left: 14px; margin: 0 0 10px;
+  color: rgba(255,255,255,0.5);
+}
+.ai-summary-md hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 16px 0; }
+.ai-summary-md a { color: #A78BFA; text-decoration: underline; }

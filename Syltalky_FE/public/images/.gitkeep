@@ -1,0 +1,4 @@
+# Drop your logo files here:
+# - logo_full.png   (full logo with text, used in sidebar + auth)
+# - logo_round.png  (icon only, used in favicon + small spaces)
+# They will be accessible at /images/logo_full.png and /images/logo_round.png
