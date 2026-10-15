@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual env
+.venv/
+env/
+venv/
+
+# Model weights (downloaded on server)
+app/sign/checkpoints/
+app/sign/pretrained_weight/
+app/stt/model/
+app/translation/model/
+app/tts/model/
+app/tts/checkpoints/
+.hf_cache/
+
+# Debug/scratch files
+pose_debug.html
+
+# ONNX cache
+*.onnx
+
+# Env vars
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Claude
+.claude/
+
+demo.html

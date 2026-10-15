@@ -18,7 +18,7 @@ Syltalky is a full-stack video conferencing platform designed around accessibili
 | [`Syltalky_BE/`](https://github.com/hoanghero125/Syltalky_BE) | Python · FastAPI · PostgreSQL | Backend: auth, meetings, voice profiles, real-time captions |
 | [`Syltalky_FE/`](https://github.com/hoanghero125/Syltalky_FE) | React · Vite · LiveKit | Web app: all user-facing screens |
 
-Each repo is its own git repository with its own README, commit history, and deployment lifecycle.
+API, backend, and frontend are tracked as regular directories in this single Git repository. Each component keeps its own README and deployment configuration. The links above credit the original source repositories.
 
 ---
 
