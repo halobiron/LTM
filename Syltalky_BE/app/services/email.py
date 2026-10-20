@@ -1,7 +1,22 @@
-import resend
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.utils import formataddr
+
 from app.config import settings
 
-resend.api_key = settings.RESEND_API_KEY
+
+def _send_email(to: str, subject: str, html: str):
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = subject
+    msg["From"] = formataddr((settings.SMTP_FROM_NAME, settings.SMTP_FROM or settings.SMTP_USER))
+    msg["To"] = to
+    msg.attach(MIMEText(html, "html", "utf-8"))
+
+    with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=15) as server:
+        server.starttls()
+        server.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
+        server.send_message(msg)
 
 
 def _base_template(display_name: str, headline: str, body: str, cta_label: str, cta_url: str, footer_note: str) -> str:
@@ -75,11 +90,10 @@ def _base_template(display_name: str, headline: str, body: str, cta_label: str, 
 
 def send_verification_email(to: str, display_name: str, token: str):
     link = f"{settings.FRONTEND_URL}/verify-email?token={token}"
-    resend.Emails.send({
-        "from": settings.RESEND_FROM,
-        "to": to,
-        "subject": "Xác nhận email — Syltalky",
-        "html": _base_template(
+    _send_email(
+        to,
+        "Xác nhận email — Syltalky",
+        _base_template(
             display_name=display_name,
             headline="Xác nhận tài khoản",
             body="Cảm ơn bạn đã đăng ký Syltalky! Nhấn vào nút bên dưới để xác nhận địa chỉ email và kích hoạt tài khoản của bạn.",
@@ -87,16 +101,15 @@ def send_verification_email(to: str, display_name: str, token: str):
             cta_url=link,
             footer_note="Link có hiệu lực trong 24 giờ. Nếu bạn không tạo tài khoản này, hãy bỏ qua email này.",
         ),
-    })
+    )
 
 
 def send_reset_password_email(to: str, display_name: str, token: str):
     link = f"{settings.FRONTEND_URL}/reset-password?token={token}"
-    resend.Emails.send({
-        "from": settings.RESEND_FROM,
-        "to": to,
-        "subject": "Đặt lại mật khẩu — Syltalky",
-        "html": _base_template(
+    _send_email(
+        to,
+        "Đặt lại mật khẩu — Syltalky",
+        _base_template(
             display_name=display_name,
             headline="Bảo mật tài khoản",
             body="Chúng tôi nhận được yêu cầu đặt lại mật khẩu cho tài khoản của bạn. Nhấn vào nút bên dưới để tiếp tục.",
@@ -104,4 +117,4 @@ def send_reset_password_email(to: str, display_name: str, token: str):
             cta_url=link,
             footer_note="Link có hiệu lực trong 24 giờ. Nếu bạn không yêu cầu điều này, hãy bỏ qua email này — tài khoản của bạn vẫn an toàn.",
         ),
-    })
+    )
