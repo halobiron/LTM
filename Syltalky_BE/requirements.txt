@@ -9,7 +9,6 @@ python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
 python-multipart==0.0.12
 minio==7.2.9
-resend==2.4.0
 livekit==0.17.4
 livekit-api==0.7.1
 httpx>=0.28.1,<1.0.0

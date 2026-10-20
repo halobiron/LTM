@@ -16,7 +16,7 @@ FastAPI backend for Syltalky: integrated authentication, meeting orchestration, 
 | LiveKit Server SDK | Python |
 | MinIO | self-hosted S3 |
 | Redis | 7 |
-| Resend | transactional email |
+| Gmail SMTP | transactional email |
 | Qwen3.5-35B-A3B (OpenAI-compatible proxy) | meeting summaries + AI chat assistant |
 
 ---
@@ -32,7 +32,7 @@ FastAPI backend for Syltalky: integrated authentication, meeting orchestration, 
 
 ```bash
 cp .env.example .env
-# Edit .env — fill in SECRET_KEY, RESEND_API_KEY, LIVEKIT keys, LLM credentials
+# Edit .env — fill in SECRET_KEY, SMTP_USER, SMTP_PASSWORD, LIVEKIT keys, LLM credentials
 ```
 
 ### 2. Start all services
@@ -71,8 +71,10 @@ Interactive API docs: `http://localhost:8001/docs`
 | `MINIO_PUBLIC_ENDPOINT` | Browser-facing MinIO URL (`minio.syltalky.pro.vn` in prod) |
 | `MINIO_ROOT_USER` / `MINIO_ROOT_PASSWORD` | MinIO credentials |
 | `MINIO_BUCKET` | Bucket name (auto-created on startup) |
-| `RESEND_API_KEY` | Resend API key for transactional email |
-| `RESEND_FROM` | From address (e.g. `no-reply@syltalky.pro.vn`) |
+| `SMTP_HOST` / `SMTP_PORT` | Gmail SMTP server (`smtp.gmail.com` / `587`) |
+| `SMTP_USER` | Gmail address used to log in |
+| `SMTP_PASSWORD` | Gmail App Password (16 chars, not your login password) |
+| `SMTP_FROM` / `SMTP_FROM_NAME` | Sender address (defaults to `SMTP_USER`) and display name |
 | `LIVEKIT_URL` | LiveKit server URL (e.g. `ws://localhost:7880`) |
 | `LIVEKIT_API_KEY` / `LIVEKIT_API_SECRET` | LiveKit credentials |
 | `AI_API_URL` | Syltalky AI API base URL (e.g. `http://localhost:8000`) |
@@ -92,7 +94,7 @@ Interactive API docs: `http://localhost:8001/docs`
 | POST | `/auth/login` | Returns JWT access + refresh tokens |
 | POST | `/auth/refresh` | Exchange refresh token for a new access token |
 | POST | `/auth/verify-email` | Confirm email from link token |
-| POST | `/auth/forgot-password` | Send password-reset email via Resend |
+| POST | `/auth/forgot-password` | Send password-reset email via Gmail SMTP |
 | POST | `/auth/reset-password` | Token + new password |
 | POST | `/auth/google` | Sign in / register with Google OAuth |
 | POST | `/auth/complete-profile` | Set display_name + gender after Google sign-in |
@@ -221,7 +223,7 @@ Syltalky_BE/
 │   ├── routers/             ← One file per domain (auth, users, meetings, …)
 │   └── services/
 │       ├── minio_client.py  ← Upload, presigned URL, public URL generation
-│       ├── email.py         ← Resend email wrapper
+│       ├── email.py         ← Gmail SMTP email wrapper
 │       └── post_processing.py ← Transcript build + LLM summarise + notify
 ├── alembic/                 ← Migration scripts
 ├── docker-compose.yml

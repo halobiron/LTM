@@ -24,7 +24,7 @@ async def _llm(messages: list) -> str:
         resp = await client.post(
             f"{settings.LLM_BASE_URL}/chat/completions",
             headers={"Authorization": f"Bearer {settings.LLM_API_KEY}"},
-            json={"messages": messages, "thinking": False, "temperature": 0.4, "max_tokens": 512},
+            json={"model": settings.LLM_MODEL, "messages": messages, "temperature": 0.4, "max_tokens": 512},
         )
         resp.raise_for_status()
         return resp.json()["choices"][0]["message"]["content"].strip()

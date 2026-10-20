@@ -16,8 +16,12 @@ class Settings(BaseSettings):
     MINIO_SECURE: bool = False
     MINIO_PUBLIC_SECURE: bool = True
 
-    RESEND_API_KEY: str
-    RESEND_FROM: str = "noreply@syltalky.app"
+    SMTP_HOST: str = "smtp.gmail.com"
+    SMTP_PORT: int = 587
+    SMTP_USER: str
+    SMTP_PASSWORD: str
+    SMTP_FROM: str = ""
+    SMTP_FROM_NAME: str = "Syltalky"
 
     LIVEKIT_URL: str = "ws://localhost:7880"
     LIVEKIT_PUBLIC_URL: str = "ws://localhost:7880"
@@ -28,6 +32,7 @@ class Settings(BaseSettings):
 
     LLM_BASE_URL: str
     LLM_API_KEY: str
+    LLM_MODEL: str = "gemini-3.5-flash-lite"
 
     GOOGLE_CLIENT_ID: str = ""
 
