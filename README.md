@@ -78,7 +78,7 @@ Both Docker Compose stacks (`Syltalky_API` and `Syltalky_BE`) run on the same ma
 |---|---|
 | LiveKit (self-hosted) | WebRTC audio/video |
 | MinIO (self-hosted) | Avatars, reference audio |
-| Resend | Transactional email (verify, reset password) |
+| Gmail SMTP | Transactional email (verify, reset password) |
 | Qwen3.5-35B-A3B (OpenAI-compatible proxy) | Meeting summarisation + AI chat assistant |
 | Google OAuth | Sign-in with Google |
 

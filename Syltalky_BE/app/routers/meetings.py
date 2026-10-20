@@ -787,7 +787,7 @@ async def ask_meeting(
             resp = await client.post(
                 f"{settings.LLM_BASE_URL}/chat/completions",
                 headers={"Authorization": f"Bearer {settings.LLM_API_KEY}"},
-                json={"messages": messages, "thinking": False, "temperature": 0.5, "max_tokens": 512},
+                json={"model": settings.LLM_MODEL, "messages": messages, "temperature": 0.5, "max_tokens": 512},
             )
             if resp.status_code >= 400:
                 raise HTTPException(status_code=503, detail=f"LLM lỗi {resp.status_code}: {resp.text[:300]}")
