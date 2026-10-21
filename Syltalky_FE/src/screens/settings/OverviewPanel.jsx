@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { api } from '../../api/client'
 import useStore from '../../store'
 import AvatarCropper from '../../components/AvatarCropper'
+import UserAvatar from '../../components/UserAvatar'
 
 export default function OverviewPanel() {
   const { user, accessToken, setUser } = useStore()
@@ -57,7 +58,6 @@ export default function OverviewPanel() {
     }
   }
 
-  const letter = name?.[0]?.toUpperCase() ?? '?'
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -69,14 +69,9 @@ export default function OverviewPanel() {
           <div style={{ position: 'relative', flexShrink: 0 }}>
             <div style={{
               width: 80, height: 80, borderRadius: '50%', overflow: 'hidden',
-              background: avatarPreview ? '#000' : 'linear-gradient(135deg,#00C9B8,#0099CC)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 30, fontWeight: 700, color: '#fff',
               border: '3px solid rgba(255,255,255,0.08)', flexShrink: 0,
             }}>
-              {avatarPreview
-                ? <img src={avatarPreview} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                : letter}
+              <UserAvatar name={user?.display_name} avatarUrl={avatarPreview} size={74} fontSize={30} />
             </div>
             {avatarPreview && (
               <div style={{
