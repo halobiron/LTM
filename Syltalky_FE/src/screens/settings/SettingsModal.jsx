@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import useStore from '../../store'
+import UserAvatar from '../../components/UserAvatar'
 import OverviewPanel from './OverviewPanel'
 import DevicesPanel from './DevicesPanel'
 import SubtitlesPanel from './SubtitlesPanel'
@@ -47,7 +48,6 @@ export default function SettingsModal({ onClose }) {
     return () => window.removeEventListener('keydown', handler)
   }, [onClose])
 
-  const avatarLetter = user?.display_name?.[0]?.toUpperCase() ?? '?'
 
   return (
     <div
@@ -139,14 +139,9 @@ export default function SettingsModal({ onClose }) {
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <div style={{
                 width: 38, height: 38, borderRadius: '50%', flexShrink: 0, overflow: 'hidden',
-                background: user?.avatar_url ? '#000' : 'linear-gradient(135deg,#00C9B8,#0099CC)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 15, fontWeight: 700, color: '#fff',
                 border: '1.5px solid rgba(255,255,255,0.1)',
               }}>
-                {user?.avatar_url
-                  ? <img src={user.avatar_url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                  : avatarLetter}
+                <UserAvatar name={user?.display_name} avatarUrl={user?.avatar_url} size={38} fontSize={15} />
               </div>
               <div style={{ overflow: 'hidden' }}>
                 <div style={{ fontSize: 13, fontWeight: 600, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
