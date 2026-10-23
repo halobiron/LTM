@@ -41,6 +41,12 @@ export const meetingsApi = {
   chatHistory: (meetingId, token) =>
     api.get(`/meetings/${meetingId}/chat`, token),
 
+  uploadChatFile: (meetingId, file, token) => {
+    const fd = new FormData()
+    fd.append('file', file)
+    return api.postForm(`/meetings/${meetingId}/files`, fd, token)
+  },
+
   // Pinned messages, polls, shared notes
   state: (meetingId, token) =>
     api.get(`/meetings/${meetingId}/state`, token),
