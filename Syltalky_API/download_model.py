@@ -65,7 +65,8 @@ def download():
     else:
         mt5_dir.mkdir(parents=True, exist_ok=True)
         print("[2/6] Downloading MT5-base...")
-        snapshot_download(repo_id="google/mt5-base", local_dir=str(mt5_dir), local_dir_use_symlinks=False)
+        snapshot_download(repo_id="google/mt5-base", local_dir=str(mt5_dir), local_dir_use_symlinks=False,
+                          ignore_patterns=["tf_model.h5", "flax_model.msgpack"])
         _patch_tokenizer_class(mt5_dir, "MT5TokenizerFast")
         print(f"      → {mt5_dir}")
 
@@ -125,7 +126,8 @@ def download():
     else:
         trans_dir.mkdir(parents=True, exist_ok=True)
         print("[5/6] Downloading EnViT5 translation model...")
-        snapshot_download(repo_id="VietAI/envit5-translation", local_dir=str(trans_dir), local_dir_use_symlinks=False)
+        snapshot_download(repo_id="VietAI/envit5-translation", local_dir=str(trans_dir), local_dir_use_symlinks=False,
+                          ignore_patterns=["tf_model.h5", "flax_model.msgpack"])
         _patch_tokenizer_class(trans_dir, "T5TokenizerFast")
         print(f"      → {trans_dir}")
 

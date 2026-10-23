@@ -5,3 +5,9 @@ __pycache__
 .claude
 uploads/
 app/stt/.hf_cache/
+# Model weights are mounted at runtime via `.:/app` in docker-compose; never bake them into the image
+app/tts/checkpoints/
+app/sign/checkpoints/
+app/sign/pretrained_weight/
+app/translation/model/
+app/stt/model/

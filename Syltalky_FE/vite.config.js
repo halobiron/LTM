@@ -6,6 +6,8 @@ export default defineConfig({
   base: '/',
   server: {
     port: 5173,
+    host: true,
+    allowedHosts: ['.ts.net'],
   },
   preview: {
     port: 5173,
