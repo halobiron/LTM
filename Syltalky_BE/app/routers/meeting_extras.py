@@ -1,8 +1,8 @@
 import uuid
 from datetime import datetime, timezone
-from app.services.minio_client import get_public_url
+from app.services.minio_client import get_public_url, upload_bytes
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from pydantic import BaseModel
 from sqlalchemy import select, delete, func
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -184,6 +184,42 @@ async def set_co_hosts(
     meeting.co_hosts = cleaned
     await db.commit()
     return {"co_hosts": cleaned}
+
+
+# ── Chat file attachments ────────────────────────────────────────────────────
+
+MAX_CHAT_FILE_BYTES = 25 * 1024 * 1024
+
+
+@router.post("/{meeting_id}/files")
+async def upload_chat_file(
+    meeting_id: str,
+    file: UploadFile = File(...),
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    meeting = await require_participant(meeting_id, user, db)
+    data = await file.read(MAX_CHAT_FILE_BYTES + 1)
+    if not data:
+        raise HTTPException(status_code=400, detail="Tệp rỗng")
+    if len(data) > MAX_CHAT_FILE_BYTES:
+        raise HTTPException(status_code=413, detail="Tệp vượt quá giới hạn 25MB")
+
+    name = (file.filename or "file").replace("\\", "/").rsplit("/", 1)[-1][:150] or "file"
+    ext = name.rsplit(".", 1)[-1].lower() if "." in name else ""
+    ext = "".join(c for c in ext if c.isalnum())[:10]
+    key = f"chat-files/{meeting.id}/{uuid.uuid4().hex}" + (f".{ext}" if ext else "")
+    content_type = file.content_type or "application/octet-stream"
+    # Never let uploaded HTML/SVG/JS render inline from the public bucket
+    if content_type.lower().split(";")[0] in ("text/html", "image/svg+xml", "application/xhtml+xml", "text/javascript", "application/javascript"):
+        content_type = "application/octet-stream"
+    upload_bytes(key, data, content_type)
+    return {
+        "url": get_public_url(key),
+        "name": name,
+        "size": len(data),
+        "content_type": content_type,
+    }
 
 
 # ── Pinned messages ──────────────────────────────────────────────────────────

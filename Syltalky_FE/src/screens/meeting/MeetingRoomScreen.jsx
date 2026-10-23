@@ -410,12 +410,13 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
     return () => room.off(RoomEvent.DataReceived, onData)
   }, [room])
 
-  const sendChat = useCallback((text) => {
+  const sendChat = useCallback((text, file) => {
     const msg = {
       type: 'chat',
       sender_id: localUser?.id || '',
       sender_name: localUser?.display_name || 'Bạn',
       text,
+      ...(file ? { file } : {}),
       timestamp_ms: Date.now(),
     }
     // Add to own list immediately
@@ -652,7 +653,7 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
               {panel === 'participants' && <ParticipantsPanel participants={participants} userInfoMap={userInfoMap} localUser={localUser} hostId={hostId} isHost={isHost} isCoHost={isCoHost} coHosts={coHosts} onToggleCoHost={toggleCoHost} meetingId={meetingId} accessToken={accessToken} waitingRequests={waitingRequests} raisedHands={raisedHands} onApprove={reqId => { setWaitingRequests(p => p.filter(r => r.request_id !== reqId)); refreshWaiting() }} onDeny={reqId => { setWaitingRequests(p => p.filter(r => r.request_id !== reqId)); refreshWaiting() }} onApproveAll={() => { setWaitingRequests([]); refreshWaiting() }} waitingRoomEnabled={waitingRoomEnabled} onToggleWaitingRoom={async (v) => { setWaitingRoomEnabled(v); try { await meetingsApi.toggleWaitingRoom(meetingId, v, accessToken) } catch { setWaitingRoomEnabled(!v) } }} />}
               {panel === 'noidung'     && <MeetingContentPanel captions={captions} ttsMessages={ttsMessages} replayLog={replayLog} userInfoMap={userInfoMap} localUser={localUser} meetingId={meetingId} accessToken={accessToken} />}
               {panel === 'tts'         && <TtsPanel meetingId={meetingId} accessToken={accessToken} ttsMessages={ttsMessages} captionsWsRef={captionsWsRef} localParticipant={localParticipant} micEnabled={micEnabled} localUserId={localUser?.id} onReplay={msg => setReplayLog(prev => [...prev.slice(-99), { ...msg, id: Date.now() + Math.random(), timestamp_ms: Date.now(), isReplay: true }])} />}
-              {panel === 'chat'        && <ChatPanel messages={chatMessages} onSend={sendChat} localUserId={localUser?.id} userInfoMap={userInfoMap} localUser={localUser} pins={extras.pins} isHostOrCohost={isHostOrCohost} onPin={extras.actions.pinMessage} onUnpin={extras.actions.unpinMessage} />}
+              {panel === 'chat'        && <ChatPanel messages={chatMessages} onSend={sendChat} localUserId={localUser?.id} userInfoMap={userInfoMap} localUser={localUser} pins={extras.pins} isHostOrCohost={isHostOrCohost} onPin={extras.actions.pinMessage} onUnpin={extras.actions.unpinMessage} meetingId={meetingId} accessToken={accessToken} />}
               {panel === 'polls'       && <PollsPanel polls={extras.polls} isHostOrCohost={isHostOrCohost} currentUserId={localUser?.id} currentUser={localUser} userInfoMap={userInfoMap} onCreate={extras.actions.createPoll} onVote={extras.actions.votePoll} onClose={extras.actions.closePoll} onDelete={extras.actions.deletePoll} />}
               {panel === 'notes'       && <NotesPanel notes={extras.notes} isHostOrCohost={isHostOrCohost} meetingId={meetingId} accessToken={accessToken} currentUser={localUser} onCreate={extras.actions.createNote} onRename={extras.actions.renameNote} onDelete={extras.actions.deleteNote} />}
             </div>
@@ -676,7 +677,7 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
               {panel === 'participants' && <ParticipantsPanel participants={participants} userInfoMap={userInfoMap} localUser={localUser} hostId={hostId} isHost={isHost} isCoHost={isCoHost} coHosts={coHosts} onToggleCoHost={toggleCoHost} meetingId={meetingId} accessToken={accessToken} waitingRequests={waitingRequests} raisedHands={raisedHands} onApprove={reqId => { setWaitingRequests(p => p.filter(r => r.request_id !== reqId)); refreshWaiting() }} onDeny={reqId => { setWaitingRequests(p => p.filter(r => r.request_id !== reqId)); refreshWaiting() }} onApproveAll={() => { setWaitingRequests([]); refreshWaiting() }} waitingRoomEnabled={waitingRoomEnabled} onToggleWaitingRoom={async (v) => { setWaitingRoomEnabled(v); try { await meetingsApi.toggleWaitingRoom(meetingId, v, accessToken) } catch { setWaitingRoomEnabled(!v) } }} />}
               {panel === 'noidung'     && <MeetingContentPanel captions={captions} ttsMessages={ttsMessages} replayLog={replayLog} userInfoMap={userInfoMap} localUser={localUser} meetingId={meetingId} accessToken={accessToken} />}
               {panel === 'tts'         && <TtsPanel meetingId={meetingId} accessToken={accessToken} ttsMessages={ttsMessages} captionsWsRef={captionsWsRef} localParticipant={localParticipant} micEnabled={micEnabled} localUserId={localUser?.id} onReplay={msg => setReplayLog(prev => [...prev.slice(-99), { ...msg, id: Date.now() + Math.random(), timestamp_ms: Date.now(), isReplay: true }])} />}
-              {panel === 'chat'        && <ChatPanel messages={chatMessages} onSend={sendChat} localUserId={localUser?.id} userInfoMap={userInfoMap} localUser={localUser} pins={extras.pins} isHostOrCohost={isHostOrCohost} onPin={extras.actions.pinMessage} onUnpin={extras.actions.unpinMessage} />}
+              {panel === 'chat'        && <ChatPanel messages={chatMessages} onSend={sendChat} localUserId={localUser?.id} userInfoMap={userInfoMap} localUser={localUser} pins={extras.pins} isHostOrCohost={isHostOrCohost} onPin={extras.actions.pinMessage} onUnpin={extras.actions.unpinMessage} meetingId={meetingId} accessToken={accessToken} />}
               {panel === 'polls'       && <PollsPanel polls={extras.polls} isHostOrCohost={isHostOrCohost} currentUserId={localUser?.id} currentUser={localUser} userInfoMap={userInfoMap} onCreate={extras.actions.createPoll} onVote={extras.actions.votePoll} onClose={extras.actions.closePoll} onDelete={extras.actions.deletePoll} />}
               {panel === 'notes'       && <NotesPanel notes={extras.notes} isHostOrCohost={isHostOrCohost} meetingId={meetingId} accessToken={accessToken} currentUser={localUser} onCreate={extras.actions.createNote} onRename={extras.actions.renameNote} onDelete={extras.actions.deleteNote} />}
             </div>
@@ -2472,7 +2473,69 @@ function PinIcon({ size = 11 }) {
   )
 }
 
-function ChatPanel({ messages, onSend, localUserId, userInfoMap = {}, localUser, pins = [], isHostOrCohost = false, onPin, onUnpin }) {
+const MAX_CHAT_FILE = 25 * 1024 * 1024
+
+function fmtFileSize(n) {
+  if (n < 1024) return `${n} B`
+  if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`
+  return `${(n / 1024 / 1024).toFixed(1)} MB`
+}
+
+function FileAttachment({ file, mine }) {
+  const isImage = (file.content_type || '').startsWith('image/') && !(file.content_type || '').includes('svg')
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 0 }}>
+      {isImage && (
+        <a href={file.url} target="_blank" rel="noopener noreferrer">
+          <img src={file.url} alt={file.name} style={{ display: 'block', maxWidth: '100%', maxHeight: 180, borderRadius: 8 }} />
+        </a>
+      )}
+      <a href={file.url} target="_blank" rel="noopener noreferrer" download={file.name}
+        style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '7px 9px', borderRadius: 9, textDecoration: 'none', background: 'rgba(0,0,0,0.25)', border: '1px solid rgba(255,255,255,0.08)' }}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={mine ? '#00C9B8' : '#60A5FA'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
+        </svg>
+        <div style={{ minWidth: 0, flex: 1 }}>
+          <div style={{ fontSize: 12.5, fontWeight: 600, color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{file.name}</div>
+          <div style={{ fontSize: 10.5, color: 'rgba(255,255,255,0.4)' }}>{fmtFileSize(file.size || 0)}</div>
+        </div>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+      </a>
+    </div>
+  )
+}
+
+function ChatPanel({ messages, onSend, localUserId, userInfoMap = {}, localUser, pins = [], isHostOrCohost = false, onPin, onUnpin, meetingId, accessToken }) {
+  const [uploading, setUploading]   = useState(false)
+  const [fileError, setFileError]   = useState('')
+  const fileInputRef = useRef(null)
+
+  async function handleFilePick(e) {
+    const f = e.target.files?.[0]
+    e.target.value = ''
+    if (!f) return
+    if (f.size > MAX_CHAT_FILE) {
+      setFileError('Tệp vượt quá giới hạn 25MB')
+      setTimeout(() => setFileError(''), 3500)
+      return
+    }
+    setFileError('')
+    setUploading(true)
+    try {
+      const res = await meetingsApi.uploadChatFile(meetingId, f, accessToken)
+      onSend(text.trim(), { url: res.url, name: res.name, size: res.size, content_type: res.content_type })
+      setText('')
+      setAtBottom(true)
+    } catch (err) {
+      setFileError(err.message || 'Không thể gửi tệp')
+      setTimeout(() => setFileError(''), 3500)
+    } finally {
+      setUploading(false)
+    }
+  }
+
   const [text, setText]             = useState('')
   const [pendingLink, setPendingLink] = useState(null)
   const [atBottom, setAtBottom]     = useState(true)
@@ -2488,7 +2551,7 @@ function ChatPanel({ messages, onSend, localUserId, userInfoMap = {}, localUser,
       await onPin?.({
         sender_id: m.sender_id,
         sender_name: userInfoMap[m.sender_id]?.display_name || m.sender_name,
-        text: m.text,
+        text: m.text || (m.file ? `📎 ${m.file.name}` : ''),
         original_ts_ms: m.timestamp_ms,
       })
     } catch (err) {
@@ -2578,9 +2641,9 @@ function ChatPanel({ messages, onSend, localUserId, userInfoMap = {}, localUser,
 
       <PinnedStrip pins={pins} isHostOrCohost={isHostOrCohost} userInfoMap={userInfoMap} onUnpin={onUnpin} />
 
-      {pinError && (
+      {(pinError || fileError) && (
         <div style={{ padding: '6px 14px', background: 'rgba(248,113,113,0.1)', color: '#F87171', fontSize: 11, borderBottom: '1px solid rgba(248,113,113,0.2)' }}>
-          {pinError}
+          {pinError || fileError}
         </div>
       )}
 
@@ -2641,7 +2704,8 @@ function ChatPanel({ messages, onSend, localUserId, userInfoMap = {}, localUser,
                     background: mine ? 'rgba(0,201,184,0.13)' : 'rgba(255,255,255,0.07)',
                     border: `1px solid ${mine ? 'rgba(0,201,184,0.2)' : 'rgba(255,255,255,0.07)'}`,
                   }}>
-                    <MarkdownMessage content={m.text} mdReady={mdReady} onLinkClick={setPendingLink} />
+                    {m.file && <FileAttachment file={m.file} mine={mine} />}
+                    {m.text && <div style={m.file ? { marginTop: 6 } : undefined}><MarkdownMessage content={m.text} mdReady={mdReady} onLinkClick={setPendingLink} /></div>}
                   </div>
                   {isLastInGroup && (
                     <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.2)', marginTop: 4 }}>{fmt(m.timestamp_ms)}</span>
@@ -2674,6 +2738,13 @@ function ChatPanel({ messages, onSend, localUserId, userInfoMap = {}, localUser,
           onFocusCapture={e => { e.currentTarget.style.borderColor = 'rgba(0,201,184,0.42)'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,201,184,0.07)' }}
           onBlurCapture={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.09)'; e.currentTarget.style.boxShadow = 'none' }}
         >
+          <input ref={fileInputRef} type="file" onChange={handleFilePick} style={{ display: 'none' }} />
+          <button onClick={() => fileInputRef.current?.click()} disabled={uploading} title="Đính kèm tệp (tối đa 25MB)"
+            style={{ width: 34, height: 34, borderRadius: 10, border: 'none', flexShrink: 0, background: 'transparent', color: uploading ? '#00C9B8' : 'rgba(255,255,255,0.45)', cursor: uploading ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-end', marginLeft: -6, padding: 0 }}>
+            {uploading
+              ? <span style={{ fontSize: 10, fontWeight: 700 }}>…</span>
+              : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>}
+          </button>
           <textarea
             ref={textareaRef}
             value={text}
@@ -2681,7 +2752,7 @@ function ChatPanel({ messages, onSend, localUserId, userInfoMap = {}, localUser,
             onKeyDown={handleKeyDown}
             placeholder="Nhắn tin…"
             rows={1}
-            style={{ flex: 1, resize: 'none', border: 'none', outline: 'none', background: 'transparent', color: '#fff', fontSize: 13, fontFamily: 'inherit', lineHeight: 1.55, padding: '3px 0', minHeight: 22, overflowY: 'hidden' }}
+            style={{ flex: 1, resize: 'none', border: 'none', outline: 'none', background: 'transparent', color: '#fff', fontSize: 13, fontFamily: 'inherit', lineHeight: 1.55, padding: '3px 0', minHeight: 22, overflowY: 'hidden', alignSelf: 'center' }}
           />
           <button onClick={handleSend} disabled={!text.trim()} style={{ width: 34, height: 34, borderRadius: 10, border: 'none', flexShrink: 0, background: text.trim() ? 'linear-gradient(135deg,#00C9B8,#009E8A)' : 'rgba(255,255,255,0.05)', color: text.trim() ? '#07090F' : 'rgba(255,255,255,0.18)', cursor: text.trim() ? 'pointer' : 'default', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.18s', boxShadow: text.trim() ? '0 4px 14px rgba(0,201,184,0.35)' : 'none', alignSelf: 'flex-end' }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
