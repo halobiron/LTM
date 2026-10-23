@@ -1,4 +1,4 @@
-param([switch]$Stop, [switch]$NoApi, [switch]$WithApi)
+param([switch]$Stop, [switch]$NoApi, [switch]$WithApi, [switch]$Tailscale, [switch]$Local)
 $ErrorActionPreference = 'Stop'
 
 function Compose([string]$Folder, [string[]]$Arguments) {
@@ -39,6 +39,13 @@ try {
         Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'Syltalky_BE/.env.example') -Destination $envFile
         throw 'Created Syltalky_BE/.env. Configure it as described in README, then rerun.'
     }
+    if (-not $Tailscale -and -not $Local) {
+        $answer = Read-Host 'Chay o che do nao? [1] Local (localhost)  [2] Tailscale'
+        $Tailscale = $answer -match '^(2|t|tailscale)$'
+    }
+    $mode = if ($Tailscale) { 'tailscale' } else { 'local' }
+    Copy-Item -LiteralPath (Join-Path $PSScriptRoot "Syltalky_BE/mode.$mode.env") -Destination (Join-Path $PSScriptRoot 'Syltalky_BE/.env.mode') -Force
+    Write-Host "Mode: $mode"
     # AI API needs an NVIDIA GPU. Without it the rest of the app still works (STT, TTS and sign language are unavailable).
     $runApi = $true
     if ($NoApi) {
@@ -77,8 +84,8 @@ try {
             if (Test-Path 'package-lock.json') { & npm.cmd ci } else { & npm.cmd install }
             if ($LASTEXITCODE -ne 0) { throw 'Frontend dependency installation failed.' }
         }
-        Write-Host 'Open http://localhost:5173. Ctrl+C stops frontend; start.cmd -Stop stops Docker.'
-        & npm.cmd run dev -- --port 5173 --strictPort
+        Write-Host 'Open http://localhost:5173 (or the ts.net URL in -Tailscale mode). Ctrl+C stops frontend; start.cmd -Stop stops Docker.'
+        & npm.cmd run dev -- --port 5173 --strictPort --mode $(if ($Tailscale) { 'tailscale' } else { 'development' })
         if ($LASTEXITCODE -ne 0) { throw 'Frontend stopped with an error.' }
     } finally { Pop-Location }
 } catch {

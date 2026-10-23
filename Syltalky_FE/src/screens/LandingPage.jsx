@@ -158,13 +158,6 @@ const FEATURES = [
   },
 ]
 
-const TEAM = [
-  { name: 'Trần Kiều Minh Dũng', role: 'Solution Architect', color: '#00D4C0', photo: '/images/team/member-1.JPG', pos: '50% 18%' },
-  { name: 'Vương Trí Bách', role: 'Front-end Developer',  color: '#A78BFA', photo: '/images/team/member-2.jpg', pos: '50% 23%' },
-  { name: 'Dương Đỗ Hoàng', role: 'UI/UX Designer', color: '#FB923C', photo: '/images/team/member-3.jpg', pos: '50% 23%' },
-  { name: 'Đỗ Phạm Bảo Hoàng', role: 'Technical Lead', color: '#34D399', photo: '/images/team/member-4.jpg', pos: '50% 15%' },
-]
-
 const STATS = [
   { value: '<200ms', label: 'Độ trễ phụ đề',    color: '#00D4C0' },
   { value: '1000+',     label: 'Giọng nói hỗ trợ',  color: '#A78BFA' },
@@ -278,7 +271,6 @@ export default function LandingPage() {
           <Logo />
           {!isMobile && <div style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
             <button onClick={() => scrollTo('features')} className="nav-btn" style={{ fontSize: 14, fontWeight: 500, color: 'rgba(255,255,255,0.42)', background: 'none', border: 'none', cursor: 'pointer', transition: 'color 0.2s', padding: 0, fontFamily: 'inherit' }}>Tính năng</button>
-            <button onClick={() => scrollTo('stats')}    className="nav-btn" style={{ fontSize: 14, fontWeight: 500, color: 'rgba(255,255,255,0.42)', background: 'none', border: 'none', cursor: 'pointer', transition: 'color 0.2s', padding: 0, fontFamily: 'inherit' }}>Về chúng tôi</button>
           </div>}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             {isLoggedIn ? (
@@ -488,7 +480,7 @@ export default function LandingPage() {
               <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#00D4C0', boxShadow: '0 0 6px #00D4C0' }}/>
               <div style={{ fontSize: 9, color: '#00D4C0', fontWeight: 700, letterSpacing: '0.1em' }}>LIVE CAPTION</div>
             </div>
-            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>Hoàngg Đỗ đang nói...</div>
+            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>Hải Long đang nói...</div>
           </div>
 
           <div style={{
@@ -501,7 +493,7 @@ export default function LandingPage() {
               <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#A78BFA', boxShadow: '0 0 6px #A78BFA' }}/>
               <div style={{ fontSize: 9, color: '#A78BFA', fontWeight: 700, letterSpacing: '0.1em' }}>VOICE CLONED</div>
             </div>
-            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>Giọng của Hoàngg Đỗ · AI</div>
+            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>Giọng của Hải Long · AI</div>
           </div>
 
           {/* Third card — summary */}
@@ -564,57 +556,6 @@ export default function LandingPage() {
           <FeatureCard f={FEATURES[1]} style={{ gridColumn: isMobile ? undefined : '3 / 4' }} delay={2}/>
           <FeatureCard f={FEATURES[2]} style={{ gridColumn: isMobile ? undefined : '1 / 2' }} delay={1}/>
           <FeatureCard f={FEATURES[3]} style={{ gridColumn: isMobile ? undefined : '2 / 4' }} delay={2}/>
-        </div>
-      </section>
-
-      {/* ════ TEAM ════ */}
-      <section style={{ padding: isMobile ? '0 20px 80px' : isTablet ? '0 32px 100px' : '0 52px 130px', maxWidth: 1280, margin: '0 auto' }}>
-        <span id="stats" style={{ display: 'block', scrollMarginTop: 88 }} />
-        <div className="reveal" style={{ marginBottom: 64 }}>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.16em', color: '#A78BFA', textTransform: 'uppercase', marginBottom: 14 }}>— Về chúng tôi</div>
-          <h2 style={{ fontSize: 'clamp(28px,3.2vw,46px)', fontWeight: 800, letterSpacing: '-1.5px', margin: 0, lineHeight: 1.1, color: '#fff' }}>
-            Đội ngũ đằng sau<br/>
-            <em style={{ fontWeight: 300, fontStyle: 'italic', color: 'rgba(255,255,255,0.45)' }}>Syltalky</em>
-          </h2>
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: 20 }}>
-          {TEAM.map((m, i) => (
-            <div key={i} className={`reveal reveal-delay-${i + 1}`} style={{
-              background: 'rgba(255,255,255,0.022)',
-              border: '1px solid rgba(255,255,255,0.07)',
-              borderRadius: 20, overflow: 'hidden',
-              transition: 'transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease',
-            }}
-              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.borderColor = `${m.color}55`; e.currentTarget.style.boxShadow = `0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px ${m.color}22` }}
-              onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'; e.currentTarget.style.boxShadow = 'none' }}
-            >
-              <div style={{
-                width: '100%', aspectRatio: '1 / 1',
-                background: `radial-gradient(ellipse at 50% 80%, ${m.color}22 0%, transparent 70%), linear-gradient(160deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)`,
-                borderBottom: `1px solid rgba(255,255,255,0.06)`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                position: 'relative', overflow: 'hidden',
-              }}>
-                <img src={m.photo} alt={m.name}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: m.pos || 'top', display: 'block' }}
-                  onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex' }}
-                />
-                <div style={{ display: 'none', width: '100%', height: '100%', position: 'absolute', inset: 0, alignItems: 'center', justifyContent: 'center' }}>
-                  <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="9" r="5" fill={m.color} opacity="0.2"/>
-                    <circle cx="12" cy="9" r="5" stroke={m.color} strokeWidth="1.2" opacity="0.4"/>
-                    <path d="M3 21c0-5 4-8.5 9-8.5s9 3.5 9 8.5" stroke={m.color} strokeWidth="1.2" strokeLinecap="round" opacity="0.3"/>
-                  </svg>
-                </div>
-                <div style={{ position: 'absolute', bottom: 12, right: 12, width: 8, height: 8, borderRadius: '50%', background: m.color, boxShadow: `0 0 12px ${m.color}`, zIndex: 1 }}/>
-              </div>
-              <div style={{ padding: '20px 22px 24px' }}>
-                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: m.color, textTransform: 'uppercase', marginBottom: 6 }}>{m.role}</div>
-                <div style={{ fontSize: 17, fontWeight: 700, color: '#fff', letterSpacing: '-0.3px' }}>{m.name}</div>
-              </div>
-            </div>
-          ))}
         </div>
       </section>
 

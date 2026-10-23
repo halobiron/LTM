@@ -74,8 +74,8 @@ export default function MeetingRoomScreen() {
         token={state.token}
         serverUrl={state.livekit_url}
         connect={true}
-        audio={state.mic_on ?? true}
-        video={state.cam_on ?? true}
+        audio={(state.mic_on ?? true) && state.mic_device_id ? { deviceId: state.mic_device_id } : (state.mic_on ?? true)}
+        video={(state.cam_on ?? true) && state.cam_device_id ? { deviceId: state.cam_device_id } : (state.cam_on ?? true)}
         style={{ width: '100%', height: '100%' }}
       >
         <RoomAudioRenderer />
