@@ -3,7 +3,9 @@ services:
     build: .
     ports:
       - "8001:8001"
-    env_file: .env
+    env_file:
+      - .env
+      - .env.mode
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
