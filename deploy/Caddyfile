@@ -1,0 +1,14 @@
+# Caddy gets and renews HTTPS certificates automatically for these hosts.
+{$API_HOST} {
+	reverse_proxy backend:8001
+}
+
+# LiveKit signaling (wss). Media uses UDP 7882 / TCP 7881 directly.
+{$RTC_HOST} {
+	reverse_proxy livekit:7880
+}
+
+# Public file URLs (avatars, chat files). Bucket policy is public-read.
+{$S3_HOST} {
+	reverse_proxy minio:9000
+}

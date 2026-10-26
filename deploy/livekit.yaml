@@ -1,0 +1,11 @@
+port: 7880
+rtc:
+  tcp_port: 7881
+  udp_port: 7882
+  # Detect the VM's public IP so remote browsers get a reachable ICE candidate
+  use_external_ip: true
+logging:
+  level: info
+room:
+  auto_create: true
+# API key/secret come from the LIVEKIT_KEYS environment variable (see docker-compose.yml)

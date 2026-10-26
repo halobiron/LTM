@@ -1,4 +1,4 @@
-param([switch]$Stop, [switch]$NoApi, [switch]$WithApi, [switch]$Tailscale, [switch]$Local)
+param([switch]$Stop, [switch]$NoApi, [switch]$WithApi, [switch]$Tailscale, [switch]$Local, [switch]$Cloud)
 $ErrorActionPreference = 'Stop'
 
 function Compose([string]$Folder, [string[]]$Arguments) {
@@ -26,6 +26,10 @@ try {
     if ($Stop) {
         Compose 'Syltalky_BE' @('down')
         Compose 'Syltalky_API' @('down')
+        if (Get-Command tailscale -ErrorAction SilentlyContinue) {
+            & tailscale funnel --https=443 off 2>$null
+            & tailscale funnel --https=8443 off 2>$null
+        }
         Write-Host 'Docker services stopped; data preserved. Stop frontend with Ctrl+C.'
         exit 0
     }
@@ -39,11 +43,12 @@ try {
         Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'Syltalky_BE/.env.example') -Destination $envFile
         throw 'Created Syltalky_BE/.env. Configure it as described in README, then rerun.'
     }
-    if (-not $Tailscale -and -not $Local) {
-        $answer = Read-Host 'Chay o che do nao? [1] Local (localhost)  [2] Tailscale'
+    if (-not $Tailscale -and -not $Local -and -not $Cloud) {
+        $answer = Read-Host 'Chay o che do nao? [1] Local (localhost)  [2] Tailscale  [3] Cloud (LiveKit Cloud + Funnel)'
         $Tailscale = $answer -match '^(2|t|tailscale)$'
+        $Cloud = $answer -match '^(3|c|cloud)$'
     }
-    $mode = if ($Tailscale) { 'tailscale' } else { 'local' }
+    $mode = if ($Cloud) { 'cloud' } elseif ($Tailscale) { 'tailscale' } else { 'local' }
     Copy-Item -LiteralPath (Join-Path $PSScriptRoot "Syltalky_BE/mode.$mode.env") -Destination (Join-Path $PSScriptRoot 'Syltalky_BE/.env.mode') -Force
     Write-Host "Mode: $mode"
     # AI API needs an NVIDIA GPU. Without it the rest of the app still works (STT, TTS and sign language are unavailable).
@@ -70,7 +75,9 @@ try {
     } else {
         Write-Host 'Bo qua Syltalky_API: cac tinh nang AI se khong dung duoc.' -ForegroundColor Yellow
     }
-    Compose 'Syltalky_BE' @('up', '-d', '--wait', '--wait-timeout', '180', 'postgres', 'redis', 'minio', 'livekit')
+    # Cloud mode: calls run on LiveKit Cloud, so no local LiveKit/Redis container
+    $infra = if ($Cloud) { @('postgres', 'minio') } else { @('postgres', 'redis', 'minio', 'livekit') }
+    Compose 'Syltalky_BE' (@('up', '-d', '--wait', '--wait-timeout', '180') + $infra)
     Compose 'Syltalky_BE' @('build', 'backend')
     if ($runApi) { Wait-Service 'http://localhost:8000/health' }
     Wait-Service 'http://localhost:9000/minio/health/live'
@@ -78,6 +85,20 @@ try {
     Compose 'Syltalky_BE' @('up', '-d', '--no-deps', '--force-recreate', 'backend')
     Wait-Service 'http://localhost:8001/health'
 
+    if ($Cloud) {
+        # Expose backend and MinIO publicly through Tailscale Funnel (visitors do not need Tailscale)
+        if (-not (Get-Command tailscale -ErrorAction SilentlyContinue)) {
+            throw 'Missing tailscale. Install Tailscale and log in, then rerun.'
+        }
+        foreach ($f in @(@('443', '8001'), @('8443', '9000'))) {
+            & tailscale funnel --bg "--https=$($f[0])" $f[1]
+            if ($LASTEXITCODE -ne 0) { throw "tailscale funnel failed for port $($f[1]). Enable Funnel/HTTPS for your tailnet (see the link it printed) and rerun." }
+        }
+        & tailscale funnel status
+        Write-Host 'Cloud mode: backend is public via Funnel. Frontend is deployed on Cloudflare Pages (see docs/DEPLOY.md). Stop with start.cmd -Stop.' -ForegroundColor Green
+        Read-Host 'Nhan Enter de dong cua so (he thong van chay nen)' | Out-Null
+        exit 0
+    }
     Push-Location (Join-Path $PSScriptRoot 'Syltalky_FE')
     try {
         if (-not (Test-Path 'node_modules/.bin/vite.cmd')) {
