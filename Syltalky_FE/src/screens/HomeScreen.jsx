@@ -96,8 +96,8 @@ export default function HomeScreen() {
   return (
     <div style={{
       flex: 1, height: '100%', overflowY: 'auto', overflowX: 'hidden',
-      fontFamily: '"Be Vietnam Pro", sans-serif', color: '#E8EAF0',
-      background: '#07090F', position: 'relative',
+      fontFamily: '"Be Vietnam Pro", sans-serif', color: 'var(--text)',
+      background: 'var(--bg)', position: 'relative',
     }}>
 
       {/* Ambient blobs — fixed so they don't scroll */}
@@ -105,8 +105,8 @@ export default function HomeScreen() {
         position: 'fixed', top: 0, left: isMobile ? 0 : 240, right: 0, bottom: 0,
         pointerEvents: 'none', zIndex: 0,
         background: `
-          radial-gradient(ellipse 50% 40% at 30% 10%, rgba(0,201,184,0.06) 0%, transparent 65%),
-          radial-gradient(ellipse 40% 35% at 80% 20%, rgba(167,139,250,0.055) 0%, transparent 65%)
+          radial-gradient(ellipse 50% 40% at 30% 10%, rgba(var(--accent-rgb), 0.06) 0%, transparent 65%),
+          radial-gradient(ellipse 40% 35% at 80% 20%, rgba(var(--purple-rgb), 0.055) 0%, transparent 65%)
         `,
       }} />
 
@@ -121,22 +121,22 @@ export default function HomeScreen() {
           marginBottom: isMobile ? 24 : 40,
         }}>
           <div>
-            <p style={{ margin: '0 0 10px', fontSize: 13, fontWeight: 500, color: 'rgba(255,255,255,0.27)', letterSpacing: '0.01em' }}>
+            <p style={{ margin: '0 0 10px', fontSize: 13, fontWeight: 500, color: 'var(--text-muted)', letterSpacing: '0.01em' }}>
               {getGreeting()}, <span style={{ opacity: 1, color: 'initial' }}>👋🏼</span>
             </p>
-            <h1 style={{ margin: 0, fontSize: isMobile ? 28 : 38, fontWeight: 900, letterSpacing: '-1.3px', color: '#fff', lineHeight: 1.05 }}>
+            <h1 style={{ margin: 0, fontSize: isMobile ? 28 : 38, fontWeight: 900, letterSpacing: '-1.3px', color: 'var(--heading)', lineHeight: 1.05 }}>
               {user?.display_name ?? 'bạn'}
             </h1>
           </div>
           <div style={{ textAlign: isMobile ? 'left' : 'right', paddingBottom: 4 }}>
-            <p style={{ margin: 0, fontSize: 12, color: 'rgba(255,255,255,0.18)', textTransform: 'capitalize' }}>{today}</p>
+            <p style={{ margin: 0, fontSize: 12, color: 'var(--text-faint)', textTransform: 'capitalize' }}>{today}</p>
             {liveCount > 0 && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, justifyContent: isMobile ? 'flex-start' : 'flex-end', marginTop: 7 }}>
                 <span style={{
                   display: 'inline-block', width: 7, height: 7, borderRadius: '50%',
-                  background: '#00C9B8', animation: 'liveDot 1.6s ease-in-out infinite',
+                  background: 'var(--accent)', animation: 'liveDot 1.6s ease-in-out infinite',
                 }} />
-                <span style={{ fontSize: 12, fontWeight: 600, color: '#00C9B8' }}>
+                <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--accent)' }}>
                   {liveCount} phòng đang hoạt động
                 </span>
               </div>
@@ -184,9 +184,9 @@ export default function HomeScreen() {
           50% { opacity: 0.35; transform: scale(1.6); }
         }
         @keyframes liveRing {
-          0% { box-shadow: 0 0 0 0 rgba(0,201,184,0.5); }
-          70% { box-shadow: 0 0 0 5px rgba(0,201,184,0); }
-          100% { box-shadow: 0 0 0 0 rgba(0,201,184,0); }
+          0% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.5); }
+          70% { box-shadow: 0 0 0 5px rgba(var(--accent-rgb), 0); }
+          100% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0); }
         }
         @keyframes shimmer {
           0% { background-position: -500px 0; }
@@ -225,12 +225,12 @@ function RecentMeetings({ meetings, loading, user, accessToken, navigate, fetchM
         <h2 style={{
           margin: 0, fontSize: 11, fontWeight: 700,
           letterSpacing: '0.09em', textTransform: 'uppercase',
-          color: 'rgba(255,255,255,0.28)',
+          color: 'var(--text-muted)',
         }}>
           Cuộc họp gần đây
         </h2>
         {meetings.length > 0 && (
-          <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.18)', fontWeight: 500 }}>
+          <span style={{ fontSize: 12, color: 'var(--text-faint)', fontWeight: 500 }}>
             {meetings.length} cuộc họp
           </span>
         )}
@@ -268,21 +268,21 @@ function RecentMeetings({ meetings, loading, user, accessToken, navigate, fetchM
                 marginTop: 10, width: '100%',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
                 padding: '10px 0', borderRadius: 11,
-                border: '1px solid rgba(255,255,255,0.07)',
-                background: 'rgba(255,255,255,0.02)',
-                color: 'rgba(255,255,255,0.32)',
+                border: '1px solid rgba(var(--ink-rgb), 0.07)',
+                background: 'rgba(var(--ink-rgb), 0.02)',
+                color: 'var(--text-muted)',
                 fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
                 transition: 'all 0.15s',
               }}
               onMouseEnter={e => {
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.13)'
-                e.currentTarget.style.color = 'rgba(255,255,255,0.6)'
-                e.currentTarget.style.background = 'rgba(255,255,255,0.04)'
+                e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb), 0.13)'
+                e.currentTarget.style.color = 'var(--text-secondary)'
+                e.currentTarget.style.background = 'rgba(var(--ink-rgb), 0.04)'
               }}
               onMouseLeave={e => {
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'
-                e.currentTarget.style.color = 'rgba(255,255,255,0.32)'
-                e.currentTarget.style.background = 'rgba(255,255,255,0.02)'
+                e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb), 0.07)'
+                e.currentTarget.style.color = 'var(--text-muted)'
+                e.currentTarget.style.background = 'rgba(var(--ink-rgb), 0.02)'
               }}
             >
               Xem tất cả trong Thư viện
@@ -307,9 +307,9 @@ function CreateCard({ creating, error, onClearError, onCreate }) {
       onMouseLeave={() => setHovered(false)}
       style={{
         borderRadius: 22, overflow: 'hidden', position: 'relative',
-        border: `1px solid ${hovered ? 'rgba(0,201,184,0.28)' : 'rgba(255,255,255,0.07)'}`,
-        background: hovered ? 'rgba(0,201,184,0.04)' : 'rgba(255,255,255,0.025)',
-        boxShadow: hovered ? '0 0 48px rgba(0,201,184,0.09), inset 0 0 0 1px rgba(0,201,184,0.06)' : 'none',
+        border: `1px solid ${hovered ? 'rgba(var(--accent-rgb), 0.28)' : 'rgba(var(--ink-rgb), 0.07)'}`,
+        background: hovered ? 'var(--surface-hover)' : 'var(--surface)',
+        boxShadow: hovered ? '0 0 48px rgba(var(--accent-rgb), 0.09), inset 0 0 0 1px rgba(var(--accent-rgb), 0.06)' : 'none',
         transition: 'border-color 0.25s, background 0.25s, box-shadow 0.25s',
         display: 'flex', flexDirection: 'column',
         minHeight: 320,
@@ -319,10 +319,10 @@ function CreateCard({ creating, error, onClearError, onCreate }) {
       <div style={{
         flex: 1, position: 'relative', overflow: 'hidden', minHeight: 160,
         background: `linear-gradient(145deg,
-          rgba(0,201,184,0.09) 0%,
+          rgba(var(--accent-rgb), 0.09) 0%,
           rgba(0,150,180,0.05) 50%,
           rgba(0,100,140,0.03) 100%)`,
-        borderBottom: '1px solid rgba(255,255,255,0.04)',
+        borderBottom: '1px solid rgba(var(--ink-rgb), 0.04)',
       }}>
         <MeetingIllustration hovered={hovered} />
 
@@ -330,7 +330,7 @@ function CreateCard({ creating, error, onClearError, onCreate }) {
         <div style={{
           position: 'absolute', bottom: -30, left: '50%', transform: 'translateX(-50%)',
           width: 200, height: 80,
-          background: 'rgba(0,201,184,0.12)',
+          background: 'rgba(var(--accent-rgb), 0.12)',
           filter: 'blur(30px)',
           opacity: hovered ? 1 : 0.5,
           transition: 'opacity 0.3s',
@@ -340,23 +340,23 @@ function CreateCard({ creating, error, onClearError, onCreate }) {
 
       {/* Content */}
       <div style={{ padding: '24px 28px 28px', display: 'flex', flexDirection: 'column' }}>
-        <h3 style={{ margin: '0 0 8px', fontSize: 20, fontWeight: 900, color: '#fff', letterSpacing: '-0.5px' }}>
+        <h3 style={{ margin: '0 0 8px', fontSize: 20, fontWeight: 900, color: 'var(--heading)', letterSpacing: '-0.5px' }}>
           Tạo phòng mới
         </h3>
-        <p style={{ margin: '0 0 22px', fontSize: 13, color: 'rgba(255,255,255,0.33)', lineHeight: 1.65 }}>
+        <p style={{ margin: '0 0 22px', fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.65 }}>
           Bắt đầu ngay với video HD, phụ đề AI thời gian thực và chuyển đổi giọng nói.
         </p>
 
         {error && (
           <div style={{
             padding: '10px 14px', borderRadius: 10, marginBottom: 14,
-            background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.18)',
+            background: 'rgba(var(--danger-rgb), 0.08)', border: '1px solid rgba(var(--danger-rgb), 0.18)',
             display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8,
           }}>
-            <span style={{ fontSize: 12, color: '#F87171', flex: 1 }}>{error}</span>
+            <span style={{ fontSize: 12, color: 'var(--danger)', flex: 1 }}>{error}</span>
             <button onClick={onClearError} style={{
               background: 'none', border: 'none', cursor: 'pointer',
-              color: 'rgba(248,113,113,0.5)', padding: 2, lineHeight: 1, fontSize: 14, flexShrink: 0,
+              color: 'rgba(var(--danger-rgb), 0.5)', padding: 2, lineHeight: 1, fontSize: 14, flexShrink: 0,
             }}>✕</button>
           </div>
         )}
@@ -368,12 +368,12 @@ function CreateCard({ creating, error, onClearError, onCreate }) {
             width: '100%', padding: '14px 20px', borderRadius: 13, border: 'none',
             cursor: creating ? 'default' : 'pointer',
             background: creating
-              ? 'rgba(0,201,184,0.18)'
-              : 'linear-gradient(135deg, #00C9B8 0%, #00A08A 100%)',
-            color: creating ? 'rgba(255,255,255,0.45)' : '#fff',
+              ? 'rgba(var(--accent-rgb), 0.18)'
+              : 'linear-gradient(135deg, var(--button-start) 0%, var(--button-end) 100%)',
+            color: creating ? 'var(--text-secondary)' : 'var(--on-accent)',
             fontSize: 14, fontWeight: 800, fontFamily: '"Be Vietnam Pro", sans-serif',
             letterSpacing: '-0.2px',
-            boxShadow: creating ? 'none' : '0 8px 24px rgba(0,201,184,0.32)',
+            boxShadow: creating ? 'none' : '0 8px 24px rgba(var(--accent-rgb), 0.32)',
             transition: 'all 0.2s',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 9,
           }}
@@ -419,9 +419,9 @@ function JoinCard({ joinCode, setJoinCode, onJoin, inputRef }) {
       onMouseLeave={() => setHovered(false)}
       style={{
         borderRadius: 22, position: 'relative', overflow: 'hidden',
-        border: `1px solid ${focused ? 'rgba(167,139,250,0.38)' : active ? 'rgba(167,139,250,0.22)' : 'rgba(255,255,255,0.07)'}`,
-        background: active ? 'rgba(167,139,250,0.04)' : 'rgba(255,255,255,0.025)',
-        boxShadow: active ? '0 0 48px rgba(167,139,250,0.08), inset 0 0 0 1px rgba(167,139,250,0.05)' : 'none',
+        border: `1px solid ${focused ? 'rgba(var(--purple-rgb), 0.38)' : active ? 'rgba(var(--purple-rgb), 0.22)' : 'rgba(var(--ink-rgb), 0.07)'}`,
+        background: active ? 'var(--surface-hover)' : 'var(--surface)',
+        boxShadow: active ? '0 0 48px rgba(var(--purple-rgb), 0.08), inset 0 0 0 1px rgba(var(--purple-rgb), 0.05)' : 'none',
         transition: 'border-color 0.25s, background 0.25s, box-shadow 0.25s',
         display: 'flex', flexDirection: 'column',
         minHeight: 320,
@@ -431,7 +431,7 @@ function JoinCard({ joinCode, setJoinCode, onJoin, inputRef }) {
       {/* Purple glow */}
       <div aria-hidden style={{
         position: 'absolute', top: -60, right: -60, width: 200, height: 200,
-        borderRadius: '50%', background: 'rgba(167,139,250,0.08)',
+        borderRadius: '50%', background: 'rgba(var(--purple-rgb), 0.08)',
         filter: 'blur(50px)', pointerEvents: 'none',
         opacity: active ? 1 : 0.3, transition: 'opacity 0.4s',
       }} />
@@ -440,19 +440,19 @@ function JoinCard({ joinCode, setJoinCode, onJoin, inputRef }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 32, position: 'relative' }}>
         <div style={{
           width: 48, height: 48, borderRadius: 14, flexShrink: 0,
-          background: 'rgba(167,139,250,0.12)', border: '1px solid rgba(167,139,250,0.22)',
+          background: 'rgba(var(--purple-rgb), 0.12)', border: '1px solid rgba(var(--purple-rgb), 0.22)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" strokeWidth="2" strokeLinecap="round">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" strokeWidth="2" strokeLinecap="round">
             <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
             <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
           </svg>
         </div>
         <div>
-          <h3 style={{ margin: 0, fontSize: 20, fontWeight: 900, color: '#fff', letterSpacing: '-0.5px' }}>
+          <h3 style={{ margin: 0, fontSize: 20, fontWeight: 900, color: 'var(--heading)', letterSpacing: '-0.5px' }}>
             Tham gia phòng
           </h3>
-          <p style={{ margin: 0, fontSize: 13, color: 'rgba(255,255,255,0.3)', marginTop: 2 }}>
+          <p style={{ margin: 0, fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>
             Nhập mã từ người tổ chức
           </p>
         </div>
@@ -462,9 +462,9 @@ function JoinCard({ joinCode, setJoinCode, onJoin, inputRef }) {
       <form onSubmit={onJoin} style={{ display: 'flex', flexDirection: 'column', gap: 14, flex: 1, position: 'relative' }}>
         <div style={{
           borderRadius: 16,
-          border: `1px solid ${focused ? 'rgba(167,139,250,0.45)' : 'rgba(255,255,255,0.09)'}`,
-          background: focused ? 'rgba(167,139,250,0.06)' : 'rgba(255,255,255,0.03)',
-          boxShadow: focused ? '0 0 0 4px rgba(167,139,250,0.1)' : 'none',
+          border: `1px solid ${focused ? 'rgba(var(--purple-rgb), 0.45)' : 'rgba(var(--ink-rgb), 0.09)'}`,
+          background: focused ? 'rgba(var(--purple-rgb), 0.06)' : 'rgba(var(--ink-rgb), 0.03)',
+          boxShadow: focused ? '0 0 0 4px rgba(var(--purple-rgb), 0.1)' : 'none',
           transition: 'all 0.2s',
         }}>
           <input
@@ -482,15 +482,15 @@ function JoinCard({ joinCode, setJoinCode, onJoin, inputRef }) {
               fontSize: 30, fontWeight: 900, letterSpacing: '0.2em',
               textAlign: 'center', textTransform: 'uppercase',
               background: 'transparent', border: 'none', outline: 'none',
-              color: joinCode ? '#fff' : 'rgba(255,255,255,0.15)',
+              color: joinCode ? 'var(--heading)' : 'var(--text-faint)',
               fontFamily: '"Be Vietnam Pro", monospace', boxSizing: 'border-box',
-              caretColor: '#A78BFA',
+              caretColor: 'var(--purple)',
             }}
           />
         </div>
 
-        <p style={{ margin: 0, fontSize: 12, color: 'rgba(255,255,255,0.2)', textAlign: 'center' }}>
-          Mã phòng bắt đầu bằng PRO, ví dụ: <span style={{ color: 'rgba(167,139,250,0.5)', fontWeight: 600 }}>PRO-K3M9</span>
+        <p style={{ margin: 0, fontSize: 12, color: 'var(--text-muted)', textAlign: 'center' }}>
+          Mã phòng bắt đầu bằng PRO, ví dụ: <span style={{ color: 'rgba(var(--purple-rgb), 0.5)', fontWeight: 600 }}>PRO-K3M9</span>
         </p>
 
         <div style={{ flex: 1 }} />
@@ -502,9 +502,9 @@ function JoinCard({ joinCode, setJoinCode, onJoin, inputRef }) {
             width: '100%', padding: '14px 20px', borderRadius: 13, border: 'none',
             cursor: joinCode.trim() ? 'pointer' : 'default',
             background: joinCode.trim()
-              ? 'linear-gradient(135deg, #A78BFA 0%, #7C3AED 100%)'
-              : 'rgba(167,139,250,0.08)',
-            color: joinCode.trim() ? '#fff' : 'rgba(255,255,255,0.22)',
+              ? 'linear-gradient(135deg, var(--purple) 0%, #7C3AED 100%)'
+              : 'rgba(var(--purple-rgb), 0.08)',
+            color: joinCode.trim() ? 'var(--on-accent)' : 'var(--text-muted)',
             fontSize: 14, fontWeight: 800, fontFamily: '"Be Vietnam Pro", sans-serif',
             letterSpacing: '-0.2px',
             boxShadow: joinCode.trim() ? '0 8px 24px rgba(124,58,237,0.35)' : 'none',
@@ -546,9 +546,9 @@ function MeetingCard({ meeting, isHost, onRejoin, onEnd, onDetail }) {
         onMouseLeave={() => setHovered(false)}
         style={{
           borderRadius: 18, position: 'relative', overflow: 'hidden',
-          background: 'rgba(0,201,184,0.05)',
-          border: `1px solid ${hovered ? 'rgba(0,201,184,0.4)' : 'rgba(0,201,184,0.18)'}`,
-          boxShadow: hovered ? '0 12px 36px rgba(0,201,184,0.12)' : '0 2px 12px rgba(0,0,0,0.3)',
+          background: 'rgba(var(--accent-rgb), 0.05)',
+          border: `1px solid ${hovered ? 'rgba(var(--accent-rgb), 0.4)' : 'rgba(var(--accent-rgb), 0.18)'}`,
+          boxShadow: hovered ? '0 12px 36px rgba(var(--accent-rgb), 0.12)' : '0 2px 12px rgba(var(--shadow-rgb), 0.3)',
           transition: 'all 0.22s ease',
           transform: hovered ? 'translateY(-2px)' : 'none',
           animation: 'cardIn 0.3s ease both',
@@ -560,7 +560,7 @@ function MeetingCard({ meeting, isHost, onRejoin, onEnd, onDetail }) {
         {/* Glow top edge */}
         <div aria-hidden style={{
           position: 'absolute', top: 0, left: '10%', right: '10%', height: 1,
-          background: 'linear-gradient(to right, transparent, rgba(0,201,184,0.6), transparent)',
+          background: 'linear-gradient(to right, transparent, rgba(var(--accent-rgb), 0.6), transparent)',
           pointerEvents: 'none',
         }} />
 
@@ -568,38 +568,38 @@ function MeetingCard({ meeting, isHost, onRejoin, onEnd, onDetail }) {
           {/* Top row: room code + live badge */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <span style={{ fontSize: 17, fontWeight: 900, letterSpacing: '0.07em', color: '#fff' }}>
+              <span style={{ fontSize: 17, fontWeight: 900, letterSpacing: '0.07em', color: 'var(--heading)' }}>
                 {meeting.room_code}
               </span>
-              <span style={{ fontSize: 10, color: 'rgba(0,201,184,0.65)', fontWeight: 500 }}>
+              <span style={{ fontSize: 10, color: 'rgba(var(--accent-rgb), 0.65)', fontWeight: 500 }}>
                 {fmtDate(meeting.started_at)}
               </span>
             </div>
             <div style={{
               display: 'flex', alignItems: 'center', gap: 5,
               padding: '3px 9px', borderRadius: 20,
-              background: 'rgba(0,201,184,0.12)', border: '1px solid rgba(0,201,184,0.28)',
+              background: 'rgba(var(--accent-rgb), 0.12)', border: '1px solid rgba(var(--accent-rgb), 0.28)',
             }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#00C9B8', animation: 'liveDot 1.6s ease-in-out infinite', display: 'block', flexShrink: 0 }} />
-              <span style={{ fontSize: 10, fontWeight: 800, color: '#00C9B8', letterSpacing: '0.06em' }}>LIVE</span>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)', animation: 'liveDot 1.6s ease-in-out infinite', display: 'block', flexShrink: 0 }} />
+              <span style={{ fontSize: 10, fontWeight: 800, color: 'var(--accent)', letterSpacing: '0.06em' }}>LIVE</span>
             </div>
           </div>
 
           {/* Meta */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginBottom: 14 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="2" strokeLinecap="round">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(var(--ink-rgb), 0.35)" strokeWidth="2" strokeLinecap="round">
                 <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
               </svg>
-              <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.65)', fontWeight: 600 }}>
+              <span style={{ fontSize: 12, color: 'var(--text-secondary)', fontWeight: 600 }}>
                 {meeting.host_name || '—'}
               </span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(0,201,184,0.55)" strokeWidth="2" strokeLinecap="round">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(var(--accent-rgb), 0.55)" strokeWidth="2" strokeLinecap="round">
                 <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
               </svg>
-              <span style={{ fontSize: 12, color: 'rgba(0,201,184,0.8)', fontWeight: 600 }}>
+              <span style={{ fontSize: 12, color: 'rgba(var(--accent-rgb), 0.8)', fontWeight: 600 }}>
                 {fmtDuration(meeting.started_at, null)}
               </span>
             </div>
@@ -611,16 +611,16 @@ function MeetingCard({ meeting, isHost, onRejoin, onEnd, onDetail }) {
               onClick={onRejoin}
               style={{
                 flex: 1, padding: '10px 0', borderRadius: 11, border: 'none',
-                background: 'linear-gradient(135deg, #00C9B8, #009E8A)',
-                color: '#fff', fontSize: 12, fontWeight: 800,
+                background: 'linear-gradient(135deg, var(--button-start), var(--button-end))',
+                color: 'var(--on-accent)', fontSize: 12, fontWeight: 800,
                 cursor: 'pointer', fontFamily: 'inherit',
-                boxShadow: '0 4px 16px rgba(0,201,184,0.3)',
+                boxShadow: '0 4px 16px rgba(var(--accent-rgb), 0.3)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
                 transition: 'all 0.15s',
                 letterSpacing: '-0.1px',
               }}
-              onMouseEnter={e => e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,201,184,0.45)'}
-              onMouseLeave={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,201,184,0.3)'}
+              onMouseEnter={e => e.currentTarget.style.boxShadow = '0 6px 20px rgba(var(--accent-rgb), 0.45)'}
+              onMouseLeave={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(var(--accent-rgb), 0.3)'}
             >
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/>
@@ -635,15 +635,15 @@ function MeetingCard({ meeting, isHost, onRejoin, onEnd, onDetail }) {
                 title="Kết thúc phòng họp"
                 style={{
                   width: 40, height: 40, borderRadius: 11, flexShrink: 0,
-                  border: '1px solid rgba(248,113,113,0.25)',
-                  background: ending ? 'rgba(248,113,113,0.06)' : 'rgba(248,113,113,0.1)',
-                  color: ending ? 'rgba(248,113,113,0.4)' : '#F87171',
+                  border: '1px solid rgba(var(--danger-rgb), 0.25)',
+                  background: ending ? 'rgba(var(--danger-rgb), 0.06)' : 'rgba(var(--danger-rgb), 0.1)',
+                  color: ending ? 'rgba(var(--danger-rgb), 0.4)' : 'var(--danger)',
                   cursor: ending ? 'default' : 'pointer',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   transition: 'all 0.15s',
                 }}
-                onMouseEnter={e => { if (!ending) { e.currentTarget.style.background = 'rgba(248,113,113,0.2)'; e.currentTarget.style.borderColor = 'rgba(248,113,113,0.4)' } }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(248,113,113,0.1)'; e.currentTarget.style.borderColor = 'rgba(248,113,113,0.25)' }}
+                onMouseEnter={e => { if (!ending) { e.currentTarget.style.background = 'rgba(var(--danger-rgb), 0.2)'; e.currentTarget.style.borderColor = 'rgba(var(--danger-rgb), 0.4)' } }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(var(--danger-rgb), 0.1)'; e.currentTarget.style.borderColor = 'rgba(var(--danger-rgb), 0.25)' }}
               >
                 {ending
                   ? <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" style={{ animation: 'heroSpin 0.7s linear infinite' }}><path d="M12 2a10 10 0 0 1 10 10"/></svg>
@@ -657,8 +657,8 @@ function MeetingCard({ meeting, isHost, onRejoin, onEnd, onDetail }) {
         {confirm && (
           <div onClick={e => { e.stopPropagation(); setConfirm(false) }} style={{
             position: 'absolute', inset: 0, zIndex: 10, borderRadius: 18,
-            background: '#0F1220',
-            border: '1px solid rgba(255,255,255,0.08)',
+            background: 'var(--surface-raised)',
+            border: '1px solid rgba(var(--ink-rgb), 0.08)',
             display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
             padding: '20px 18px',
             animation: 'modalIn 0.22s cubic-bezier(0.22,1,0.36,1)',
@@ -667,29 +667,29 @@ function MeetingCard({ meeting, isHost, onRejoin, onEnd, onDetail }) {
             <div onClick={e => e.stopPropagation()} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <div style={{
                 width: 34, height: 34, borderRadius: 10, flexShrink: 0,
-                background: 'rgba(248,113,113,0.12)', border: '1px solid rgba(248,113,113,0.25)',
+                background: 'rgba(var(--danger-rgb), 0.12)', border: '1px solid rgba(var(--danger-rgb), 0.25)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F87171" strokeWidth="2" strokeLinecap="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" strokeWidth="2" strokeLinecap="round">
                   <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
                   <line x1="17" y1="11" x2="23" y2="11"/>
                 </svg>
               </div>
               <div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: 2 }}>Kết thúc cuộc họp?</div>
-                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>Tất cả người dùng sẽ bị ngắt kết nối</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--heading)', marginBottom: 2 }}>Kết thúc cuộc họp?</div>
+                <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Tất cả người dùng sẽ bị ngắt kết nối</div>
               </div>
             </div>
             <div onClick={e => e.stopPropagation()} style={{ display: 'flex', gap: 8 }}>
               <button onClick={() => setConfirm(false)} style={{
                 flex: 1, padding: '8px 0', borderRadius: 9, fontFamily: 'inherit',
-                border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)',
-                color: 'rgba(255,255,255,0.6)', fontSize: 12, fontWeight: 600, cursor: 'pointer',
+                border: '1px solid rgba(var(--ink-rgb), 0.1)', background: 'rgba(var(--ink-rgb), 0.05)',
+                color: 'var(--text-secondary)', fontSize: 12, fontWeight: 600, cursor: 'pointer',
               }}>Huỷ</button>
               <button onClick={handleEnd} style={{
                 flex: 1, padding: '8px 0', borderRadius: 9, fontFamily: 'inherit',
-                border: 'none', background: 'linear-gradient(135deg,#F87171,#EF4444)',
-                color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer',
+                border: 'none', background: 'linear-gradient(135deg,var(--danger),var(--danger))',
+                color: 'var(--on-accent)', fontSize: 12, fontWeight: 700, cursor: 'pointer',
               }}>Kết thúc</button>
             </div>
           </div>
@@ -706,11 +706,11 @@ function MeetingCard({ meeting, isHost, onRejoin, onEnd, onDetail }) {
       onClick={onDetail}
       style={{
         borderRadius: 18, position: 'relative', overflow: 'hidden',
-        border: `1px solid ${hovered ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.06)'}`,
-        background: hovered ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.02)',
+        border: `1px solid ${hovered ? 'rgba(var(--ink-rgb), 0.1)' : 'rgba(var(--ink-rgb), 0.06)'}`,
+        background: hovered ? 'var(--surface-hover)' : 'var(--surface)',
         cursor: 'pointer', fontFamily: 'inherit',
         transform: hovered ? 'translateY(-2px)' : 'none',
-        boxShadow: hovered ? '0 12px 32px rgba(0,0,0,0.35)' : 'none',
+        boxShadow: hovered ? '0 12px 32px rgba(var(--shadow-rgb), 0.35)' : 'none',
         transition: 'all 0.2s ease',
         animation: 'cardIn 0.3s ease both',
         display: 'flex', flexDirection: 'column',
@@ -723,12 +723,12 @@ function MeetingCard({ meeting, isHost, onRejoin, onEnd, onDetail }) {
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
           <span style={{
             fontSize: 16, fontWeight: 900, letterSpacing: '0.06em',
-            color: hovered ? '#fff' : 'rgba(255,255,255,0.7)',
+            color: hovered ? 'var(--heading)' : 'var(--text)',
             transition: 'color 0.2s',
           }}>
             {meeting.room_code}
           </span>
-          <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.22)', fontWeight: 500, flexShrink: 0, paddingTop: 2 }}>
+          <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500, flexShrink: 0, paddingTop: 2 }}>
             {timeAgo(meeting.started_at)}
           </span>
         </div>
@@ -736,18 +736,18 @@ function MeetingCard({ meeting, isHost, onRejoin, onEnd, onDetail }) {
         {/* Host + duration */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 5, minWidth: 0 }}>
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.28)" strokeWidth="2" strokeLinecap="round" style={{ flexShrink: 0 }}>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(var(--ink-rgb), 0.28)" strokeWidth="2" strokeLinecap="round" style={{ flexShrink: 0 }}>
               <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
             </svg>
-            <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <span style={{ fontSize: 12, color: 'var(--text-secondary)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {meeting.host_name || '—'}
             </span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 5, flexShrink: 0 }}>
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="2" strokeLinecap="round">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(var(--ink-rgb), 0.22)" strokeWidth="2" strokeLinecap="round">
               <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
             </svg>
-            <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.28)', fontWeight: 600 }}>
+            <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600 }}>
               {fmtDuration(meeting.started_at, meeting.ended_at)}
             </span>
           </div>
@@ -756,12 +756,12 @@ function MeetingCard({ meeting, isHost, onRejoin, onEnd, onDetail }) {
 
       {/* Bottom strip */}
       <div style={{
-        borderTop: '1px solid rgba(255,255,255,0.05)',
+        borderTop: '1px solid rgba(var(--ink-rgb), 0.05)',
         padding: '10px 18px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        background: 'rgba(255,255,255,0.02)',
+        background: 'rgba(var(--ink-rgb), 0.02)',
       }}>
-        <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.22)', fontWeight: 500, display: 'flex', alignItems: 'center', gap: 4 }}>
+        <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500, display: 'flex', alignItems: 'center', gap: 4 }}>
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
           </svg>
@@ -771,9 +771,9 @@ function MeetingCard({ meeting, isHost, onRejoin, onEnd, onDetail }) {
           <span style={{
             display: 'flex', alignItems: 'center', gap: 4,
             padding: '3px 9px', borderRadius: 7,
-            border: '1px solid rgba(167,139,250,0.2)',
-            background: 'rgba(167,139,250,0.08)',
-            color: '#A78BFA', fontSize: 10, fontWeight: 700,
+            border: '1px solid rgba(var(--purple-rgb), 0.2)',
+            background: 'rgba(var(--purple-rgb), 0.08)',
+            color: 'var(--purple)', fontSize: 10, fontWeight: 700,
           }}>
             <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
               <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>

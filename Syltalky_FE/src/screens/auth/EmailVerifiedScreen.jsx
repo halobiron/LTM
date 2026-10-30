@@ -15,20 +15,20 @@ export default function EmailVerifiedScreen() {
   }, [token])
 
   return (
-    <div style={{ width: '100vw', height: '100vh', display: 'flex', flexDirection: 'column', overflowY: 'auto', background: '#07090F' }}>
+    <div style={{ width: '100vw', height: '100vh', display: 'flex', flexDirection: 'column', overflowY: 'auto', background: 'var(--bg)' }}>
       <div style={{ textAlign: 'center', maxWidth: 400, padding: '40px 24px', margin: 'auto', width: '100%', boxSizing: 'border-box' }}>
         {status === 'loading' && (
           <>
             <div style={{ fontSize: 48, marginBottom: 20 }}>⏳</div>
-            <h2 style={{ fontSize: 22, fontWeight: 700, color: '#fff' }}>Đang xác nhận...</h2>
+            <h2 style={{ fontSize: 22, fontWeight: 700, color: 'var(--heading)' }}>Đang xác nhận...</h2>
           </>
         )}
         {status === 'success' && (
           <>
             <div style={{ fontSize: 56, marginBottom: 24 }}>✅</div>
-            <h2 style={{ fontSize: 26, fontWeight: 800, color: '#fff', marginBottom: 12 }}>Email đã được xác nhận!</h2>
-            <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.45)', marginBottom: 32 }}>Tài khoản của bạn đã sẵn sàng. Đăng nhập để bắt đầu.</p>
-            <Link to="/login" style={{ display: 'inline-block', padding: '12px 28px', borderRadius: 10, background: 'linear-gradient(135deg, #00C9B8, #0099CC)', color: '#fff', fontWeight: 700, fontSize: 14, textDecoration: 'none', boxShadow: '0 8px 24px rgba(0,201,184,0.35)' }}>
+            <h2 style={{ fontSize: 26, fontWeight: 800, color: 'var(--heading)', marginBottom: 12 }}>Email đã được xác nhận!</h2>
+            <p style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 32 }}>Tài khoản của bạn đã sẵn sàng. Đăng nhập để bắt đầu.</p>
+            <Link to="/login" style={{ display: 'inline-block', padding: '12px 28px', borderRadius: 10, background: 'linear-gradient(135deg, var(--button-start), var(--button-end))', color: 'var(--on-accent)', fontWeight: 700, fontSize: 14, textDecoration: 'none', boxShadow: '0 8px 24px rgba(var(--accent-rgb),0.35)' }}>
               Đăng nhập
             </Link>
           </>
@@ -36,9 +36,9 @@ export default function EmailVerifiedScreen() {
         {status === 'error' && (
           <>
             <div style={{ fontSize: 56, marginBottom: 24 }}>❌</div>
-            <h2 style={{ fontSize: 26, fontWeight: 800, color: '#fff', marginBottom: 12 }}>Link không hợp lệ</h2>
-            <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.45)', marginBottom: 32 }}>Link đã hết hạn hoặc không đúng. Vui lòng đăng ký lại.</p>
-            <Link to="/register" style={{ display: 'inline-block', padding: '12px 28px', borderRadius: 10, background: 'linear-gradient(135deg, #00C9B8, #0099CC)', color: '#fff', fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
+            <h2 style={{ fontSize: 26, fontWeight: 800, color: 'var(--heading)', marginBottom: 12 }}>Link không hợp lệ</h2>
+            <p style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 32 }}>Link đã hết hạn hoặc không đúng. Vui lòng đăng ký lại.</p>
+            <Link to="/register" style={{ display: 'inline-block', padding: '12px 28px', borderRadius: 10, background: 'linear-gradient(135deg, var(--button-start), var(--button-end))', color: 'var(--on-accent)', fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
               Đăng ký lại
             </Link>
           </>

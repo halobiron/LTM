@@ -69,7 +69,7 @@ export default function MeetingRoomScreen() {
   if (!state.token || !authorized) return <Navigate to={`/meeting/${roomCode}`} replace />
 
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#060810', fontFamily: '"Be Vietnam Pro", sans-serif' }}>
+    <div style={{ position: 'fixed', inset: 0, background: 'var(--bg)', fontFamily: '"Be Vietnam Pro", sans-serif' }}>
       <LiveKitRoom
         token={state.token}
         serverUrl={state.livekit_url}
@@ -580,7 +580,7 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
       <div style={{ flex: 1, display: 'flex', overflow: 'hidden', minHeight: 0 }}>
 
         {/* Video area — shrinks when panel opens */}
-        <div style={{ flex: 1, position: 'relative', overflow: 'hidden', background: '#060810', minWidth: 0 }}>
+        <div className="media-surface" style={{ flex: 1, position: 'relative', overflow: 'hidden', background: '#060810', minWidth: 0 }}>
           <MeetGrid localUser={localUser} userInfoMap={userInfoMap} raisedHands={raisedHands} />
           {captionsVisible && captions.length > 0 && (
             <SubtitleOverlay captions={captions} localUserId={localUser?.id} subtitleSize={subtitleSize} subtitleFont={subtitleFont} userInfoMap={userInfoMap} />
@@ -592,8 +592,8 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
           width: (!isMobile && panel) ? panelWidth : 0,
           flexShrink: 0,
           overflow: 'hidden',
-          background: '#0A0D18',
-          borderLeft: (!isMobile && panel) ? '1px solid rgba(255,255,255,0.07)' : 'none',
+          background: 'var(--surface-alt)',
+          borderLeft: (!isMobile && panel) ? '1px solid rgba(var(--ink-rgb),0.07)' : 'none',
           display: 'flex', flexDirection: 'column',
           transition: panelResizing ? 'none' : 'width 0.25s cubic-bezier(0.22,1,0.36,1)',
         }}>
@@ -601,7 +601,7 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
             onMouseMove={e => {
               const nearEdge = e.clientX - e.currentTarget.getBoundingClientRect().left < 10
               e.currentTarget.style.cursor = nearEdge ? 'col-resize' : 'default'
-              e.currentTarget.style.boxShadow = nearEdge ? 'inset 3px 0 0 rgba(0,201,184,0.9)' : 'none'
+              e.currentTarget.style.boxShadow = nearEdge ? 'inset 3px 0 0 rgba(var(--accent-rgb),0.9)' : 'none'
             }}
             onMouseLeave={e => {
               e.currentTarget.style.cursor = 'default'
@@ -630,19 +630,19 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
             <div style={{
               height: 52, flexShrink: 0,
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              padding: '0 18px', borderBottom: '1px solid rgba(255,255,255,0.06)',
+              padding: '0 18px', borderBottom: '1px solid rgba(var(--ink-rgb),0.06)',
             }}>
-              <span style={{ fontSize: 14, fontWeight: 700, color: '#fff' }}>
+              <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--heading)' }}>
                 {{ participants: 'Người tham gia', chat: 'Chat', noidung: 'Nội dung cuộc họp', tts: 'Text-to-speech', polls: 'Bình chọn', notes: 'Ghi chú chung' }[panel] ?? ''}
               </span>
               <button onClick={() => setPanel(null)} style={{
                 width: 28, height: 28, borderRadius: 7, border: 'none',
-                background: 'rgba(255,255,255,0.06)', cursor: 'pointer',
+                background: 'rgba(var(--ink-rgb),0.06)', cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: 'rgba(255,255,255,0.5)', transition: 'all 0.15s',
+                color: 'var(--text-secondary)', transition: 'all 0.15s',
               }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,69,69,0.18)'; e.currentTarget.style.color = '#FF5555' }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.color = 'rgba(255,255,255,0.5)' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(var(--danger-rgb),0.18)'; e.currentTarget.style.color = 'var(--danger)' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(var(--ink-rgb),0.06)'; e.currentTarget.style.color = 'var(--text-secondary)' }}
               >
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
@@ -664,12 +664,12 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
       {/* Mobile panel overlay — full screen */}
       {isMobile && (panel || mobilePanelClosing) && (
         <>
-          <div style={{ position: 'fixed', inset: 0, zIndex: 200, background: '#0A0D18', display: 'flex', flexDirection: 'column', animation: `${mobilePanelClosing ? 'panelSlideOut' : 'panelSlideIn'} 0.22s cubic-bezier(0.22,1,0.36,1) both` }}>
-            <div style={{ height: 52, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 18px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-              <span style={{ fontSize: 14, fontWeight: 700, color: '#fff' }}>
+          <div style={{ position: 'fixed', inset: 0, zIndex: 200, background: 'var(--surface-alt)', display: 'flex', flexDirection: 'column', animation: `${mobilePanelClosing ? 'panelSlideOut' : 'panelSlideIn'} 0.22s cubic-bezier(0.22,1,0.36,1) both` }}>
+            <div style={{ height: 52, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 18px', borderBottom: '1px solid rgba(var(--ink-rgb),0.06)' }}>
+              <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--heading)' }}>
                 {{ participants: 'Người tham gia', chat: 'Chat', noidung: 'Nội dung cuộc họp', tts: 'Text-to-speech', polls: 'Bình chọn', notes: 'Ghi chú chung' }[panel] ?? ''}
               </span>
-              <button onClick={closeMobilePanel} style={{ width: 28, height: 28, borderRadius: 7, border: 'none', background: 'rgba(255,255,255,0.06)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.5)' }}>
+              <button onClick={closeMobilePanel} style={{ width: 28, height: 28, borderRadius: 7, border: 'none', background: 'rgba(var(--ink-rgb),0.06)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)' }}>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </button>
             </div>
@@ -687,15 +687,15 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
 
       {isMobile ? (
         /* ── MOBILE BOTTOM BAR ── */
-        <div style={{ flexShrink: 0, background: '#0A0D18', borderTop: '1px solid rgba(255,255,255,0.07)', position: 'relative' }}>
+        <div style={{ flexShrink: 0, background: 'var(--surface-alt)', borderTop: '1px solid rgba(var(--ink-rgb),0.07)', position: 'relative' }}>
           {/* Info strip */}
-          <div style={{ height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+          <div style={{ height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, borderBottom: '1px solid rgba(var(--ink-rgb),0.04)' }}>
             <CopyCodeBtn roomCode={roomCode} compact isMobile />
-            <span style={{ fontSize: 12, fontWeight: 800, color: '#fff', fontVariantNumeric: 'tabular-nums' }}>{fmtTime(elapsed)}</span>
-            <button onClick={() => { togglePanel('participants'); setMoreOpen(false) }} style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 6, border: `1px solid ${panel === 'participants' ? 'rgba(167,139,250,0.35)' : 'rgba(167,139,250,0.18)'}`, background: panel === 'participants' ? 'rgba(167,139,250,0.15)' : 'rgba(167,139,250,0.06)', cursor: 'pointer', color: '#A78BFA', position: 'relative' }}>
+            <span style={{ fontSize: 12, fontWeight: 800, color: 'var(--heading)', fontVariantNumeric: 'tabular-nums' }}>{fmtTime(elapsed)}</span>
+            <button onClick={() => { togglePanel('participants'); setMoreOpen(false) }} style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 6, border: `1px solid ${panel === 'participants' ? 'rgba(var(--purple-rgb),0.35)' : 'rgba(var(--purple-rgb),0.18)'}`, background: panel === 'participants' ? 'rgba(var(--purple-rgb),0.15)' : 'rgba(var(--purple-rgb),0.06)', cursor: 'pointer', color: 'var(--purple)', position: 'relative' }}>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
               <span style={{ fontSize: 12, fontWeight: 700 }}>{participants.length}</span>
-              {(isHost || isCoHost) && waitingRequests.length > 0 && <div style={{ position: 'absolute', top: -5, right: -5, width: 14, height: 14, borderRadius: '50%', background: '#FF6B8A', border: '2px solid #0A0D18', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 8, fontWeight: 800, color: '#fff' }}>{waitingRequests.length}</div>}
+              {(isHost || isCoHost) && waitingRequests.length > 0 && <div style={{ position: 'absolute', top: -5, right: -5, width: 14, height: 14, borderRadius: '50%', background: 'var(--danger)', border: '2px solid var(--surface-alt)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 8, fontWeight: 800, color: 'var(--on-accent)' }}>{waitingRequests.length}</div>}
             </button>
           </div>
 
@@ -705,7 +705,7 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
             <IconBtn on={micEnabled} onClick={toggleMic} offRed size={44}><MicIcon on={micEnabled} size={18} /></IconBtn>
 
             {/* More button */}
-            <button onClick={() => setMoreOpen(o => !o)} style={{ width: 44, height: 44, borderRadius: 13, border: `1px solid ${moreOpen ? 'rgba(0,201,184,0.35)' : 'rgba(255,255,255,0.12)'}`, background: moreOpen ? 'rgba(0,201,184,0.12)' : 'rgba(255,255,255,0.06)', color: moreOpen ? '#00C9B8' : 'rgba(255,255,255,0.7)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s' }}>
+            <button onClick={() => setMoreOpen(o => !o)} style={{ width: 44, height: 44, borderRadius: 13, border: `1px solid ${moreOpen ? 'rgba(var(--accent-rgb),0.35)' : 'rgba(var(--ink-rgb),0.12)'}`, background: moreOpen ? 'rgba(var(--accent-rgb),0.12)' : 'rgba(var(--ink-rgb),0.06)', color: moreOpen ? 'var(--accent)' : 'var(--text-secondary)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s' }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
             </button>
 
@@ -718,8 +718,8 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
           {moreOpen && (
             <>
               <div onClick={() => setMoreOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 50 }} />
-              <div style={{ position: 'absolute', bottom: '100%', left: 0, right: 0, zIndex: 51, background: '#0F1220', borderTop: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px 16px 0 0', padding: '16px 20px 20px', boxShadow: '0 -8px 40px rgba(0,0,0,0.5)', animation: 'slideUp 0.22s cubic-bezier(0.22,1,0.36,1)' }}>
-                <div style={{ width: 36, height: 4, borderRadius: 2, background: 'rgba(255,255,255,0.12)', margin: '0 auto 16px' }} />
+              <div style={{ position: 'absolute', bottom: '100%', left: 0, right: 0, zIndex: 51, background: 'var(--surface)', borderTop: '1px solid rgba(var(--ink-rgb),0.08)', borderRadius: '16px 16px 0 0', padding: '16px 20px 20px', boxShadow: '0 -8px 40px rgba(var(--shadow-rgb),0.5)', animation: 'slideUp 0.22s cubic-bezier(0.22,1,0.36,1)' }}>
+                <div style={{ width: 36, height: 4, borderRadius: 2, background: 'rgba(var(--ink-rgb),0.12)', margin: '0 auto 16px' }} />
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
                   {[
                     { label: 'Giơ tay', active: handRaised, onClick: () => { toggleRaiseHand(); setMoreOpen(false) }, icon: <HandIcon on={handRaised} size={20} /> },
@@ -732,10 +732,10 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
                     { label: 'Nội dung', active: panel === 'noidung', onClick: () => { togglePanel('noidung'); setMoreOpen(false) }, icon: <TranscriptIcon size={20} /> },
                     { label: 'Cài đặt', active: false, onClick: () => { setSettingsOpen(true); setMoreOpen(false) }, icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg> },
                   ].map((item, i) => (
-                    <button key={i} onClick={item.disabled ? undefined : item.onClick} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, padding: '12px 4px', borderRadius: 12, border: `1px solid ${item.active ? 'rgba(0,201,184,0.25)' : 'rgba(255,255,255,0.07)'}`, background: item.active ? 'rgba(0,201,184,0.1)' : 'rgba(255,255,255,0.04)', color: item.active ? '#00C9B8' : (item.disabled ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.65)'), cursor: item.disabled ? 'default' : 'pointer', opacity: item.disabled ? 0.4 : 1, fontFamily: 'inherit', position: 'relative' }}>
+                    <button key={i} onClick={item.disabled ? undefined : item.onClick} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, padding: '12px 4px', borderRadius: 12, border: `1px solid ${item.active ? 'rgba(var(--accent-rgb),0.25)' : 'rgba(var(--ink-rgb),0.07)'}`, background: item.active ? 'rgba(var(--accent-rgb),0.1)' : 'rgba(var(--ink-rgb),0.04)', color: item.active ? 'var(--accent)' : (item.disabled ? 'var(--text-faint)' : 'var(--text-secondary)'), cursor: item.disabled ? 'default' : 'pointer', opacity: item.disabled ? 0.4 : 1, fontFamily: 'inherit', position: 'relative' }}>
                       {item.icon}
                       <span style={{ fontSize: 10, fontWeight: 600 }}>{item.label}</span>
-                      {item.badge > 0 && <div style={{ position: 'absolute', top: 6, right: 6, minWidth: 14, height: 14, borderRadius: 7, background: '#EF4444', color: '#fff', fontSize: 8, fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 2px' }}>{item.badge > 99 ? '99+' : item.badge}</div>}
+                      {item.badge > 0 && <div style={{ position: 'absolute', top: 6, right: 6, minWidth: 14, height: 14, borderRadius: 7, background: 'var(--danger)', color: 'var(--on-accent)', fontSize: 8, fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 2px' }}>{item.badge > 99 ? '99+' : item.badge}</div>}
                     </button>
                   ))}
                 </div>
@@ -747,16 +747,16 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
         /* ── DESKTOP BOTTOM BAR — 3-zone with absolutely positioned sides ── */
         <div style={{
           height: 84, flexShrink: 0,
-          background: '#0A0D18',
-          borderTop: '1px solid rgba(255,255,255,0.07)',
+          background: 'var(--surface-alt)',
+          borderTop: '1px solid rgba(var(--ink-rgb),0.07)',
           position: 'relative', display: 'flex', alignItems: 'center',
         }}>
 
           {/* LEFT — logo + room code */}
           <div style={{ position: 'absolute', left: 24, top: '50%', transform: 'translateY(-50%)', display: 'flex', alignItems: 'center', gap: 10 }}>
             <img src="/images/full_logo_transparent.png" alt="Syltalky" style={{ height: 36, objectFit: 'contain', display: 'block', flexShrink: 0 }} onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'inline' }} />
-            <span style={{ display: 'none', fontSize: 17, fontWeight: 900, background: 'linear-gradient(135deg, #00C9B8, #A78BFA)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Syltalky</span>
-            <div style={{ width: 1, height: 16, background: 'rgba(255,255,255,0.1)', flexShrink: 0 }} />
+            <span style={{ display: 'none', fontSize: 17, fontWeight: 900, background: 'linear-gradient(135deg, var(--accent), var(--purple))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Syltalky</span>
+            <div style={{ width: 1, height: 16, background: 'rgba(var(--ink-rgb),0.1)', flexShrink: 0 }} />
             <CopyCodeBtn roomCode={roomCode} />
           </div>
 
@@ -766,7 +766,7 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
             <IconBtn on={micEnabled}  onClick={toggleMic}    offRed><MicIcon on={micEnabled} size={20} /></IconBtn>
             <IconBtn on={panel === 'tts'} onClick={() => micEnabled ? togglePanel('tts') : null} disabled={!micEnabled} title={micEnabled ? 'Text-to-speech' : 'Bật mic để dùng TTS'} offRed={!micEnabled}><TtsIcon /></IconBtn>
             <Divider />
-            <IconBtn on={handRaised} onClick={toggleRaiseHand} title="Giơ tay" style={{ color: handRaised ? '#FBBF24' : undefined }}>
+            <IconBtn on={handRaised} onClick={toggleRaiseHand} title="Giơ tay" style={{ color: handRaised ? 'var(--warning)' : undefined }}>
               <HandIcon on={handRaised} />
             </IconBtn>
             <ScreenShareBtn active={screenShare} disabled={someoneElseSharing && !screenShare} onClick={toggleScreen} />
@@ -774,7 +774,7 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
             <IconBtn on={panel === 'noidung'} onClick={() => togglePanel('noidung')} title="Nội dung cuộc họp"><TranscriptIcon /></IconBtn>
             <div style={{ position: 'relative', display: 'inline-flex' }}>
               <IconBtn on={panel === 'chat'} onClick={() => togglePanel('chat')}><ChatIcon /></IconBtn>
-              {chatUnread > 0 && <div style={{ position: 'absolute', top: -3, right: -3, minWidth: 15, height: 15, borderRadius: 8, background: '#EF4444', color: '#fff', fontSize: 9, fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 3px', pointerEvents: 'none', letterSpacing: 0 }}>{chatUnread > 99 ? '99+' : chatUnread}</div>}
+              {chatUnread > 0 && <div style={{ position: 'absolute', top: -3, right: -3, minWidth: 15, height: 15, borderRadius: 8, background: 'var(--danger)', color: 'var(--on-accent)', fontSize: 9, fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 3px', pointerEvents: 'none', letterSpacing: 0 }}>{chatUnread > 99 ? '99+' : chatUnread}</div>}
             </div>
             <IconBtn on={panel === 'polls'} onClick={() => togglePanel('polls')} title="Bình chọn"><PollsIcon /></IconBtn>
             <IconBtn on={panel === 'notes'} onClick={() => togglePanel('notes')} title="Ghi chú chung"><NotesIcon /></IconBtn>
@@ -785,12 +785,12 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
 
           {/* RIGHT */}
           <div style={{ position: 'absolute', right: 24, top: '50%', transform: 'translateY(-50%)', display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span style={{ fontSize: 18, fontWeight: 800, color: '#fff', fontVariantNumeric: 'tabular-nums', letterSpacing: '0.02em', minWidth: 64, textAlign: 'right', display: 'inline-block' }}>{fmtTime(elapsed)}</span>
+            <span style={{ fontSize: 18, fontWeight: 800, color: 'var(--heading)', fontVariantNumeric: 'tabular-nums', letterSpacing: '0.02em', minWidth: 64, textAlign: 'right', display: 'inline-block' }}>{fmtTime(elapsed)}</span>
             <Divider />
-            <button onClick={() => togglePanel('participants')} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 14px', borderRadius: 10, position: 'relative', border: `1px solid ${panel === 'participants' ? 'rgba(167,139,250,0.35)' : 'rgba(167,139,250,0.18)'}`, background: panel === 'participants' ? 'rgba(167,139,250,0.15)' : 'rgba(167,139,250,0.08)', cursor: 'pointer', color: '#A78BFA', transition: 'all 0.15s' }}>
+            <button onClick={() => togglePanel('participants')} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 14px', borderRadius: 10, position: 'relative', border: `1px solid ${panel === 'participants' ? 'rgba(var(--purple-rgb),0.35)' : 'rgba(var(--purple-rgb),0.18)'}`, background: panel === 'participants' ? 'rgba(var(--purple-rgb),0.15)' : 'rgba(var(--purple-rgb),0.08)', cursor: 'pointer', color: 'var(--purple)', transition: 'all 0.15s' }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
               <span style={{ fontSize: 14, fontWeight: 700, minWidth: 14, textAlign: 'center' }}>{participants.length}</span>
-              {(isHost || isCoHost) && waitingRequests.length > 0 && <div style={{ position: 'absolute', top: -6, right: -6, width: 18, height: 18, borderRadius: '50%', background: '#FF6B8A', border: '2px solid #0A0D18', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 800, color: '#fff' }}>{waitingRequests.length}</div>}
+              {(isHost || isCoHost) && waitingRequests.length > 0 && <div style={{ position: 'absolute', top: -6, right: -6, width: 18, height: 18, borderRadius: '50%', background: 'var(--danger)', border: '2px solid var(--surface-alt)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 800, color: 'var(--on-accent)' }}>{waitingRequests.length}</div>}
             </button>
             <Divider />
             <LeaveButton isHost={isHost} leaving={leaving} ending={ending} onLeave={handleLeave} onEnd={handleEnd} />
@@ -805,15 +805,15 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
             <div key={t.id} style={{
               display: 'flex', alignItems: 'center', gap: 8,
               padding: '8px 16px', borderRadius: 20,
-              background: 'rgba(15,18,32,0.92)', backdropFilter: 'blur(12px)',
-              border: '1px solid rgba(251,191,36,0.3)',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+              background: 'var(--surface)', backdropFilter: 'blur(12px)',
+              border: '1px solid rgba(var(--warning-rgb),0.3)',
+              boxShadow: '0 4px 20px rgba(var(--shadow-rgb),0.5)',
               animation: 'handToastIn 0.25s cubic-bezier(0.22,1,0.36,1)',
-              fontSize: 13, fontWeight: 600, color: '#fff',
+              fontSize: 13, fontWeight: 600, color: 'var(--heading)',
             }}>
               <RaisedHandIcon size={18} />
-              <span style={{ color: '#FBBF24' }}>{t.name}</span>
-              <span style={{ color: 'rgba(255,255,255,0.55)' }}>{t.raised ? 'đã giơ tay' : 'đã hạ tay'}</span>
+              <span style={{ color: 'var(--warning)' }}>{t.name}</span>
+              <span style={{ color: 'var(--text-secondary)' }}>{t.raised ? 'đã giơ tay' : 'đã hạ tay'}</span>
             </div>
           ))}
         </div>
@@ -829,7 +829,7 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
       {wasKicked && (
         <div style={{
           position: 'absolute', inset: 0, zIndex: 100,
-          background: 'rgba(6,8,16,0.92)', backdropFilter: 'blur(20px)',
+          background: 'var(--bg)', backdropFilter: 'blur(20px)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontFamily: '"Be Vietnam Pro", sans-serif',
           animation: 'panelIn 0.3s cubic-bezier(0.22,1,0.36,1)',
@@ -840,20 +840,20 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
           }}>
             <div style={{
               width: 64, height: 64, borderRadius: 20, marginBottom: 24,
-              background: 'rgba(251,146,60,0.1)', border: '1px solid rgba(251,146,60,0.2)',
+              background: 'rgba(var(--orange-rgb),0.1)', border: '1px solid rgba(var(--orange-rgb),0.2)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FB923C" strokeWidth="2" strokeLinecap="round">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" strokeWidth="2" strokeLinecap="round">
                 <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
                 <circle cx="9" cy="7" r="4"/>
                 <line x1="17" y1="11" x2="23" y2="11"/>
               </svg>
             </div>
 
-            <h2 style={{ margin: '0 0 10px', fontSize: 22, fontWeight: 900, color: '#fff', letterSpacing: '-0.5px', whiteSpace: 'nowrap' }}>
+            <h2 style={{ margin: '0 0 10px', fontSize: 22, fontWeight: 900, color: 'var(--heading)', letterSpacing: '-0.5px', whiteSpace: 'nowrap' }}>
               Bạn đã bị xóa khỏi phòng
             </h2>
-            <p style={{ margin: '0 0 36px', fontSize: 14, color: 'rgba(255,255,255,0.38)', lineHeight: 1.6 }}>
+            <p style={{ margin: '0 0 36px', fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.6 }}>
               Chủ phòng đã xóa bạn khỏi cuộc họp này.
             </p>
 
@@ -862,10 +862,10 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
                 onClick={() => navigate(`/meeting/${roomCode}`, { replace: true })}
                 style={{
                   width: '100%', padding: '14px', borderRadius: 13, border: 'none',
-                  background: 'linear-gradient(135deg, #00C9B8, #009E8A)',
-                  color: '#fff', fontSize: 14, fontWeight: 800,
+                  background: 'linear-gradient(135deg, var(--button-start), var(--button-end))',
+                  color: 'var(--on-accent)', fontSize: 14, fontWeight: 800,
                   cursor: 'pointer', fontFamily: 'inherit',
-                  boxShadow: '0 6px 20px rgba(0,201,184,0.3)',
+                  boxShadow: '0 6px 20px rgba(var(--accent-rgb),0.3)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                 }}
               >
@@ -879,13 +879,13 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
                 onClick={() => navigate('/home', { replace: true })}
                 style={{
                   width: '100%', padding: '13px', borderRadius: 13,
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  background: 'rgba(255,255,255,0.05)',
-                  color: 'rgba(255,255,255,0.6)', fontSize: 14, fontWeight: 700,
+                  border: '1px solid rgba(var(--ink-rgb),0.1)',
+                  background: 'rgba(var(--ink-rgb),0.05)',
+                  color: 'var(--text-secondary)', fontSize: 14, fontWeight: 700,
                   cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = 'rgba(255,255,255,0.6)' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(var(--ink-rgb),0.1)'; e.currentTarget.style.color = 'var(--heading)' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(var(--ink-rgb),0.05)'; e.currentTarget.style.color = 'var(--text-secondary)' }}
               >
                 Về trang chủ
               </button>
@@ -898,7 +898,7 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
       {dupSession && (
         <div style={{
           position: 'absolute', inset: 0, zIndex: 100,
-          background: 'rgba(6,8,16,0.92)', backdropFilter: 'blur(20px)',
+          background: 'var(--bg)', backdropFilter: 'blur(20px)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontFamily: '"Be Vietnam Pro", sans-serif',
           animation: 'panelIn 0.3s cubic-bezier(0.22,1,0.36,1)',
@@ -906,18 +906,18 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', maxWidth: 380, padding: '0 24px' }}>
             <div style={{
               width: 64, height: 64, borderRadius: 20, marginBottom: 24,
-              background: 'rgba(96,165,250,0.1)', border: '1px solid rgba(96,165,250,0.25)',
+              background: 'rgba(var(--blue-rgb),0.1)', border: '1px solid rgba(var(--blue-rgb),0.25)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" strokeWidth="2" strokeLinecap="round">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2" strokeLinecap="round">
                 <rect x="2" y="3" width="20" height="14" rx="2"/>
                 <line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
               </svg>
             </div>
-            <h2 style={{ margin: '0 0 10px', fontSize: 22, fontWeight: 900, color: '#fff', letterSpacing: '-0.5px' }}>
+            <h2 style={{ margin: '0 0 10px', fontSize: 22, fontWeight: 900, color: 'var(--heading)', letterSpacing: '-0.5px' }}>
               Bạn đã tham gia từ thiết bị khác
             </h2>
-            <p style={{ margin: '0 0 36px', fontSize: 14, color: 'rgba(255,255,255,0.38)', lineHeight: 1.7 }}>
+            <p style={{ margin: '0 0 36px', fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.7 }}>
               Phiên này đã bị ngắt kết nối vì tài khoản của bạn vừa tham gia cuộc họp từ một tab hoặc thiết bị khác.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%' }}>
@@ -925,8 +925,8 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
                 onClick={() => navigate(`/meeting/${roomCode}`, { replace: true })}
                 style={{
                   width: '100%', padding: '14px', borderRadius: 13, border: 'none',
-                  background: 'linear-gradient(135deg, #60A5FA, #3B82F6)',
-                  color: '#fff', fontSize: 14, fontWeight: 800,
+                  background: 'linear-gradient(135deg, var(--blue), #3B82F6)',
+                  color: 'var(--on-accent)', fontSize: 14, fontWeight: 800,
                   cursor: 'pointer', fontFamily: 'inherit',
                   boxShadow: '0 6px 20px rgba(59,130,246,0.3)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
@@ -941,13 +941,13 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
                 onClick={() => navigate('/home', { replace: true })}
                 style={{
                   width: '100%', padding: '13px', borderRadius: 13,
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  background: 'rgba(255,255,255,0.05)',
-                  color: 'rgba(255,255,255,0.6)', fontSize: 14, fontWeight: 700,
+                  border: '1px solid rgba(var(--ink-rgb),0.1)',
+                  background: 'rgba(var(--ink-rgb),0.05)',
+                  color: 'var(--text-secondary)', fontSize: 14, fontWeight: 700,
                   cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = 'rgba(255,255,255,0.6)' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(var(--ink-rgb),0.1)'; e.currentTarget.style.color = 'var(--heading)' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(var(--ink-rgb),0.05)'; e.currentTarget.style.color = 'var(--text-secondary)' }}
               >
                 Về trang chủ
               </button>
@@ -959,8 +959,8 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes screenPulse {
-          0%, 100% { box-shadow: 0 0 0 3px rgba(0,201,184,0.3); }
-          50%       { box-shadow: 0 0 0 5px rgba(0,201,184,0.12); }
+          0%, 100% { box-shadow: 0 0 0 3px rgba(var(--accent-rgb),0.3); }
+          50%       { box-shadow: 0 0 0 5px rgba(var(--accent-rgb),0.12); }
         }
         @keyframes liveDot {
           0%, 100% { opacity: 1; transform: scale(1); }
@@ -1016,7 +1016,7 @@ function LeftOverlay({ roomCode, navigate }) {
   return (
     <div style={{
       position: 'absolute', inset: 0, zIndex: 100,
-      background: 'rgba(6,8,16,0.94)', backdropFilter: 'blur(22px)',
+      background: 'var(--bg)', backdropFilter: 'blur(22px)',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       fontFamily: '"Be Vietnam Pro", sans-serif',
       animation: 'panelIn 0.3s cubic-bezier(0.22,1,0.36,1)',
@@ -1028,28 +1028,28 @@ function LeftOverlay({ roomCode, navigate }) {
         {/* Icon */}
         <div style={{
           width: 64, height: 64, borderRadius: 20, marginBottom: 24,
-          background: 'rgba(0,201,184,0.08)', border: '1px solid rgba(0,201,184,0.18)',
+          background: 'rgba(var(--accent-rgb),0.08)', border: '1px solid rgba(var(--accent-rgb),0.18)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#00C9B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
             <polyline points="16 17 21 12 16 7"/>
             <line x1="21" y1="12" x2="9" y2="12"/>
           </svg>
         </div>
 
-        <h2 style={{ margin: '0 0 8px', fontSize: 26, fontWeight: 900, color: '#fff', letterSpacing: '-0.5px' }}>
+        <h2 style={{ margin: '0 0 8px', fontSize: 26, fontWeight: 900, color: 'var(--heading)', letterSpacing: '-0.5px' }}>
           Bạn đã rời cuộc họp
         </h2>
-        <p style={{ margin: '0 0 8px', fontSize: 14, color: 'rgba(255,255,255,0.38)', lineHeight: 1.6 }}>
-          Phòng <span style={{ color: 'rgba(255,255,255,0.65)', fontWeight: 700 }}>{roomCode}</span>
+        <p style={{ margin: '0 0 8px', fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.6 }}>
+          Phòng <span style={{ color: 'var(--text-secondary)', fontWeight: 700 }}>{roomCode}</span>
         </p>
 
         {/* Countdown ring */}
         <div style={{ margin: '16px 0 28px', position: 'relative', width: 56, height: 56 }}>
           <svg width="56" height="56" viewBox="0 0 56 56" style={{ transform: 'rotate(-90deg)' }}>
-            <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="3" />
-            <circle cx="28" cy="28" r="24" fill="none" stroke="#00C9B8" strokeWidth="3"
+            <circle cx="28" cy="28" r="24" fill="none" stroke="var(--text-faint)" strokeWidth="3" />
+            <circle cx="28" cy="28" r="24" fill="none" stroke="var(--accent)" strokeWidth="3"
               strokeDasharray={`${2 * Math.PI * 24}`}
               strokeDashoffset={`${2 * Math.PI * 24 * (1 - countdown / 60)}`}
               strokeLinecap="round"
@@ -1059,12 +1059,12 @@ function LeftOverlay({ roomCode, navigate }) {
           <span style={{
             position: 'absolute', inset: 0,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 16, fontWeight: 800, color: '#fff',
+            fontSize: 16, fontWeight: 800, color: 'var(--heading)',
             fontVariantNumeric: 'tabular-nums',
           }}>{countdown}</span>
         </div>
 
-        <p style={{ margin: '0 0 20px', fontSize: 12, color: 'rgba(255,255,255,0.28)' }}>
+        <p style={{ margin: '0 0 20px', fontSize: 12, color: 'var(--text-faint)' }}>
           Tự động về trang chủ sau {countdown}s
         </p>
 
@@ -1073,10 +1073,10 @@ function LeftOverlay({ roomCode, navigate }) {
             onClick={handleRejoin}
             style={{
               width: '100%', padding: '14px', borderRadius: 13, border: 'none',
-              background: 'linear-gradient(135deg, #00C9B8, #009E8A)',
-              color: '#fff', fontSize: 14, fontWeight: 800,
+              background: 'linear-gradient(135deg, var(--button-start), var(--button-end))',
+              color: 'var(--on-accent)', fontSize: 14, fontWeight: 800,
               cursor: 'pointer', fontFamily: 'inherit',
-              boxShadow: '0 6px 20px rgba(0,201,184,0.3)',
+              boxShadow: '0 6px 20px rgba(var(--accent-rgb),0.3)',
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
             }}
           >
@@ -1092,13 +1092,13 @@ function LeftOverlay({ roomCode, navigate }) {
             onClick={() => navigate('/home', { replace: true })}
             style={{
               width: '100%', padding: '13px', borderRadius: 13,
-              border: '1px solid rgba(255,255,255,0.1)',
-              background: 'rgba(255,255,255,0.05)',
-              color: 'rgba(255,255,255,0.6)', fontSize: 14, fontWeight: 700,
+              border: '1px solid rgba(var(--ink-rgb),0.1)',
+              background: 'rgba(var(--ink-rgb),0.05)',
+              color: 'var(--text-secondary)', fontSize: 14, fontWeight: 700,
               cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = 'rgba(255,255,255,0.6)' }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(var(--ink-rgb),0.1)'; e.currentTarget.style.color = 'var(--heading)' }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(var(--ink-rgb),0.05)'; e.currentTarget.style.color = 'var(--text-secondary)' }}
           >
             Về trang chủ
           </button>
@@ -1125,7 +1125,7 @@ function RoomEndedOverlay({ meetingId, navigate }) {
   return (
     <div style={{
       position: 'absolute', inset: 0, zIndex: 100,
-      background: 'rgba(6,8,16,0.94)', backdropFilter: 'blur(22px)',
+      background: 'var(--bg)', backdropFilter: 'blur(22px)',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       fontFamily: '"Be Vietnam Pro", sans-serif',
       animation: 'panelIn 0.3s cubic-bezier(0.22,1,0.36,1)',
@@ -1136,26 +1136,26 @@ function RoomEndedOverlay({ meetingId, navigate }) {
       }}>
         <div style={{
           width: 64, height: 64, borderRadius: 20, marginBottom: 24,
-          background: 'rgba(255,107,138,0.1)', border: '1px solid rgba(255,107,138,0.2)',
+          background: 'rgba(var(--danger-rgb),0.1)', border: '1px solid rgba(var(--danger-rgb),0.2)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF6B8A" strokeWidth="2" strokeLinecap="round">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" strokeWidth="2" strokeLinecap="round">
             <path d="M18 6L6 18M6 6l12 12"/>
           </svg>
         </div>
 
-        <h2 style={{ margin: '0 0 8px', fontSize: 26, fontWeight: 900, color: '#fff', letterSpacing: '-0.5px' }}>
+        <h2 style={{ margin: '0 0 8px', fontSize: 26, fontWeight: 900, color: 'var(--heading)', letterSpacing: '-0.5px' }}>
           Cuộc họp đã kết thúc
         </h2>
-        <p style={{ margin: '0 0 16px', fontSize: 14, color: 'rgba(255,255,255,0.38)', lineHeight: 1.6 }}>
+        <p style={{ margin: '0 0 16px', fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.6 }}>
           Chủ phòng đã kết thúc cuộc họp này.
         </p>
 
         {/* Countdown ring */}
         <div style={{ margin: '0 0 8px', position: 'relative', width: 56, height: 56 }}>
           <svg width="56" height="56" viewBox="0 0 56 56" style={{ transform: 'rotate(-90deg)' }}>
-            <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="3" />
-            <circle cx="28" cy="28" r="24" fill="none" stroke="#FF6B8A" strokeWidth="3"
+            <circle cx="28" cy="28" r="24" fill="none" stroke="var(--text-faint)" strokeWidth="3" />
+            <circle cx="28" cy="28" r="24" fill="none" stroke="var(--danger)" strokeWidth="3"
               strokeDasharray={`${2 * Math.PI * 24}`}
               strokeDashoffset={`${2 * Math.PI * 24 * (1 - countdown / 60)}`}
               strokeLinecap="round"
@@ -1165,12 +1165,12 @@ function RoomEndedOverlay({ meetingId, navigate }) {
           <span style={{
             position: 'absolute', inset: 0,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 16, fontWeight: 800, color: '#fff',
+            fontSize: 16, fontWeight: 800, color: 'var(--heading)',
             fontVariantNumeric: 'tabular-nums',
           }}>{countdown}</span>
         </div>
 
-        <p style={{ margin: '0 0 24px', fontSize: 12, color: 'rgba(255,255,255,0.28)' }}>
+        <p style={{ margin: '0 0 24px', fontSize: 12, color: 'var(--text-faint)' }}>
           Tự động về trang chủ sau {countdown}s
         </p>
 
@@ -1179,8 +1179,8 @@ function RoomEndedOverlay({ meetingId, navigate }) {
             onClick={() => navigate(`/library/${meetingId}`)}
             style={{
               width: '100%', padding: '14px', borderRadius: 13, border: 'none',
-              background: 'linear-gradient(135deg, #A78BFA, #7C3AED)',
-              color: '#fff', fontSize: 14, fontWeight: 800,
+              background: 'linear-gradient(135deg, var(--purple), #7C3AED)',
+              color: 'var(--on-accent)', fontSize: 14, fontWeight: 800,
               cursor: 'pointer', fontFamily: 'inherit',
               boxShadow: '0 6px 20px rgba(124,58,237,0.3)',
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
@@ -1197,13 +1197,13 @@ function RoomEndedOverlay({ meetingId, navigate }) {
             onClick={() => navigate('/home', { replace: true })}
             style={{
               width: '100%', padding: '13px', borderRadius: 13,
-              border: '1px solid rgba(255,255,255,0.1)',
-              background: 'rgba(255,255,255,0.05)',
-              color: 'rgba(255,255,255,0.6)', fontSize: 14, fontWeight: 700,
+              border: '1px solid rgba(var(--ink-rgb),0.1)',
+              background: 'rgba(var(--ink-rgb),0.05)',
+              color: 'var(--text-secondary)', fontSize: 14, fontWeight: 700,
               cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#fff' }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = 'rgba(255,255,255,0.6)' }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(var(--ink-rgb),0.1)'; e.currentTarget.style.color = 'var(--heading)' }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(var(--ink-rgb),0.05)'; e.currentTarget.style.color = 'var(--text-secondary)' }}
           >
             Về trang chủ
           </button>
@@ -1392,7 +1392,7 @@ function ScreenShareTile({ track }) {
       width: '100%', height: '100%', position: 'relative',
       borderRadius: 4, overflow: 'hidden', background: '#060810',
       border: '1px solid rgba(255,255,255,0.08)',
-      boxShadow: '0 4px 24px rgba(0,0,0,0.5)',
+      boxShadow: '0 4px 24px rgba(var(--shadow-rgb),0.5)',
     }}>
       <VideoTrack
         trackRef={track}
@@ -1445,7 +1445,7 @@ function MeetTile({ track, localUser, userInfoMap, avatarSize = 120, raisedHands
       borderRadius: 4, overflow: 'hidden',
       background: '#111525',
       border: `2px solid ${isSpeaking ? '#00C9B8' : 'rgba(255,255,255,0.06)'}`,
-      boxShadow: isSpeaking ? '0 0 0 3px rgba(0,201,184,0.18)' : '0 2px 12px rgba(0,0,0,0.45)',
+      boxShadow: isSpeaking ? '0 0 0 3px rgba(0,201,184,0.18)' : '0 2px 12px rgba(var(--shadow-rgb),0.45)',
       transition: 'border-color 0.18s, box-shadow 0.18s',
     }}>
 
@@ -1569,12 +1569,12 @@ function ParticipantsPanel({ participants, userInfoMap, localUser, hostId, isHos
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           padding: '10px 14px', borderRadius: 12,
-          background: 'rgba(255,255,255,0.03)',
-          border: '1px solid rgba(255,255,255,0.07)',
+          background: 'rgba(var(--ink-rgb),0.03)',
+          border: '1px solid rgba(var(--ink-rgb),0.07)',
         }}>
           <div>
-            <p style={{ margin: 0, fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.8)' }}>Phòng chờ</p>
-            <p style={{ margin: '2px 0 0', fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>
+            <p style={{ margin: 0, fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>Phòng chờ</p>
+            <p style={{ margin: '2px 0 0', fontSize: 11, color: 'var(--text-muted)' }}>
               {waitingRoomEnabled ? 'Phải được duyệt để vào' : 'Ai cũng vào được'}
             </p>
           </div>
@@ -1583,7 +1583,7 @@ function ParticipantsPanel({ participants, userInfoMap, localUser, hostId, isHos
             style={{
               width: 42, height: 24, borderRadius: 12, border: 'none',
               padding: 2, cursor: 'pointer', flexShrink: 0,
-              background: waitingRoomEnabled ? '#00C9B8' : 'rgba(255,255,255,0.12)',
+              background: waitingRoomEnabled ? 'var(--accent)' : 'rgba(var(--ink-rgb),0.12)',
               transition: 'background 0.2s',
               display: 'flex', alignItems: 'center',
               justifyContent: waitingRoomEnabled ? 'flex-end' : 'flex-start',
@@ -1592,7 +1592,7 @@ function ParticipantsPanel({ participants, userInfoMap, localUser, hostId, isHos
             <div style={{
               width: 20, height: 20, borderRadius: '50%',
               background: '#fff',
-              boxShadow: '0 1px 4px rgba(0,0,0,0.3)',
+              boxShadow: '0 1px 4px rgba(var(--shadow-rgb),0.3)',
               transition: 'transform 0.2s',
             }} />
           </button>
@@ -1603,7 +1603,7 @@ function ParticipantsPanel({ participants, userInfoMap, localUser, hostId, isHos
       {(isHost || isCoHost) && waitingRequests.length > 0 && (
         <div style={{ marginBottom: 4 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-            <p style={{ margin: 0, fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#FF6B8A' }}>
+            <p style={{ margin: 0, fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--danger)' }}>
               Đang chờ duyệt · {waitingRequests.length}
             </p>
             <button
@@ -1612,13 +1612,13 @@ function ParticipantsPanel({ participants, userInfoMap, localUser, hostId, isHos
               style={{
                 display: 'flex', alignItems: 'center', gap: 5,
                 padding: '4px 10px', borderRadius: 8, border: 'none',
-                background: approvingAll ? 'rgba(0,201,184,0.08)' : 'rgba(0,201,184,0.14)',
-                color: approvingAll ? 'rgba(0,201,184,0.4)' : '#00C9B8',
+                background: approvingAll ? 'rgba(var(--accent-rgb),0.08)' : 'rgba(var(--accent-rgb),0.14)',
+                color: approvingAll ? 'rgba(var(--accent-rgb),0.4)' : 'var(--accent)',
                 fontSize: 11, fontWeight: 700, cursor: approvingAll ? 'default' : 'pointer',
                 transition: 'all 0.15s', whiteSpace: 'nowrap',
               }}
-              onMouseEnter={e => { if (!approvingAll) e.currentTarget.style.background = 'rgba(0,201,184,0.26)' }}
-              onMouseLeave={e => { if (!approvingAll) e.currentTarget.style.background = 'rgba(0,201,184,0.14)' }}
+              onMouseEnter={e => { if (!approvingAll) e.currentTarget.style.background = 'rgba(var(--accent-rgb),0.26)' }}
+              onMouseLeave={e => { if (!approvingAll) e.currentTarget.style.background = 'rgba(var(--accent-rgb),0.14)' }}
             >
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round">
                 <polyline points="20 6 9 17 4 12"/>
@@ -1631,12 +1631,12 @@ function ParticipantsPanel({ participants, userInfoMap, localUser, hostId, isHos
               <div key={req.request_id} style={{
                 display: 'flex', alignItems: 'center', gap: 10,
                 padding: '10px 12px', borderRadius: 12,
-                background: 'rgba(255,107,138,0.06)',
-                border: '1px solid rgba(255,107,138,0.18)',
+                background: 'rgba(var(--danger-rgb),0.06)',
+                border: '1px solid rgba(var(--danger-rgb),0.18)',
                 animation: 'captionIn 0.2s ease',
               }}>
                 <UserAvatar name={req.display_name} avatarUrl={req.avatar_url || ''} size={32} />
-                <span style={{ flex: 1, fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.82)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                <span style={{ flex: 1, fontSize: 13, fontWeight: 600, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {req.display_name}
                 </span>
                 <button
@@ -1644,12 +1644,12 @@ function ParticipantsPanel({ participants, userInfoMap, localUser, hostId, isHos
                   title="Chấp nhận"
                   style={{
                     width: 30, height: 30, borderRadius: 8, border: 'none', flexShrink: 0,
-                    background: 'rgba(0,201,184,0.15)', color: '#00C9B8',
+                    background: 'rgba(var(--accent-rgb),0.15)', color: 'var(--accent)',
                     cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
                     transition: 'all 0.15s',
                   }}
-                  onMouseEnter={e => e.currentTarget.style.background = 'rgba(0,201,184,0.3)'}
-                  onMouseLeave={e => e.currentTarget.style.background = 'rgba(0,201,184,0.15)'}
+                  onMouseEnter={e => e.currentTarget.style.background = 'rgba(var(--accent-rgb),0.3)'}
+                  onMouseLeave={e => e.currentTarget.style.background = 'rgba(var(--accent-rgb),0.15)'}
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                     <polyline points="20 6 9 17 4 12"/>
@@ -1660,12 +1660,12 @@ function ParticipantsPanel({ participants, userInfoMap, localUser, hostId, isHos
                   title="Từ chối"
                   style={{
                     width: 30, height: 30, borderRadius: 8, border: 'none', flexShrink: 0,
-                    background: 'rgba(255,107,138,0.12)', color: '#FF6B8A',
+                    background: 'rgba(var(--danger-rgb),0.12)', color: 'var(--danger)',
                     cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
                     transition: 'all 0.15s',
                   }}
-                  onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,107,138,0.25)'}
-                  onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,107,138,0.12)'}
+                  onMouseEnter={e => e.currentTarget.style.background = 'rgba(var(--danger-rgb),0.25)'}
+                  onMouseLeave={e => e.currentTarget.style.background = 'rgba(var(--danger-rgb),0.12)'}
                 >
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                     <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
@@ -1674,13 +1674,13 @@ function ParticipantsPanel({ participants, userInfoMap, localUser, hostId, isHos
               </div>
             ))}
           </div>
-          <div style={{ height: 1, background: 'rgba(255,255,255,0.06)', margin: '10px 0 2px' }} />
+          <div style={{ height: 1, background: 'rgba(var(--ink-rgb),0.06)', margin: '10px 0 2px' }} />
         </div>
       )}
 
       {/* Search */}
       <div style={{ position: 'relative' }}>
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2" strokeLinecap="round"
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" strokeWidth="2" strokeLinecap="round"
           style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}>
           <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
@@ -1691,16 +1691,16 @@ function ParticipantsPanel({ participants, userInfoMap, localUser, hostId, isHos
           placeholder="Tìm thành viên…"
           style={{
             width: '100%', padding: '8px 10px 8px 30px', borderRadius: 9,
-            background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)',
-            color: '#fff', fontSize: 12, outline: 'none', fontFamily: 'inherit',
+            background: 'rgba(var(--ink-rgb),0.05)', border: '1px solid rgba(var(--ink-rgb),0.08)',
+            color: 'var(--heading)', fontSize: 12, outline: 'none', fontFamily: 'inherit',
             boxSizing: 'border-box', transition: 'border-color 0.15s',
           }}
-          onFocus={e => e.target.style.borderColor = 'rgba(0,201,184,0.4)'}
-          onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
+          onFocus={e => e.target.style.borderColor = 'rgba(var(--accent-rgb),0.4)'}
+          onBlur={e => e.target.style.borderColor = 'rgba(var(--ink-rgb),0.08)'}
         />
       </div>
 
-      <p style={{ margin: 0, fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)' }}>
+      <p style={{ margin: 0, fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
         {filtered.length} / {participants.length} thành viên
       </p>
 
@@ -1725,37 +1725,37 @@ function ParticipantsPanel({ participants, userInfoMap, localUser, hostId, isHos
           <div key={p.identity} style={{
             display: 'flex', alignItems: 'center', gap: 10,
             padding: '9px 12px', borderRadius: 10,
-            background: hasHand ? 'rgba(251,191,36,0.07)' : (isThisHost ? 'rgba(251,191,36,0.05)' : isThisCoHost ? 'rgba(0,201,184,0.04)' : 'rgba(255,255,255,0.04)'),
-            border: `1px solid ${hasHand ? 'rgba(251,191,36,0.25)' : isThisHost ? 'rgba(251,191,36,0.15)' : isThisCoHost ? 'rgba(0,201,184,0.12)' : 'rgba(255,255,255,0.05)'}`,
+            background: hasHand ? 'rgba(var(--warning-rgb),0.07)' : (isThisHost ? 'rgba(var(--warning-rgb),0.05)' : isThisCoHost ? 'rgba(var(--accent-rgb),0.04)' : 'rgba(var(--ink-rgb),0.04)'),
+            border: `1px solid ${hasHand ? 'rgba(var(--warning-rgb),0.25)' : isThisHost ? 'rgba(var(--warning-rgb),0.15)' : isThisCoHost ? 'rgba(var(--accent-rgb),0.12)' : 'rgba(var(--ink-rgb),0.05)'}`,
             transition: 'background 0.2s, border-color 0.2s',
           }}>
             <UserAvatar name={name} avatarUrl={avatarUrl} size={34} />
             <div style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: 6 }}>
-              <span style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.82)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {name}
               </span>
               {hasHand && <span style={{ flexShrink: 0, display: 'flex' }}><RaisedHandIcon size={16} /></span>}
               {/* Host crown */}
               {isThisHost && (
                 <svg width="15" height="15" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
-                  <path fill="#FBBF24" fillOpacity="0.9" d="M4 15 L2 5 L9 10 L12 2 L15 10 L22 5 L20 15 Z"/>
-                  <rect fill="#FBBF24" x="4" y="16.5" width="16" height="1.8" rx="0.9"/>
+                  <path fill="var(--warning)" fillOpacity="0.9" d="M4 15 L2 5 L9 10 L12 2 L15 10 L22 5 L20 15 Z"/>
+                  <rect fill="var(--warning)" x="4" y="16.5" width="16" height="1.8" rx="0.9"/>
                 </svg>
               )}
               {/* Co-host silver crown */}
               {!isThisHost && isThisCoHost && (
                 <svg width="15" height="15" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
-                  <path fill="rgba(255,255,255,0.75)" d="M4 15 L2 5 L9 10 L12 2 L15 10 L22 5 L20 15 Z"/>
-                  <rect fill="rgba(255,255,255,0.75)" x="4" y="16.5" width="16" height="1.8" rx="0.9"/>
+                  <path fill="var(--text-secondary)" d="M4 15 L2 5 L9 10 L12 2 L15 10 L22 5 L20 15 Z"/>
+                  <rect fill="var(--text-secondary)" x="4" y="16.5" width="16" height="1.8" rx="0.9"/>
                 </svg>
               )}
             </div>
             {p.isSpeaking && (
-              <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#00C9B8', flexShrink: 0 }} />
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--accent)', flexShrink: 0 }} />
             )}
             {!p.isMicrophoneEnabled && (
-              <div style={{ width: 22, height: 22, borderRadius: 6, background: 'rgba(255,69,69,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <MicIcon on={false} size={11} color="#FF5555" />
+              <div style={{ width: 22, height: 22, borderRadius: 6, background: 'rgba(var(--danger-rgb),0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <MicIcon on={false} size={11} color="var(--danger)" />
               </div>
             )}
             {/* Assign/revoke co-host — host only, not on self, not on host */}
@@ -1783,14 +1783,14 @@ function CoHostBtn({ isCoHost, name, onToggle }) {
         title={isCoHost ? 'Xóa đồng chủ trì' : 'Đặt làm đồng chủ trì'}
         style={{
           width: 26, height: 26, borderRadius: 7, flexShrink: 0,
-          background: isCoHost ? 'rgba(15,18,32,0.95)' : 'rgba(255,255,255,0.07)',
-          border: isCoHost ? '1px solid rgba(255,69,69,0.3)' : 'none',
-          color: isCoHost ? '#FF5555' : 'rgba(255,255,255,0.4)',
+          background: isCoHost ? 'var(--surface)' : 'rgba(var(--ink-rgb),0.07)',
+          border: isCoHost ? '1px solid rgba(var(--danger-rgb),0.3)' : 'none',
+          color: isCoHost ? 'var(--danger)' : 'var(--text-muted)',
           cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
           transition: 'all 0.15s',
         }}
-        onMouseEnter={e => { if (isCoHost) { e.currentTarget.style.background = '#FF3B3B'; e.currentTarget.style.borderColor = '#FF3B3B'; e.currentTarget.style.color = '#fff' } else { e.currentTarget.style.background = 'rgba(255,255,255,0.12)'; e.currentTarget.style.color = '#fff' } }}
-        onMouseLeave={e => { if (isCoHost) { e.currentTarget.style.background = 'rgba(15,18,32,0.95)'; e.currentTarget.style.borderColor = 'rgba(255,69,69,0.3)'; e.currentTarget.style.color = '#FF5555' } else { e.currentTarget.style.background = 'rgba(255,255,255,0.07)'; e.currentTarget.style.color = 'rgba(255,255,255,0.4)' } }}
+        onMouseEnter={e => { if (isCoHost) { e.currentTarget.style.background = 'var(--danger)'; e.currentTarget.style.borderColor = 'var(--danger)'; e.currentTarget.style.color = 'var(--on-accent)' } else { e.currentTarget.style.background = 'rgba(var(--ink-rgb),0.12)'; e.currentTarget.style.color = 'var(--heading)' } }}
+        onMouseLeave={e => { if (isCoHost) { e.currentTarget.style.background = 'var(--surface)'; e.currentTarget.style.borderColor = 'rgba(var(--danger-rgb),0.3)'; e.currentTarget.style.color = 'var(--danger)' } else { e.currentTarget.style.background = 'rgba(var(--ink-rgb),0.07)'; e.currentTarget.style.color = 'var(--text-muted)' } }}
       >
         {isCoHost ? (
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
@@ -1825,30 +1825,30 @@ function CoHostBtn({ isCoHost, name, onToggle }) {
           <div
             onClick={e => e.stopPropagation()}
             style={{
-              width: 320, background: '#0F1220', borderRadius: 18,
-              border: '1px solid rgba(255,255,255,0.08)',
-              boxShadow: '0 24px 60px rgba(0,0,0,0.7)',
+              width: 320, background: 'var(--surface)', borderRadius: 18,
+              border: '1px solid rgba(var(--ink-rgb),0.08)',
+              boxShadow: '0 24px 60px rgba(var(--shadow-rgb),0.7)',
               padding: '24px 24px 20px',
               animation: 'coHostDropUp 0.18s cubic-bezier(0.22,1,0.36,1)',
             }}
           >
             <div style={{
               width: 44, height: 44, borderRadius: 12, marginBottom: 16,
-              background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)',
+              background: 'rgba(var(--ink-rgb),0.07)', border: '1px solid rgba(var(--ink-rgb),0.12)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
               <svg width="22" height="22" viewBox="0 0 24 24">
-                <path fill="rgba(255,255,255,0.8)" d="M4 15 L2 5 L9 10 L12 2 L15 10 L22 5 L20 15 Z"/>
-                <rect fill="rgba(255,255,255,0.8)" x="4" y="16.5" width="16" height="1.8" rx="0.9"/>
+                <path fill="var(--text)" d="M4 15 L2 5 L9 10 L12 2 L15 10 L22 5 L20 15 Z"/>
+                <rect fill="var(--text)" x="4" y="16.5" width="16" height="1.8" rx="0.9"/>
               </svg>
             </div>
-            <h3 style={{ margin: '0 0 8px', fontSize: 16, fontWeight: 800, color: '#fff', letterSpacing: '-0.3px' }}>
+            <h3 style={{ margin: '0 0 8px', fontSize: 16, fontWeight: 800, color: 'var(--heading)', letterSpacing: '-0.3px' }}>
               {isCoHost ? 'Xóa quyền đồng chủ trì?' : 'Đặt làm đồng chủ trì?'}
             </h3>
-            <p style={{ margin: '0 0 22px', fontSize: 13, color: 'rgba(255,255,255,0.4)', lineHeight: 1.6 }}>
+            <p style={{ margin: '0 0 22px', fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6 }}>
               {isCoHost
-                ? <><strong style={{ color: 'rgba(255,255,255,0.7)' }}>{name}</strong> sẽ mất quyền đồng chủ trì.</>
-                : <><strong style={{ color: 'rgba(255,255,255,0.7)' }}>{name}</strong> sẽ có thể duyệt/từ chối thành viên chờ và xóa người tham gia.</>
+                ? <><strong style={{ color: 'var(--text-secondary)' }}>{name}</strong> sẽ mất quyền đồng chủ trì.</>
+                : <><strong style={{ color: 'var(--text-secondary)' }}>{name}</strong> sẽ có thể duyệt/từ chối thành viên chờ và xóa người tham gia.</>
               }
             </p>
             <div style={{ display: 'flex', gap: 10 }}>
@@ -1856,8 +1856,8 @@ function CoHostBtn({ isCoHost, name, onToggle }) {
                 onClick={() => setConfirm(false)}
                 style={{
                   flex: 1, padding: '10px', borderRadius: 10,
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  background: 'transparent', color: 'rgba(255,255,255,0.55)',
+                  border: '1px solid rgba(var(--ink-rgb),0.1)',
+                  background: 'transparent', color: 'var(--text-secondary)',
                   fontSize: 13, fontWeight: 600, cursor: 'pointer',
                 }}
               >Hủy</button>
@@ -1865,8 +1865,8 @@ function CoHostBtn({ isCoHost, name, onToggle }) {
                 onClick={() => { setConfirm(false); onToggle() }}
                 style={{
                   flex: 1, padding: '10px', borderRadius: 10, border: 'none',
-                  background: isCoHost ? 'rgba(255,69,69,0.15)' : 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08))',
-                  color: isCoHost ? '#FF7070' : '#fff',
+                  background: isCoHost ? 'rgba(var(--danger-rgb),0.15)' : 'linear-gradient(135deg, rgba(var(--ink-rgb),0.15), rgba(var(--ink-rgb),0.08))',
+                  color: isCoHost ? 'var(--danger)' : 'var(--heading)',
                   fontSize: 13, fontWeight: 700, cursor: 'pointer',
                 }}
               >{isCoHost ? 'Xóa quyền' : 'Xác nhận'}</button>
@@ -1902,16 +1902,16 @@ function KickBtn({ participantId, meetingId, accessToken, name }) {
         title="Xóa khỏi phòng"
         style={{
           width: 26, height: 26, borderRadius: 7, flexShrink: 0,
-          background: 'rgba(15,18,32,0.95)',
-          border: '1px solid rgba(255,69,69,0.3)',
-          color: '#FF5555',
+          background: 'var(--surface)',
+          border: '1px solid rgba(var(--danger-rgb),0.3)',
+          color: 'var(--danger)',
           cursor: kicking ? 'default' : 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           transition: 'all 0.15s',
           opacity: kicking ? 0.4 : 1,
         }}
-        onMouseEnter={e => { if (!kicking) { e.currentTarget.style.background = '#FF3B3B'; e.currentTarget.style.borderColor = '#FF3B3B'; e.currentTarget.style.color = '#fff' } }}
-        onMouseLeave={e => { e.currentTarget.style.background = 'rgba(15,18,32,0.95)'; e.currentTarget.style.borderColor = 'rgba(255,69,69,0.3)'; e.currentTarget.style.color = '#FF5555' }}
+        onMouseEnter={e => { if (!kicking) { e.currentTarget.style.background = 'var(--danger)'; e.currentTarget.style.borderColor = 'var(--danger)'; e.currentTarget.style.color = 'var(--on-accent)' } }}
+        onMouseLeave={e => { e.currentTarget.style.background = 'var(--surface)'; e.currentTarget.style.borderColor = 'rgba(var(--danger-rgb),0.3)'; e.currentTarget.style.color = 'var(--danger)' }}
       >
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
           <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
@@ -1933,37 +1933,37 @@ function KickBtn({ participantId, meetingId, accessToken, name }) {
           <div
             onClick={e => e.stopPropagation()}
             style={{
-              width: 320, background: '#0F1220', borderRadius: 18,
-              border: '1px solid rgba(255,255,255,0.08)',
-              boxShadow: '0 24px 60px rgba(0,0,0,0.7)',
+              width: 320, background: 'var(--surface)', borderRadius: 18,
+              border: '1px solid rgba(var(--ink-rgb),0.08)',
+              boxShadow: '0 24px 60px rgba(var(--shadow-rgb),0.7)',
               padding: '24px 24px 20px',
               animation: 'dropUp 0.18s cubic-bezier(0.22,1,0.36,1)',
             }}
           >
             <div style={{
               width: 44, height: 44, borderRadius: 12, marginBottom: 16,
-              background: 'rgba(255,69,69,0.1)', border: '1px solid rgba(255,69,69,0.2)',
+              background: 'rgba(var(--danger-rgb),0.1)', border: '1px solid rgba(var(--danger-rgb),0.2)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF5555" strokeWidth="2" strokeLinecap="round">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" strokeWidth="2" strokeLinecap="round">
                 <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
                 <circle cx="9" cy="7" r="4"/>
                 <line x1="17" y1="11" x2="23" y2="11"/>
               </svg>
             </div>
-            <h3 style={{ margin: '0 0 8px', fontSize: 16, fontWeight: 800, color: '#fff', letterSpacing: '-0.3px' }}>
+            <h3 style={{ margin: '0 0 8px', fontSize: 16, fontWeight: 800, color: 'var(--heading)', letterSpacing: '-0.3px' }}>
               Xóa khỏi phòng?
             </h3>
-            <p style={{ margin: '0 0 22px', fontSize: 13, color: 'rgba(255,255,255,0.4)', lineHeight: 1.6 }}>
-              <strong style={{ color: 'rgba(255,255,255,0.7)' }}>{name}</strong> sẽ bị xóa khỏi cuộc họp này ngay lập tức.
+            <p style={{ margin: '0 0 22px', fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6 }}>
+              <strong style={{ color: 'var(--text-secondary)' }}>{name}</strong> sẽ bị xóa khỏi cuộc họp này ngay lập tức.
             </p>
             <div style={{ display: 'flex', gap: 10 }}>
               <button
                 onClick={() => setConfirm(false)}
                 style={{
                   flex: 1, padding: '10px', borderRadius: 10,
-                  border: '1px solid rgba(255,255,255,0.1)', background: 'transparent',
-                  color: 'rgba(255,255,255,0.5)', fontWeight: 600, fontSize: 13,
+                  border: '1px solid rgba(var(--ink-rgb),0.1)', background: 'transparent',
+                  color: 'var(--text-secondary)', fontWeight: 600, fontSize: 13,
                   cursor: 'pointer', fontFamily: 'inherit',
                 }}
               >Huỷ</button>
@@ -1971,7 +1971,7 @@ function KickBtn({ participantId, meetingId, accessToken, name }) {
                 onClick={handleKick}
                 style={{
                   flex: 1, padding: '10px', borderRadius: 10, border: 'none',
-                  background: '#FF3B3B', color: '#fff', fontWeight: 700, fontSize: 13,
+                  background: 'var(--danger)', color: 'var(--on-accent)', fontWeight: 700, fontSize: 13,
                   cursor: 'pointer', fontFamily: 'inherit',
                   boxShadow: '0 4px 14px rgba(255,59,59,0.35)',
                 }}
@@ -2078,10 +2078,10 @@ function MeetingContentPanel({ captions, ttsMessages, replayLog = [], userInfoMa
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', minHeight: 200, gap: 14 }}>
         <div style={{ display: 'flex', gap: 6 }}>
           {[0, 1, 2].map(i => (
-            <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: '#00C9B8', animation: `liveDot 1.4s ease-in-out ${i * 0.22}s infinite` }} />
+            <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)', animation: `liveDot 1.4s ease-in-out ${i * 0.22}s infinite` }} />
           ))}
         </div>
-        <p style={{ margin: 0, fontSize: 13, color: 'rgba(255,255,255,0.28)', textAlign: 'center' }}>Đang lắng nghe cuộc họp…</p>
+        <p style={{ margin: 0, fontSize: 13, color: 'var(--text-faint)', textAlign: 'center' }}>Đang lắng nghe cuộc họp…</p>
       </div>
     )
   }
@@ -2116,7 +2116,7 @@ function MeetingContentPanel({ captions, ttsMessages, replayLog = [], userInfoMa
         <div style={{
           flexShrink: 0, marginBottom: 14, borderRadius: 14, overflow: 'hidden',
           background: 'linear-gradient(160deg, rgba(109,40,217,0.14) 0%, rgba(79,20,180,0.08) 100%)',
-          border: '1px solid rgba(167,139,250,0.28)',
+          border: '1px solid rgba(var(--purple-rgb),0.28)',
           boxShadow: '0 4px 28px rgba(109,40,217,0.14)',
           animation: 'captionIn 0.25s cubic-bezier(0.22,1,0.36,1)',
         }}>
@@ -2127,28 +2127,28 @@ function MeetingContentPanel({ captions, ttsMessages, replayLog = [], userInfoMa
               <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
                 <div style={{
                   width: 24, height: 24, borderRadius: 7, flexShrink: 0,
-                  background: 'linear-gradient(135deg, rgba(124,58,237,0.5), rgba(167,139,250,0.3))',
+                  background: 'linear-gradient(135deg, rgba(124,58,237,0.5), rgba(var(--purple-rgb),0.3))',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#DDD6FE" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
                   </svg>
                 </div>
                 <div>
-                  <div style={{ fontSize: 11, fontWeight: 800, color: '#C4B5FD', letterSpacing: '0.06em', lineHeight: 1 }}>TÓM TẮT AI</div>
-                  <div style={{ fontSize: 9, color: 'rgba(167,139,250,0.45)', marginTop: 2 }}>Cập nhật lúc {summaryTime}</div>
+                  <div style={{ fontSize: 11, fontWeight: 800, color: 'var(--purple)', letterSpacing: '0.06em', lineHeight: 1 }}>TÓM TẮT AI</div>
+                  <div style={{ fontSize: 9, color: 'rgba(var(--purple-rgb),0.45)', marginTop: 2 }}>Cập nhật lúc {summaryTime}</div>
                 </div>
               </div>
               <div style={{ display: 'flex', gap: 5 }}>
                 {/* Close */}
                 <button onClick={() => setSummary(null)} title="Ẩn" style={{
                   width: 24, height: 24, borderRadius: 7, border: 'none',
-                  background: 'rgba(167,139,250,0.1)', cursor: 'pointer',
+                  background: 'rgba(var(--purple-rgb),0.1)', cursor: 'pointer',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: 'rgba(167,139,250,0.5)', transition: 'all 0.15s',
+                  color: 'rgba(var(--purple-rgb),0.5)', transition: 'all 0.15s',
                 }}
-                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,69,69,0.15)'; e.currentTarget.style.color = '#FF6B8A' }}
-                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(167,139,250,0.1)'; e.currentTarget.style.color = 'rgba(167,139,250,0.5)' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(var(--danger-rgb),0.15)'; e.currentTarget.style.color = 'var(--danger)' }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(var(--purple-rgb),0.1)'; e.currentTarget.style.color = 'rgba(var(--purple-rgb),0.5)' }}
                 >
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </button>
@@ -2156,7 +2156,7 @@ function MeetingContentPanel({ captions, ttsMessages, replayLog = [], userInfoMa
             </div>
 
             {/* Divider */}
-            <div style={{ height: 1, background: 'rgba(167,139,250,0.12)', marginBottom: 10 }} />
+            <div style={{ height: 1, background: 'rgba(var(--purple-rgb),0.12)', marginBottom: 10 }} />
 
             {/* Bullet points with inline bold rendering */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 7, maxHeight: 220, overflowY: 'auto', paddingRight: 2 }}>
@@ -2168,11 +2168,11 @@ function MeetingContentPanel({ captions, ttsMessages, replayLog = [], userInfoMa
                     <div style={{
                       flexShrink: 0, marginTop: 6,
                       width: 5, height: 5, borderRadius: '50%',
-                      background: 'linear-gradient(135deg, #A78BFA, #7C3AED)',
+                      background: 'linear-gradient(135deg, var(--purple), #7C3AED)',
                     }} />
-                    <p style={{ margin: 0, fontSize: 12.5, lineHeight: 1.65, color: 'rgba(255,255,255,0.78)' }}>
+                    <p style={{ margin: 0, fontSize: 12.5, lineHeight: 1.65, color: 'var(--text-secondary)' }}>
                       {parts.map((p, j) => j % 2 === 1
-                        ? <strong key={j} style={{ color: '#E9D5FF', fontWeight: 700 }}>{p}</strong>
+                        ? <strong key={j} style={{ color: 'var(--purple)', fontWeight: 700 }}>{p}</strong>
                         : p
                       )}
                     </p>
@@ -2192,15 +2192,15 @@ function MeetingContentPanel({ captions, ttsMessages, replayLog = [], userInfoMa
           style={{
             width: '100%', padding: '9px 14px', borderRadius: 10,
             background: 'transparent',
-            border: `1px dashed ${summaryLoading ? 'rgba(167,139,250,0.15)' : 'rgba(167,139,250,0.3)'}`,
-            color: summaryLoading ? 'rgba(167,139,250,0.35)' : 'rgba(167,139,250,0.7)',
+            border: `1px dashed ${summaryLoading ? 'rgba(var(--purple-rgb),0.15)' : 'rgba(var(--purple-rgb),0.3)'}`,
+            color: summaryLoading ? 'rgba(var(--purple-rgb),0.35)' : 'rgba(var(--purple-rgb),0.7)',
             cursor: summaryLoading ? 'default' : 'pointer',
             fontFamily: 'inherit', fontSize: 12, fontWeight: 600,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
             transition: 'all 0.15s',
           }}
-          onMouseEnter={e => { if (!summaryLoading) { e.currentTarget.style.background = 'rgba(167,139,250,0.06)'; e.currentTarget.style.color = '#C4B5FD'; e.currentTarget.style.borderColor = 'rgba(167,139,250,0.5)' }}}
-          onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(167,139,250,0.7)'; e.currentTarget.style.borderColor = 'rgba(167,139,250,0.3)' }}
+          onMouseEnter={e => { if (!summaryLoading) { e.currentTarget.style.background = 'rgba(var(--purple-rgb),0.06)'; e.currentTarget.style.color = 'var(--purple)'; e.currentTarget.style.borderColor = 'rgba(var(--purple-rgb),0.5)' }}}
+          onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(var(--purple-rgb),0.7)'; e.currentTarget.style.borderColor = 'rgba(var(--purple-rgb),0.3)' }}
         >
           {summaryLoading
             ? <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" style={{ animation: 'spin 0.7s linear infinite' }}><path d="M12 2a10 10 0 0 1 10 10"/></svg>
@@ -2209,7 +2209,7 @@ function MeetingContentPanel({ captions, ttsMessages, replayLog = [], userInfoMa
           {summaryLoading ? 'Đang phân tích…' : summary ? 'Tóm tắt lại' : 'Tóm tắt nội dung'}
         </button>
         {summaryError && (
-          <p style={{ margin: '6px 0 0', fontSize: 11, color: '#F87171', textAlign: 'center' }}>{summaryError}</p>
+          <p style={{ margin: '6px 0 0', fontSize: 11, color: 'var(--danger)', textAlign: 'center' }}>{summaryError}</p>
         )}
       </div>
 
@@ -2227,7 +2227,7 @@ function MeetingContentPanel({ captions, ttsMessages, replayLog = [], userInfoMa
               avatarUrl={g.speaker_id === localUser?.id ? (localUser?.avatar_url || '') : (userInfoMap?.[g.speaker_id]?.avatar_url || '')}
               size={30}
             />
-            <span style={{ fontSize: 13, fontWeight: 700, color: g.color, flex: 1 }}>{g.speaker_name}</span>
+            <span style={{ fontSize: 13, fontWeight: 700, color: `color-mix(in srgb, ${g.color} 55%, var(--text))`, flex: 1 }}>{g.speaker_name}</span>
           </div>
 
           {/* Messages */}
@@ -2237,27 +2237,27 @@ function MeetingContentPanel({ captions, ttsMessages, replayLog = [], userInfoMa
               return (
                 <div key={c.id} style={{
                   padding: '6px 10px', borderRadius: 8,
-                  background: isLatest ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.02)',
-                  border: `1px solid ${isLatest ? 'rgba(255,255,255,0.07)' : 'rgba(255,255,255,0.03)'}`,
+                  background: isLatest ? 'rgba(var(--ink-rgb),0.05)' : 'rgba(var(--ink-rgb),0.02)',
+                  border: `1px solid ${isLatest ? 'rgba(var(--ink-rgb),0.07)' : 'rgba(var(--ink-rgb),0.03)'}`,
                   display: 'flex', alignItems: 'flex-start', gap: 8,
                 }}>
                   {c.isTts && (
                     <span style={{
                       marginTop: 3, flexShrink: 0,
                       fontSize: 9, fontWeight: 700, letterSpacing: '0.05em',
-                      color: '#A78BFA', background: 'rgba(167,139,250,0.12)',
-                      border: '1px solid rgba(167,139,250,0.25)',
+                      color: 'var(--purple)', background: 'rgba(var(--purple-rgb),0.12)',
+                      border: '1px solid rgba(var(--purple-rgb),0.25)',
                       borderRadius: 4, padding: '1px 5px',
                     }}>TTS</span>
                   )}
                   <p style={{
                     margin: 0, flex: 1, fontSize: 13.5, lineHeight: 1.65,
-                    color: isLatest ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.58)',
+                    color: isLatest ? 'var(--text)' : 'var(--text-secondary)',
                     fontStyle: c.isTts ? 'italic' : 'normal',
                   }}>
                     {c.text}
                   </p>
-                  <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.18)', flexShrink: 0, marginTop: 4, width: 34, textAlign: 'right' }}>
+                  <span style={{ fontSize: 9, color: 'var(--text-faint)', flexShrink: 0, marginTop: 4, width: 34, textAlign: 'right' }}>
                     {fmt(c.timestamp_ms)}
                   </span>
                 </div>
@@ -2267,7 +2267,7 @@ function MeetingContentPanel({ captions, ttsMessages, replayLog = [], userInfoMa
 
           {/* Divider between groups */}
           {gi < groups.length - 1 && (
-            <div style={{ marginTop: 12, marginLeft: 39, height: 1, background: 'rgba(255,255,255,0.04)' }} />
+            <div style={{ marginTop: 12, marginLeft: 39, height: 1, background: 'rgba(var(--ink-rgb),0.04)' }} />
           )}
         </div>
       ))}
@@ -2278,8 +2278,8 @@ function MeetingContentPanel({ captions, ttsMessages, replayLog = [], userInfoMa
           style={{
             position: 'sticky', bottom: 8, alignSelf: 'center',
             padding: '5px 14px', borderRadius: 20,
-            border: '1px solid rgba(0,201,184,0.3)',
-            background: 'rgba(0,201,184,0.1)', color: '#00C9B8',
+            border: '1px solid rgba(var(--accent-rgb),0.3)',
+            background: 'rgba(var(--accent-rgb),0.1)', color: 'var(--accent)',
             fontSize: 11, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
           }}
         >↓ Mới nhất</button>
@@ -2340,42 +2340,42 @@ function LinkConfirmModal({ url, onConfirm, onCancel }) {
         @keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(10px) } to { opacity: 1; transform: scale(1) translateY(0) } }
       `}</style>
       <div onClick={e => e.stopPropagation()} style={{
-        background: '#0F1220', borderRadius: 16,
-        border: '1px solid rgba(255,255,255,0.1)',
-        boxShadow: '0 24px 60px rgba(0,0,0,0.7)',
+        background: 'var(--surface)', borderRadius: 16,
+        border: '1px solid rgba(var(--ink-rgb),0.1)',
+        boxShadow: '0 24px 60px rgba(var(--shadow-rgb),0.7)',
         padding: '24px 24px 20px', width: 360, maxWidth: '90vw',
         animation: 'modalIn 0.22s cubic-bezier(0.22,1,0.36,1)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
           <div style={{
             width: 36, height: 36, borderRadius: 10, flexShrink: 0,
-            background: 'rgba(251,191,36,0.12)', border: '1px solid rgba(251,191,36,0.25)',
+            background: 'rgba(var(--warning-rgb),0.12)', border: '1px solid rgba(var(--warning-rgb),0.25)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" strokeWidth="2" strokeLinecap="round">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" strokeWidth="2" strokeLinecap="round">
               <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
               <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
             </svg>
           </div>
           <div>
-            <div style={{ fontSize: 14, fontWeight: 700, color: '#fff', marginBottom: 2 }}>Mở liên kết ngoài?</div>
-            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>Bạn sắp rời khỏi Syltalky</div>
+            <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--heading)', marginBottom: 2 }}>Mở liên kết ngoài?</div>
+            <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Bạn sắp rời khỏi Syltalky</div>
           </div>
         </div>
         <div style={{
           padding: '9px 12px', borderRadius: 8, marginBottom: 18,
-          background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)',
+          background: 'rgba(var(--ink-rgb),0.04)', border: '1px solid rgba(var(--ink-rgb),0.07)',
         }}>
           <span style={{
-            fontSize: 12, color: '#60A5FA', wordBreak: 'break-all',
+            fontSize: 12, color: 'var(--blue)', wordBreak: 'break-all',
             display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden',
           }}>{url}</span>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
           <button onClick={onCancel} style={{
             flex: 1, padding: '9px 0', borderRadius: 9, fontFamily: 'inherit',
-            border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)',
-            color: 'rgba(255,255,255,0.6)', fontSize: 13, fontWeight: 600, cursor: 'pointer',
+            border: '1px solid rgba(var(--ink-rgb),0.1)', background: 'rgba(var(--ink-rgb),0.05)',
+            color: 'var(--text-secondary)', fontSize: 13, fontWeight: 600, cursor: 'pointer',
           }}>Huỷ</button>
           <button onClick={onConfirm} style={{
             flex: 1, padding: '9px 0', borderRadius: 9, fontFamily: 'inherit',
@@ -2408,14 +2408,14 @@ function CodeBlock({ children }) {
   }
 
   return (
-    <div style={{ borderRadius: 10, overflow: 'hidden', background: 'rgba(0,0,0,0.45)', border: '1px solid rgba(255,255,255,0.08)', margin: '4px 0', maxWidth: '100%' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '5px 10px 5px 12px', background: 'rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-        <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', fontFamily: 'monospace', fontWeight: 600, letterSpacing: '0.05em' }}>{lang || 'code'}</span>
+    <div className="media-surface" style={{ borderRadius: 10, overflow: 'hidden', background: '#111525', border: '1px solid rgba(var(--ink-rgb),0.08)', margin: '4px 0', maxWidth: '100%' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '5px 10px 5px 12px', background: 'rgba(var(--ink-rgb),0.04)', borderBottom: '1px solid rgba(var(--ink-rgb),0.06)' }}>
+        <span style={{ fontSize: 10, color: 'var(--text-muted)', fontFamily: 'monospace', fontWeight: 600, letterSpacing: '0.05em' }}>{lang || 'code'}</span>
         <button onClick={copy} style={{
           minWidth: 54, textAlign: 'center', padding: '2px 9px', borderRadius: 5,
-          border: `1px solid ${copied ? 'rgba(52,211,153,0.3)' : 'rgba(255,255,255,0.1)'}`,
-          background: copied ? 'rgba(52,211,153,0.15)' : 'rgba(255,255,255,0.05)',
-          color: copied ? '#34D399' : 'rgba(255,255,255,0.4)',
+          border: `1px solid ${copied ? 'rgba(var(--success-rgb),0.3)' : 'rgba(var(--ink-rgb),0.1)'}`,
+          background: copied ? 'rgba(var(--success-rgb),0.15)' : 'rgba(var(--ink-rgb),0.05)',
+          color: copied ? 'var(--success)' : 'var(--text-muted)',
           fontSize: 10, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
           transition: 'background 0.3s ease, color 0.3s ease, border-color 0.3s ease',
         }}>
@@ -2431,7 +2431,7 @@ function CodeBlock({ children }) {
 
 function MarkdownMessage({ content, mdReady, onLinkClick }) {
   if (!mdReady || !_md.Md) {
-    return <span style={{ fontSize: 13, color: '#E2E8F5', lineHeight: 1.65, wordBreak: 'break-word', display: 'block' }}>{content}</span>
+    return <span style={{ fontSize: 13, color: 'var(--text)', lineHeight: 1.65, wordBreak: 'break-word', display: 'block' }}>{content}</span>
   }
   const Md = _md.Md
   const { gfm, math, katex, highlight } = _md.plugins
@@ -2447,7 +2447,7 @@ function MarkdownMessage({ content, mdReady, onLinkClick }) {
             if (e.ctrlKey || e.metaKey || e.shiftKey) return
             e.preventDefault(); onLinkClick?.(href)
           }
-          return <a href={href} target="_blank" rel="noopener noreferrer" onClick={go} style={{ color: '#00C9B8', textDecoration: 'underline', textUnderlineOffset: 3, cursor: 'pointer' }}>{children}</a>
+          return <a href={href} target="_blank" rel="noopener noreferrer" onClick={go} style={{ color: 'var(--accent)', textDecoration: 'underline', textUnderlineOffset: 3, cursor: 'pointer' }}>{children}</a>
         },
       }}
     >
@@ -2458,9 +2458,9 @@ function MarkdownMessage({ content, mdReady, onLinkClick }) {
 
 const pinHoverBtn = {
   width: 24, height: 24, borderRadius: 6, padding: 0,
-  border: '1px solid rgba(255,255,255,0.1)',
-  background: 'rgba(12,15,28,0.8)', backdropFilter: 'blur(6px)',
-  color: 'rgba(255,255,255,0.5)',
+  border: '1px solid rgba(var(--ink-rgb),0.1)',
+  background: 'var(--surface)', backdropFilter: 'blur(6px)',
+  color: 'var(--text-secondary)',
   cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
   flexShrink: 0, marginTop: 6,
 }
@@ -2491,15 +2491,15 @@ function FileAttachment({ file, mine }) {
         </a>
       )}
       <a href={file.url} target="_blank" rel="noopener noreferrer" download={file.name}
-        style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '7px 9px', borderRadius: 9, textDecoration: 'none', background: 'rgba(0,0,0,0.25)', border: '1px solid rgba(255,255,255,0.08)' }}>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={mine ? '#00C9B8' : '#60A5FA'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+        style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '7px 9px', borderRadius: 9, textDecoration: 'none', background: 'rgba(var(--ink-rgb),0.04)', border: '1px solid rgba(var(--ink-rgb),0.08)' }}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={mine ? 'var(--accent)' : 'var(--blue)'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
         </svg>
         <div style={{ minWidth: 0, flex: 1 }}>
-          <div style={{ fontSize: 12.5, fontWeight: 600, color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{file.name}</div>
-          <div style={{ fontSize: 10.5, color: 'rgba(255,255,255,0.4)' }}>{fmtFileSize(file.size || 0)}</div>
+          <div style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--heading)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{file.name}</div>
+          <div style={{ fontSize: 10.5, color: 'var(--text-muted)' }}>{fmtFileSize(file.size || 0)}</div>
         </div>
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
           <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
         </svg>
       </a>
@@ -2612,28 +2612,28 @@ function ChatPanel({ messages, onSend, localUserId, userInfoMap = {}, localUser,
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', position: 'relative' }}>
       <style>{`
         @keyframes chatIn { from { opacity:0; transform:translateY(5px) } to { opacity:1; transform:translateY(0) } }
-        .chat-md { font-size: 13px; color: #E2E8F5; line-height: 1.65; word-break: break-word; }
+        .chat-md { font-size: 13px; color: var(--text); line-height: 1.65; word-break: break-word; }
         .chat-md > *:first-child { margin-top: 0 !important; }
         .chat-md > *:last-child  { margin-bottom: 0 !important; }
         .chat-md p { margin: 0 0 4px; }
         .chat-md p:last-child { margin-bottom: 0; }
-        .chat-md strong { color: #fff; font-weight: 700; }
-        .chat-md em { color: rgba(255,255,255,0.82); font-style: italic; }
-        .chat-md code { font-family: "JetBrains Mono","Fira Code",monospace; font-size: 11.5px; background: rgba(0,0,0,0.38); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 1px 5px; color: #7dd3fc; }
+        .chat-md strong { color: var(--heading); font-weight: 700; }
+        .chat-md em { color: var(--text); font-style: italic; }
+        .chat-md code { font-family: "JetBrains Mono","Fira Code",monospace; font-size: 11.5px; background: var(--surface-alt); border: 1px solid rgba(var(--ink-rgb),0.1); border-radius: 4px; padding: 1px 5px; color: var(--blue); }
         .chat-md pre { margin: 0; }
         .chat-md pre code { background: none; border: none; padding: 0; color: inherit; font-size: 12px; }
-        .chat-md blockquote { margin: 4px 0; padding: 3px 10px; border-left: 3px solid rgba(0,201,184,0.4); color: rgba(255,255,255,0.55); font-style: italic; }
+        .chat-md blockquote { margin: 4px 0; padding: 3px 10px; border-left: 3px solid rgba(var(--accent-rgb),0.4); color: var(--text-secondary); font-style: italic; }
         .chat-md ul, .chat-md ol { margin: 3px 0; padding-left: 18px; }
         .chat-md li { margin-bottom: 2px; }
-        .chat-md h1, .chat-md h2, .chat-md h3 { color: #fff; margin: 7px 0 3px; font-weight: 700; }
+        .chat-md h1, .chat-md h2, .chat-md h3 { color: var(--heading); margin: 7px 0 3px; font-weight: 700; }
         .chat-md h1 { font-size: 15px; } .chat-md h2 { font-size: 14px; } .chat-md h3 { font-size: 13px; }
         .chat-md table { border-collapse: collapse; font-size: 12px; margin: 4px 0; width: 100%; }
-        .chat-md th, .chat-md td { border: 1px solid rgba(255,255,255,0.1); padding: 5px 10px; }
-        .chat-md th { background: rgba(255,255,255,0.05); font-weight: 700; }
+        .chat-md th, .chat-md td { border: 1px solid rgba(var(--ink-rgb),0.1); padding: 5px 10px; }
+        .chat-md th { background: rgba(var(--ink-rgb),0.05); font-weight: 700; }
         .chat-md .katex { font-size: 1.08em; }
         .chat-md .katex-display { margin: 8px 0; overflow-x: auto; }
         .chat-md .katex-display .katex { font-size: 1.12em; }
-        .chat-stb:hover { background: rgba(0,201,184,0.15) !important; border-color: rgba(0,201,184,0.35) !important; color: #00C9B8 !important; }
+        .chat-stb:hover { background: rgba(var(--accent-rgb),0.15) !important; border-color: rgba(var(--accent-rgb),0.35) !important; color: var(--accent) !important; }
         .chat-msg-row { position: relative; }
         .chat-msg-row .chat-pin-btn { opacity: 0; transition: opacity 0.15s; }
         .chat-msg-row:hover .chat-pin-btn { opacity: 1; }
@@ -2642,7 +2642,7 @@ function ChatPanel({ messages, onSend, localUserId, userInfoMap = {}, localUser,
       <PinnedStrip pins={pins} isHostOrCohost={isHostOrCohost} userInfoMap={userInfoMap} onUnpin={onUnpin} />
 
       {(pinError || fileError) && (
-        <div style={{ padding: '6px 14px', background: 'rgba(248,113,113,0.1)', color: '#F87171', fontSize: 11, borderBottom: '1px solid rgba(248,113,113,0.2)' }}>
+        <div style={{ padding: '6px 14px', background: 'rgba(var(--danger-rgb),0.1)', color: 'var(--danger)', fontSize: 11, borderBottom: '1px solid rgba(var(--danger-rgb),0.2)' }}>
           {pinError || fileError}
         </div>
       )}
@@ -2651,12 +2651,12 @@ function ChatPanel({ messages, onSend, localUserId, userInfoMap = {}, localUser,
       <div ref={listRef} onScroll={onScroll} style={{ flex: 1, overflowY: 'auto', padding: '4px 0 8px', display: 'flex', flexDirection: 'column' }}>
         {messages.length === 0 ? (
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10, minHeight: 180, padding: '0 20px', textAlign: 'center' }}>
-            <div style={{ width: 48, height: 48, borderRadius: 14, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" strokeLinecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            <div style={{ width: 48, height: 48, borderRadius: 14, background: 'rgba(var(--ink-rgb),0.04)', border: '1px solid rgba(var(--ink-rgb),0.07)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-faint)" strokeWidth="1.5" strokeLinecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
             </div>
             <div>
-              <p style={{ margin: '0 0 3px', fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.28)' }}>Chưa có tin nhắn</p>
-              <p style={{ margin: 0, fontSize: 11, color: 'rgba(255,255,255,0.16)', lineHeight: 1.55 }}>Hãy bắt đầu cuộc trò chuyện</p>
+              <p style={{ margin: '0 0 3px', fontSize: 13, fontWeight: 600, color: 'var(--text-faint)' }}>Chưa có tin nhắn</p>
+              <p style={{ margin: 0, fontSize: 11, color: 'var(--text-faint)', lineHeight: 1.55 }}>Hãy bắt đầu cuộc trò chuyện</p>
             </div>
           </div>
         ) : messages.map((m, i) => {
@@ -2701,14 +2701,14 @@ function ChatPanel({ messages, onSend, localUserId, userInfoMap = {}, localUser,
                     borderRadius: mine
                       ? (isLastInGroup ? '14px 14px 4px 14px' : '14px 4px 4px 14px')
                       : (isLastInGroup ? '4px 14px 14px 14px' : '4px 14px 14px 4px'),
-                    background: mine ? 'rgba(0,201,184,0.13)' : 'rgba(255,255,255,0.07)',
-                    border: `1px solid ${mine ? 'rgba(0,201,184,0.2)' : 'rgba(255,255,255,0.07)'}`,
+                    background: mine ? 'rgba(var(--accent-rgb),0.13)' : 'rgba(var(--ink-rgb),0.07)',
+                    border: `1px solid ${mine ? 'rgba(var(--accent-rgb),0.2)' : 'rgba(var(--ink-rgb),0.07)'}`,
                   }}>
                     {m.file && <FileAttachment file={m.file} mine={mine} />}
                     {m.text && <div style={m.file ? { marginTop: 6 } : undefined}><MarkdownMessage content={m.text} mdReady={mdReady} onLinkClick={setPendingLink} /></div>}
                   </div>
                   {isLastInGroup && (
-                    <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.2)', marginTop: 4 }}>{fmt(m.timestamp_ms)}</span>
+                    <span style={{ fontSize: 9, color: 'var(--text-faint)', marginTop: 4 }}>{fmt(m.timestamp_ms)}</span>
                   )}
                 </div>
                 {!mine && isHostOrCohost && (
@@ -2726,21 +2726,21 @@ function ChatPanel({ messages, onSend, localUserId, userInfoMap = {}, localUser,
 
       {/* Scroll-to-bottom button */}
       {!atBottom && (
-        <button className="chat-stb" onClick={scrollToBottom} style={{ position: 'absolute', bottom: 80, right: 14, width: 30, height: 30, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(12,15,28,0.92)', backdropFilter: 'blur(12px)', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.5)', transition: 'all 0.15s', padding: 0, zIndex: 10 }}>
+        <button className="chat-stb" onClick={scrollToBottom} style={{ position: 'absolute', bottom: 80, right: 14, width: 30, height: 30, borderRadius: '50%', border: '1px solid rgba(var(--ink-rgb),0.12)', background: 'var(--surface)', backdropFilter: 'blur(12px)', color: 'var(--text-secondary)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 20px rgba(var(--shadow-rgb),0.5)', transition: 'all 0.15s', padding: 0, zIndex: 10 }}>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
       )}
 
       {/* ── Input ── */}
-      <div style={{ paddingTop: 10, borderTop: '1px solid rgba(255,255,255,0.06)', flexShrink: 0 }}>
+      <div style={{ paddingTop: 10, borderTop: '1px solid rgba(var(--ink-rgb),0.06)', flexShrink: 0 }}>
         <div
-          style={{ display: 'flex', alignItems: 'flex-end', gap: 8, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.09)', borderRadius: 14, padding: '7px 7px 7px 13px', transition: 'border-color 0.15s, box-shadow 0.15s' }}
-          onFocusCapture={e => { e.currentTarget.style.borderColor = 'rgba(0,201,184,0.42)'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,201,184,0.07)' }}
-          onBlurCapture={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.09)'; e.currentTarget.style.boxShadow = 'none' }}
+          style={{ display: 'flex', alignItems: 'flex-end', gap: 8, background: 'rgba(var(--ink-rgb),0.05)', border: '1px solid rgba(var(--ink-rgb),0.09)', borderRadius: 14, padding: '7px 7px 7px 13px', transition: 'border-color 0.15s, box-shadow 0.15s' }}
+          onFocusCapture={e => { e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),0.42)'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(var(--accent-rgb),0.07)' }}
+          onBlurCapture={e => { e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb),0.09)'; e.currentTarget.style.boxShadow = 'none' }}
         >
           <input ref={fileInputRef} type="file" onChange={handleFilePick} style={{ display: 'none' }} />
           <button onClick={() => fileInputRef.current?.click()} disabled={uploading} title="Đính kèm tệp (tối đa 25MB)"
-            style={{ width: 34, height: 34, borderRadius: 10, border: 'none', flexShrink: 0, background: 'transparent', color: uploading ? '#00C9B8' : 'rgba(255,255,255,0.45)', cursor: uploading ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-end', marginLeft: -6, padding: 0 }}>
+            style={{ width: 34, height: 34, borderRadius: 10, border: 'none', flexShrink: 0, background: 'transparent', color: uploading ? 'var(--accent)' : 'var(--text-muted)', cursor: uploading ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-end', marginLeft: -6, padding: 0 }}>
             {uploading
               ? <span style={{ fontSize: 10, fontWeight: 700 }}>…</span>
               : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>}
@@ -2752,13 +2752,13 @@ function ChatPanel({ messages, onSend, localUserId, userInfoMap = {}, localUser,
             onKeyDown={handleKeyDown}
             placeholder="Nhắn tin…"
             rows={1}
-            style={{ flex: 1, resize: 'none', border: 'none', outline: 'none', background: 'transparent', color: '#fff', fontSize: 13, fontFamily: 'inherit', lineHeight: 1.55, padding: '3px 0', minHeight: 22, overflowY: 'hidden', alignSelf: 'center' }}
+            style={{ flex: 1, resize: 'none', border: 'none', outline: 'none', background: 'transparent', color: 'var(--heading)', fontSize: 13, fontFamily: 'inherit', lineHeight: 1.55, padding: '3px 0', minHeight: 22, overflowY: 'hidden', alignSelf: 'center' }}
           />
-          <button onClick={handleSend} disabled={!text.trim()} style={{ width: 34, height: 34, borderRadius: 10, border: 'none', flexShrink: 0, background: text.trim() ? 'linear-gradient(135deg,#00C9B8,#009E8A)' : 'rgba(255,255,255,0.05)', color: text.trim() ? '#07090F' : 'rgba(255,255,255,0.18)', cursor: text.trim() ? 'pointer' : 'default', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.18s', boxShadow: text.trim() ? '0 4px 14px rgba(0,201,184,0.35)' : 'none', alignSelf: 'flex-end' }}>
+          <button onClick={handleSend} disabled={!text.trim()} style={{ width: 34, height: 34, borderRadius: 10, border: 'none', flexShrink: 0, background: text.trim() ? 'linear-gradient(135deg, var(--button-start), var(--button-end))' : 'rgba(var(--ink-rgb),0.05)', color: text.trim() ? 'var(--on-accent)' : 'var(--text-faint)', cursor: text.trim() ? 'pointer' : 'default', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.18s', boxShadow: text.trim() ? '0 4px 14px rgba(var(--accent-rgb),0.35)' : 'none', alignSelf: 'flex-end' }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
           </button>
         </div>
-        <p style={{ margin: '5px 2px 0', fontSize: 9.5, color: 'rgba(255,255,255,0.15)', lineHeight: 1.4 }}>
+        <p style={{ margin: '5px 2px 0', fontSize: 9.5, color: 'var(--text-faint)', lineHeight: 1.4 }}>
           Enter gửi · Shift+Enter xuống dòng
         </p>
       </div>
@@ -2849,7 +2849,7 @@ function SignRecorder({ onResult, onClose, BASE, accessToken }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
       {/* Camera preview */}
-      <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', borderRadius: 10, overflow: 'hidden', background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.08)' }}>
+      <div className="media-surface" style={{ position: 'relative', width: '100%', aspectRatio: '16/9', borderRadius: 10, overflow: 'hidden', background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.08)' }}>
         <video ref={videoRef} autoPlay playsInline muted style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'scaleX(-1)', display: phase === 'translating' ? 'none' : 'block' }} />
         {phase === 'translating' && (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 10, color: 'rgba(255,255,255,0.5)' }}>
@@ -2883,8 +2883,8 @@ function SignRecorder({ onResult, onClose, BASE, accessToken }) {
             disabled={phase === 'translating' || phase === 'error'}
             style={{
               flex: 1, padding: '9px', borderRadius: 9, border: 'none', fontFamily: 'inherit',
-              background: phase === 'error' ? 'rgba(255,255,255,0.05)' : 'rgba(0,201,184,0.15)',
-              color: phase === 'error' ? 'rgba(255,255,255,0.2)' : '#00C9B8',
+              background: phase === 'error' ? 'rgba(var(--ink-rgb),0.05)' : 'rgba(var(--accent-rgb),0.15)',
+              color: phase === 'error' ? 'var(--text-faint)' : 'var(--accent)',
               fontSize: 12, fontWeight: 700, cursor: phase === 'error' ? 'default' : 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
             }}
@@ -2897,7 +2897,7 @@ function SignRecorder({ onResult, onClose, BASE, accessToken }) {
             onClick={stopAndTranslate}
             style={{
               flex: 1, padding: '9px', borderRadius: 9, border: 'none', fontFamily: 'inherit',
-              background: 'rgba(255,107,138,0.15)', color: '#FF6B8A',
+              background: 'rgba(var(--danger-rgb),0.15)', color: 'var(--danger)',
               fontSize: 12, fontWeight: 700, cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
             }}
@@ -2910,8 +2910,8 @@ function SignRecorder({ onResult, onClose, BASE, accessToken }) {
           onClick={onClose}
           disabled={phase === 'translating'}
           style={{
-            padding: '9px 14px', borderRadius: 9, border: '1px solid rgba(255,255,255,0.08)', fontFamily: 'inherit',
-            background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.4)',
+            padding: '9px 14px', borderRadius: 9, border: '1px solid rgba(var(--ink-rgb),0.08)', fontFamily: 'inherit',
+            background: 'rgba(var(--ink-rgb),0.04)', color: 'var(--text-muted)',
             fontSize: 12, cursor: phase === 'translating' ? 'default' : 'pointer',
           }}
         >
@@ -2991,11 +2991,11 @@ function TtsPanel({ meetingId, accessToken, ttsMessages, captionsWsRef, localPar
         <div style={{
           display: 'flex', alignItems: 'center', gap: 10,
           padding: '10px 14px', borderRadius: 10,
-          background: 'rgba(255,107,138,0.08)', border: '1px solid rgba(255,107,138,0.2)',
+          background: 'rgba(var(--danger-rgb),0.08)', border: '1px solid rgba(var(--danger-rgb),0.2)',
           flexShrink: 0,
         }}>
-          <MicIcon on={false} size={15} color="#FF6B8A" />
-          <p style={{ margin: 0, fontSize: 12, color: '#FF6B8A', lineHeight: 1.5 }}>
+          <MicIcon on={false} size={15} color="var(--danger)" />
+          <p style={{ margin: 0, fontSize: 12, color: 'var(--danger)', lineHeight: 1.5 }}>
             Mic đang tắt — bật mic để sử dụng TTS.
           </p>
         </div>
@@ -3006,18 +3006,18 @@ function TtsPanel({ meetingId, accessToken, ttsMessages, captionsWsRef, localPar
         {myMessages.length === 0 ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: 1, gap: 10, minHeight: 120, textAlign: 'center' }}>
             <TtsIcon size={28} />
-            <p style={{ margin: 0, fontSize: 12, color: 'rgba(255,255,255,0.25)' }}>Nhập văn bản để chuyển thành giọng nói</p>
+            <p style={{ margin: 0, fontSize: 12, color: 'var(--text-faint)' }}>Nhập văn bản để chuyển thành giọng nói</p>
           </div>
         ) : myMessages.map(m => (
           <div key={m.id} style={{
             padding: '9px 12px', borderRadius: 10,
-            background: 'rgba(167,139,250,0.07)', border: '1px solid rgba(167,139,250,0.12)',
+            background: 'rgba(var(--purple-rgb),0.07)', border: '1px solid rgba(var(--purple-rgb),0.12)',
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-              <span style={{ fontSize: 11, fontWeight: 700, color: '#A78BFA' }}>{m.speaker_name}</span>
-              <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.2)' }}>{fmt(m.timestamp_ms)}</span>
+              <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--purple)' }}>{m.speaker_name}</span>
+              <span style={{ fontSize: 10, color: 'var(--text-faint)' }}>{fmt(m.timestamp_ms)}</span>
             </div>
-            <p style={{ margin: 0, fontSize: 13, color: 'rgba(255,255,255,0.78)', lineHeight: 1.5 }}>{m.text}</p>
+            <p style={{ margin: 0, fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.5 }}>{m.text}</p>
             {m.audio_url && (
               <button onClick={async () => {
                 if (!micEnabled || !localParticipant) return
@@ -3039,8 +3039,8 @@ function TtsPanel({ meetingId, accessToken, ttsMessages, captionsWsRef, localPar
                 } catch {}
               }} style={{
                 marginTop: 6, display: 'flex', alignItems: 'center', gap: 5, padding: '4px 10px',
-                borderRadius: 7, border: '1px solid rgba(167,139,250,0.2)',
-                background: 'rgba(167,139,250,0.08)', color: '#A78BFA',
+                borderRadius: 7, border: '1px solid rgba(var(--purple-rgb),0.2)',
+                background: 'rgba(var(--purple-rgb),0.08)', color: 'var(--purple)',
                 fontSize: 11, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
               }}>
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -3063,7 +3063,7 @@ function TtsPanel({ meetingId, accessToken, ttsMessages, captionsWsRef, localPar
       )}
 
       {/* Input */}
-      {error && <p style={{ margin: 0, fontSize: 11, color: '#F87171' }}>{error}</p>}
+      {error && <p style={{ margin: 0, fontSize: 11, color: 'var(--danger)' }}>{error}</p>}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         <textarea
           value={text}
@@ -3073,12 +3073,12 @@ function TtsPanel({ meetingId, accessToken, ttsMessages, captionsWsRef, localPar
           rows={3}
           style={{
             width: '100%', padding: '10px 12px', borderRadius: 10, resize: 'none',
-            background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.09)',
-            color: '#fff', fontSize: 13, fontFamily: 'inherit', outline: 'none',
+            background: 'rgba(var(--ink-rgb),0.05)', border: '1px solid rgba(var(--ink-rgb),0.09)',
+            color: 'var(--heading)', fontSize: 13, fontFamily: 'inherit', outline: 'none',
             boxSizing: 'border-box', lineHeight: 1.5, transition: 'border-color 0.15s',
           }}
-          onFocus={e => e.target.style.borderColor = 'rgba(167,139,250,0.4)'}
-          onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.09)'}
+          onFocus={e => e.target.style.borderColor = 'rgba(var(--purple-rgb),0.4)'}
+          onBlur={e => e.target.style.borderColor = 'rgba(var(--ink-rgb),0.09)'}
         />
         <div style={{ display: 'flex', gap: 8 }}>
           <button
@@ -3086,9 +3086,9 @@ function TtsPanel({ meetingId, accessToken, ttsMessages, captionsWsRef, localPar
             disabled={!micEnabled}
             title="Dịch ngôn ngữ ký hiệu"
             style={{
-              padding: '10px 14px', borderRadius: 10, border: showSign ? '1px solid rgba(0,201,184,0.4)' : '1px solid rgba(255,255,255,0.08)',
-              background: showSign ? 'rgba(0,201,184,0.12)' : 'rgba(255,255,255,0.04)',
-              color: showSign ? '#00C9B8' : (micEnabled ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.15)'),
+              padding: '10px 14px', borderRadius: 10, border: showSign ? '1px solid rgba(var(--accent-rgb),0.4)' : '1px solid rgba(var(--ink-rgb),0.08)',
+              background: showSign ? 'rgba(var(--accent-rgb),0.12)' : 'rgba(var(--ink-rgb),0.04)',
+              color: showSign ? 'var(--accent)' : (micEnabled ? 'var(--text-secondary)' : 'var(--text-faint)'),
               cursor: micEnabled ? 'pointer' : 'default', flexShrink: 0,
               transition: 'all 0.15s', lineHeight: 1,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -3110,8 +3110,8 @@ function TtsPanel({ meetingId, accessToken, ttsMessages, captionsWsRef, localPar
             disabled={!text.trim() || sending || !micEnabled}
             style={{
               flex: 1, padding: '10px', borderRadius: 10, border: 'none',
-              background: text.trim() && !sending && micEnabled ? 'linear-gradient(135deg, #A78BFA, #7C3AED)' : 'rgba(167,139,250,0.1)',
-              color: text.trim() && !sending && micEnabled ? '#fff' : 'rgba(255,255,255,0.25)',
+              background: text.trim() && !sending && micEnabled ? 'linear-gradient(135deg, var(--purple), #7C3AED)' : 'rgba(var(--purple-rgb),0.1)',
+              color: text.trim() && !sending && micEnabled ? 'var(--on-accent)' : 'var(--text-faint)',
               fontSize: 13, fontWeight: 700, cursor: text.trim() && !sending && micEnabled ? 'pointer' : 'default',
               fontFamily: 'inherit', transition: 'all 0.15s',
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
@@ -3135,12 +3135,12 @@ function TtsPanel({ meetingId, accessToken, ttsMessages, captionsWsRef, localPar
 function ComingSoonPanel({ label, phase }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', minHeight: 200, textAlign: 'center', gap: 12 }}>
-      <div style={{ width: 48, height: 48, borderRadius: 14, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.2)' }}>
+      <div style={{ width: 48, height: 48, borderRadius: 14, background: 'rgba(var(--ink-rgb),0.05)', border: '1px solid rgba(var(--ink-rgb),0.07)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-faint)' }}>
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
       </div>
       <div>
-        <p style={{ margin: '0 0 4px', fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.3)' }}>{label}</p>
-        <p style={{ margin: 0, fontSize: 12, color: 'rgba(255,255,255,0.16)' }}>Sắp ra mắt · {phase}</p>
+        <p style={{ margin: '0 0 4px', fontSize: 14, fontWeight: 700, color: 'var(--text-muted)' }}>{label}</p>
+        <p style={{ margin: 0, fontSize: 12, color: 'var(--text-faint)' }}>Sắp ra mắt · {phase}</p>
       </div>
     </div>
   )
@@ -3171,16 +3171,16 @@ function LeaveButton({ isHost, leaving, ending, onLeave, onEnd }) {
         title="Rời phòng"
         style={{
           width: 52, height: 52, borderRadius: 14,
-          background: leaving ? 'rgba(255,255,255,0.06)' : 'rgba(15,18,32,0.95)',
-          border: '1px solid rgba(255,69,69,0.3)',
-          color: leaving ? 'rgba(255,255,255,0.3)' : '#FF5555',
+          background: leaving ? 'rgba(var(--ink-rgb),0.06)' : 'var(--surface)',
+          border: '1px solid rgba(var(--danger-rgb),0.3)',
+          color: leaving ? 'var(--text-muted)' : 'var(--danger)',
           cursor: leaving ? 'default' : 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           transition: 'all 0.15s',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.4)',
+          boxShadow: '0 2px 10px rgba(var(--shadow-rgb),0.4)',
         }}
-        onMouseEnter={e => { if (!leaving) { e.currentTarget.style.background = '#FF3B3B'; e.currentTarget.style.borderColor = '#FF3B3B'; e.currentTarget.style.color = '#fff' } }}
-        onMouseLeave={e => { e.currentTarget.style.background = 'rgba(15,18,32,0.95)'; e.currentTarget.style.borderColor = 'rgba(255,69,69,0.3)'; e.currentTarget.style.color = '#FF5555' }}
+        onMouseEnter={e => { if (!leaving) { e.currentTarget.style.background = 'var(--danger)'; e.currentTarget.style.borderColor = 'var(--danger)'; e.currentTarget.style.color = 'var(--on-accent)' } }}
+        onMouseLeave={e => { e.currentTarget.style.background = 'var(--surface)'; e.currentTarget.style.borderColor = 'rgba(var(--danger-rgb),0.3)'; e.currentTarget.style.color = 'var(--danger)' }}
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
           <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" transform="rotate(135 12 12)"/>
@@ -3197,16 +3197,16 @@ function LeaveButton({ isHost, leaving, ending, onLeave, onEnd }) {
         title="Rời / Kết thúc"
         style={{
           width: 52, height: 52, borderRadius: 14,
-          background: open ? '#FF3B3B' : (busy ? 'rgba(255,255,255,0.06)' : 'rgba(15,18,32,0.95)'),
-          border: `1px solid ${open ? '#FF3B3B' : 'rgba(255,69,69,0.3)'}`,
-          color: open ? '#fff' : (busy ? 'rgba(255,255,255,0.3)' : '#FF5555'),
+          background: open ? 'var(--danger)' : (busy ? 'rgba(var(--ink-rgb),0.06)' : 'var(--surface)'),
+          border: `1px solid ${open ? 'var(--danger)' : 'rgba(var(--danger-rgb),0.3)'}`,
+          color: open ? 'var(--on-accent)' : (busy ? 'var(--text-muted)' : 'var(--danger)'),
           cursor: busy ? 'default' : 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           transition: 'all 0.15s',
-          boxShadow: open ? '0 4px 14px rgba(255,59,59,0.4)' : '0 2px 10px rgba(0,0,0,0.4)',
+          boxShadow: open ? '0 4px 14px rgba(255,59,59,0.4)' : '0 2px 10px rgba(var(--shadow-rgb),0.4)',
         }}
-        onMouseEnter={e => { if (!busy) { e.currentTarget.style.background = '#FF3B3B'; e.currentTarget.style.borderColor = '#FF3B3B'; e.currentTarget.style.color = '#fff' } }}
-        onMouseLeave={e => { if (!open) { e.currentTarget.style.background = 'rgba(15,18,32,0.95)'; e.currentTarget.style.borderColor = 'rgba(255,69,69,0.3)'; e.currentTarget.style.color = '#FF5555' } }}
+        onMouseEnter={e => { if (!busy) { e.currentTarget.style.background = 'var(--danger)'; e.currentTarget.style.borderColor = 'var(--danger)'; e.currentTarget.style.color = 'var(--on-accent)' } }}
+        onMouseLeave={e => { if (!open) { e.currentTarget.style.background = 'var(--surface)'; e.currentTarget.style.borderColor = 'rgba(var(--danger-rgb),0.3)'; e.currentTarget.style.color = 'var(--danger)' } }}
       >
         {busy ? (
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
@@ -3223,9 +3223,9 @@ function LeaveButton({ isHost, leaving, ending, onLeave, onEnd }) {
       {open && (
         <div style={{
           position: 'absolute', bottom: 'calc(100% + 10px)', right: 0,
-          background: '#0F1220', border: '1px solid rgba(255,255,255,0.09)',
+          background: 'var(--surface)', border: '1px solid rgba(var(--ink-rgb),0.09)',
           borderRadius: 12, overflow: 'hidden', minWidth: 200,
-          boxShadow: '0 12px 40px rgba(0,0,0,0.6)',
+          boxShadow: '0 12px 40px rgba(var(--shadow-rgb),0.6)',
           animation: 'dropUp 0.15s cubic-bezier(0.22,1,0.36,1)',
         }}>
           {/* Leave option — always shown */}
@@ -3239,13 +3239,13 @@ function LeaveButton({ isHost, leaving, ending, onLeave, onEnd }) {
             }
             label="Rời phòng"
             sub="Cuộc họp vẫn tiếp tục"
-            color="rgba(255,255,255,0.75)"
+            color="var(--text-secondary)"
           />
 
           {/* End option — host only */}
           {isHost && (
             <>
-              <div style={{ height: 1, background: 'rgba(255,255,255,0.06)', margin: '0 12px' }} />
+              <div style={{ height: 1, background: 'rgba(var(--ink-rgb),0.06)', margin: '0 12px' }} />
               <DropItem
                 onClick={() => { setOpen(false); onEnd() }}
                 icon={
@@ -3255,7 +3255,7 @@ function LeaveButton({ isHost, leaving, ending, onLeave, onEnd }) {
                 }
                 label="Kết thúc cuộc họp"
                 sub="Tất cả thành viên sẽ bị ngắt"
-                color="#FF6B8A"
+                color="var(--danger)"
               />
             </>
           )}
@@ -3331,18 +3331,18 @@ function CopyCodeBtn({ roomCode, compact = false, isMobile = false }) {
         display: 'flex', alignItems: 'center', gap: compact ? 4 : 6,
         padding: compact ? '3px 8px' : '5px 10px',
         borderRadius: compact ? 6 : 7,
-        border: `1px solid ${open ? 'rgba(0,201,184,0.3)' : 'rgba(255,255,255,0.08)'}`,
-        background: open ? 'rgba(0,201,184,0.08)' : 'rgba(255,255,255,0.05)',
-        cursor: 'pointer', color: '#fff', transition: 'all 0.15s',
+        border: `1px solid ${open ? 'rgba(var(--accent-rgb),0.3)' : 'rgba(var(--ink-rgb),0.08)'}`,
+        background: open ? 'rgba(var(--accent-rgb),0.08)' : 'rgba(var(--ink-rgb),0.05)',
+        cursor: 'pointer', color: 'var(--heading)', transition: 'all 0.15s',
         fontFamily: 'inherit',
       }}>
-        <span style={{ fontSize: compact ? 11 : 12, fontWeight: 700, letterSpacing: '0.08em', color: open ? '#00C9B8' : 'rgba(255,255,255,0.8)' }}>
+        <span style={{ fontSize: compact ? 11 : 12, fontWeight: 700, letterSpacing: '0.08em', color: open ? 'var(--accent)' : 'var(--text)' }}>
           {roomCode}
         </span>
         {tip ? (
-          <span style={{ fontSize: compact ? 9 : 10, color: '#00C9B8', fontWeight: 700 }}>✓</span>
+          <span style={{ fontSize: compact ? 9 : 10, color: 'var(--accent)', fontWeight: 700 }}>✓</span>
         ) : (
-          <svg width={compact ? 9 : 10} height={compact ? 9 : 10} viewBox="0 0 24 24" fill="none" stroke={open ? '#00C9B8' : 'rgba(255,255,255,0.35)'} strokeWidth="2">
+          <svg width={compact ? 9 : 10} height={compact ? 9 : 10} viewBox="0 0 24 24" fill="none" stroke={open ? 'var(--accent)' : 'var(--text-muted)'} strokeWidth="2">
             <rect x="9" y="9" width="13" height="13" rx="2"/>
             <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
           </svg>
@@ -3357,9 +3357,9 @@ function CopyCodeBtn({ roomCode, compact = false, isMobile = false }) {
           style={{
             position: 'absolute', bottom: 'calc(100% + 8px)', left: 0,
             minWidth: 190, zIndex: 300,
-            background: '#12172A', border: '1px solid rgba(255,255,255,0.1)',
+            background: 'var(--surface-hover)', border: '1px solid rgba(var(--ink-rgb),0.1)',
             borderRadius: 12, overflow: 'hidden',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+            boxShadow: '0 8px 32px rgba(var(--shadow-rgb),0.5)',
             animation: 'dropUp 0.15s cubic-bezier(0.22,1,0.36,1)',
           }}
         >
@@ -3375,7 +3375,7 @@ function CopyCodeBtn({ roomCode, compact = false, isMobile = false }) {
             label="Sao chép mã phòng"
             value={roomCode}
           />
-          <div style={{ height: 1, background: 'rgba(255,255,255,0.05)', margin: '0 12px' }} />
+          <div style={{ height: 1, background: 'rgba(var(--ink-rgb),0.05)', margin: '0 12px' }} />
           <CopyDropItem
             onClick={copyLink}
             active={tip === 'link'}
@@ -3403,16 +3403,16 @@ function CopyDropItem({ onClick, icon, label, value, active }) {
       onMouseLeave={() => setHovered(false)}
       style={{
         width: '100%', padding: '10px 14px', border: 'none', textAlign: 'left',
-        background: hovered ? 'rgba(255,255,255,0.05)' : 'transparent',
+        background: hovered ? 'rgba(var(--ink-rgb),0.05)' : 'transparent',
         cursor: 'pointer', fontFamily: 'inherit', transition: 'background 0.12s',
         display: 'flex', alignItems: 'center', gap: 10,
-        color: active ? '#00C9B8' : 'rgba(255,255,255,0.75)',
+        color: active ? 'var(--accent)' : 'var(--text-secondary)',
       }}
     >
-      <span style={{ flexShrink: 0, display: 'flex', color: active ? '#00C9B8' : 'rgba(255,255,255,0.4)' }}>{icon}</span>
+      <span style={{ flexShrink: 0, display: 'flex', color: active ? 'var(--accent)' : 'var(--text-muted)' }}>{icon}</span>
       <div style={{ minWidth: 0 }}>
         <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 2 }}>{active ? 'Đã sao chép!' : label}</div>
-        <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{value}</div>
+        <div style={{ fontSize: 10, color: 'var(--text-faint)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{value}</div>
       </div>
     </button>
   )
@@ -3427,7 +3427,7 @@ function DropItem({ onClick, icon, label, sub, color }) {
       onMouseLeave={() => setHovered(false)}
       style={{
         width: '100%', padding: '12px 16px', border: 'none', textAlign: 'left',
-        background: hovered ? 'rgba(255,255,255,0.05)' : 'transparent',
+        background: hovered ? 'rgba(var(--ink-rgb),0.05)' : 'transparent',
         cursor: 'pointer', fontFamily: 'inherit', transition: 'background 0.12s',
         display: 'flex', alignItems: 'center', gap: 12,
       }}
@@ -3435,7 +3435,7 @@ function DropItem({ onClick, icon, label, sub, color }) {
       <span style={{ color, display: 'flex', flexShrink: 0 }}>{icon}</span>
       <div>
         <div style={{ fontSize: 13, fontWeight: 700, color, lineHeight: 1.3 }}>{label}</div>
-        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', marginTop: 2 }}>{sub}</div>
+        <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>{sub}</div>
       </div>
     </button>
   )
@@ -3443,7 +3443,7 @@ function DropItem({ onClick, icon, label, sub, color }) {
 
 /* ── Bottom bar helpers ──────────────────────────────────────────────────── */
 function Divider() {
-  return <div style={{ width: 1, height: 26, background: 'rgba(255,255,255,0.1)', margin: '0 4px', flexShrink: 0 }} />
+  return <div style={{ width: 1, height: 26, background: 'rgba(var(--ink-rgb),0.1)', margin: '0 4px', flexShrink: 0 }} />
 }
 
 /* ── Screen share button ────────────────────────────────────────────────── */
@@ -3464,9 +3464,9 @@ function ScreenShareBtn({ active, disabled, onClick }) {
           opacity: disabled ? 0.35 : 1,
           background: active
             ? (hovered ? '#007A6C' : '#00A896')
-            : (hovered ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.07)'),
-          color: active ? '#fff' : 'rgba(255,255,255,0.7)',
-          boxShadow: active ? '0 0 0 3px rgba(0,201,184,0.3)' : 'none',
+            : (hovered ? 'rgba(var(--ink-rgb),0.12)' : 'rgba(var(--ink-rgb),0.07)'),
+          color: active ? 'var(--on-accent)' : 'var(--text-secondary)',
+          boxShadow: active ? '0 0 0 3px rgba(var(--accent-rgb),0.3)' : 'none',
           animation: active ? 'screenPulse 2s ease-in-out infinite' : 'none',
         }}
       >
@@ -3493,12 +3493,12 @@ function IconBtn({ children, on, onClick, offRed, disabled, title }) {
         transition: 'all 0.15s',
         opacity: disabled ? 0.35 : 1,
         background: isOff
-          ? (hovered ? 'rgba(255,69,69,0.28)' : 'rgba(255,69,69,0.16)')
+          ? (hovered ? 'rgba(var(--danger-rgb),0.28)' : 'rgba(var(--danger-rgb),0.16)')
           : on
-            ? (hovered ? 'rgba(0,201,184,0.28)' : 'rgba(0,201,184,0.15)')
-            : (hovered ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.07)'),
-        color: isOff ? '#FF5555' : on ? '#00C9B8' : 'rgba(255,255,255,0.7)',
-        boxShadow: on && !offRed ? '0 0 0 1px rgba(0,201,184,0.2)' : 'none',
+            ? (hovered ? 'rgba(var(--accent-rgb),0.28)' : 'rgba(var(--accent-rgb),0.15)')
+            : (hovered ? 'rgba(var(--ink-rgb),0.12)' : 'rgba(var(--ink-rgb),0.07)'),
+        color: isOff ? 'var(--danger)' : on ? 'var(--accent)' : 'var(--text-secondary)',
+        boxShadow: on && !offRed ? '0 0 0 1px rgba(var(--accent-rgb),0.2)' : 'none',
       }}
     >
       {children}
@@ -3603,7 +3603,7 @@ function NotesIcon({ size = 18 }) {
 }
 
 function HandIcon({ size = 18, on = false }) {
-  const stroke = on ? '#FBBF24' : 'currentColor'
+  const stroke = on ? 'var(--warning)' : 'currentColor'
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={stroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
       <path d="M6.9 11.4444V14.2222M6.9 11.4444V4.77778C6.9 3.8573 7.66112 3.11111 8.6 3.11111C9.53888 3.11111 10.3 3.8573 10.3 4.77778M6.9 11.4444C6.9 10.524 6.13888 9.77778 5.2 9.77778C4.26112 9.77778 3.5 10.524 3.5 11.4444V13.6667C3.5 18.269 7.30558 22 12 22C16.6944 22 20.5 18.269 20.5 13.6667V8.11111C20.5 7.19064 19.7389 6.44444 18.8 6.44444C17.8611 6.44444 17.1 7.19064 17.1 8.11111M10.3 4.77778V10.8889M10.3 4.77778V3.66667C10.3 2.74619 11.0611 2 12 2C12.9389 2 13.7 2.74619 13.7 3.66667V4.77778M13.7 4.77778V10.8889M13.7 4.77778C13.7 3.8573 14.4611 3.11111 15.4 3.11111C16.3389 3.11111 17.1 3.8573 17.1 4.77778V8.11111M17.1 8.11111V10.8889" />
@@ -3614,7 +3614,7 @@ function HandIcon({ size = 18, on = false }) {
 function RaisedHandIcon({ size = 18 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M8.6 3.11111C7.66112 3.11111 6.9 3.8573 6.9 4.77778L6.9 9.97C6.34 9.65 5.79 9.77778 5.2 9.77778C4.26112 9.77778 3.5 10.524 3.5 11.4444L3.5 13.6667C3.5 18.269 7.30558 22 12 22C16.6944 22 20.5 18.269 20.5 13.6667L20.5 8.11111C20.5 7.19064 19.7389 6.44444 18.8 6.44444C18.13 6.44444 17.55 6.82 17.1 7.3L17.1 4.77778C17.1 3.8573 16.3389 3.11111 15.4 3.11111C14.4611 3.11111 13.7 3.8573 13.7 4.77778L13.7 3.66667C13.7 2.74619 12.9389 2 12 2C11.0611 2 10.3 2.74619 10.3 3.66667L10.3 4.77778C10.3 3.8573 9.53888 3.11111 8.6 3.11111Z" fill="#FBBF24" stroke="none"/>
+      <path d="M8.6 3.11111C7.66112 3.11111 6.9 3.8573 6.9 4.77778L6.9 9.97C6.34 9.65 5.79 9.77778 5.2 9.77778C4.26112 9.77778 3.5 10.524 3.5 11.4444L3.5 13.6667C3.5 18.269 7.30558 22 12 22C16.6944 22 20.5 18.269 20.5 13.6667L20.5 8.11111C20.5 7.19064 19.7389 6.44444 18.8 6.44444C18.13 6.44444 17.55 6.82 17.1 7.3L17.1 4.77778C17.1 3.8573 16.3389 3.11111 15.4 3.11111C14.4611 3.11111 13.7 3.8573 13.7 4.77778L13.7 3.66667C13.7 2.74619 12.9389 2 12 2C11.0611 2 10.3 2.74619 10.3 3.66667L10.3 4.77778C10.3 3.8573 9.53888 3.11111 8.6 3.11111Z" fill="var(--warning)" stroke="none"/>
       <path d="M6.9 11.4444V14.2222M6.9 11.4444V4.77778C6.9 3.8573 7.66112 3.11111 8.6 3.11111C9.53888 3.11111 10.3 3.8573 10.3 4.77778M6.9 11.4444C6.9 10.524 6.13888 9.77778 5.2 9.77778C4.26112 9.77778 3.5 10.524 3.5 11.4444V13.6667C3.5 18.269 7.30558 22 12 22C16.6944 22 20.5 18.269 20.5 13.6667V8.11111C20.5 7.19064 19.7389 6.44444 18.8 6.44444C17.8611 6.44444 17.1 7.19064 17.1 8.11111M10.3 4.77778V10.8889M10.3 4.77778V3.66667C10.3 2.74619 11.0611 2 12 2C12.9389 2 13.7 2.74619 13.7 3.66667V4.77778M13.7 4.77778V10.8889M13.7 4.77778C13.7 3.8573 14.4611 3.11111 15.4 3.11111C16.3389 3.11111 17.1 3.8573 17.1 4.77778V8.11111M17.1 8.11111V10.8889" stroke="#92400E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   )

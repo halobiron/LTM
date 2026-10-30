@@ -125,24 +125,24 @@ export default function VoicePanel() {
           rows={3}
           style={{
             width: '100%', padding: '10px 14px', borderRadius: 9, resize: 'vertical',
-            background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.09)',
-            color: '#fff', fontSize: 14, outline: 'none', fontFamily: 'inherit',
+            background: 'rgba(var(--ink-rgb),0.05)', border: '1px solid rgba(var(--ink-rgb),0.09)',
+            color: 'var(--heading)', fontSize: 14, outline: 'none', fontFamily: 'inherit',
             transition: 'border-color 0.15s', boxSizing: 'border-box', lineHeight: 1.6,
           }}
-          onFocus={e => e.target.style.borderColor = '#00C9B8'}
-          onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.09)'}
+          onFocus={e => e.target.style.borderColor = 'var(--accent)'}
+          onBlur={e => e.target.style.borderColor = 'rgba(var(--ink-rgb),0.09)'}
         />
-        {demoError && <p style={{ margin: 0, fontSize: 12, color: '#F87171' }}>{demoError}</p>}
+        {demoError && <p style={{ margin: 0, fontSize: 12, color: 'var(--danger)' }}>{demoError}</p>}
         <button
           onClick={handleDemo}
           disabled={demoing || !demoText.trim()}
           style={{
             alignSelf: 'flex-start', display: 'flex', alignItems: 'center', gap: 8,
             padding: '9px 20px', borderRadius: 9, cursor: demoing ? 'default' : 'pointer',
-            background: demoing ? 'rgba(0,201,184,0.3)' : 'rgba(0,201,184,0.12)',
-            color: '#00C9B8', fontWeight: 600, fontSize: 13,
+            background: demoing ? 'rgba(var(--accent-rgb),0.3)' : 'rgba(var(--accent-rgb),0.12)',
+            color: 'var(--accent)', fontWeight: 600, fontSize: 13,
             fontFamily: 'inherit', transition: 'all 0.2s',
-            border: '1px solid rgba(0,201,184,0.25)',
+            border: '1px solid rgba(var(--accent-rgb),0.25)',
           }}
         >
           {demoing
@@ -153,7 +153,7 @@ export default function VoicePanel() {
       </Section>
 
       {/* ── Divider ── */}
-      <div style={{ height: 1, background: 'rgba(255,255,255,0.06)', margin: '0 -2px' }} />
+      <div style={{ height: 1, background: 'rgba(var(--ink-rgb),0.06)', margin: '0 -2px' }} />
 
       {!configLoaded ? (
         <div style={{ padding: '24px 0', display: 'flex', justifyContent: 'center' }}>
@@ -174,17 +174,17 @@ export default function VoicePanel() {
                   style={{
                     flex: 1, padding: '14px 16px', borderRadius: 10, textAlign: 'left',
                     fontFamily: 'inherit', cursor: 'pointer',
-                    border: `1.5px solid ${mode === opt.id ? '#00C9B8' : 'rgba(255,255,255,0.08)'}`,
-                    background: mode === opt.id ? 'rgba(0,201,184,0.08)' : 'rgba(255,255,255,0.03)',
+                    border: `1.5px solid ${mode === opt.id ? 'var(--accent)' : 'rgba(var(--ink-rgb),0.08)'}`,
+                    background: mode === opt.id ? 'rgba(var(--accent-rgb),0.08)' : 'rgba(var(--ink-rgb),0.03)',
                     transition: 'all 0.15s',
                   }}
                 >
                   <div style={{ marginBottom: 4 }}>
-                    <span style={{ fontSize: 13, fontWeight: 700, color: mode === opt.id ? '#00C9B8' : 'rgba(255,255,255,0.6)' }}>
+                    <span style={{ fontSize: 13, fontWeight: 700, color: mode === opt.id ? 'var(--accent)' : 'var(--text-secondary)' }}>
                       {opt.label}
                     </span>
                   </div>
-                  <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)' }}>{opt.desc}</div>
+                  <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{opt.desc}</div>
                 </button>
               ))}
             </div>
@@ -194,11 +194,11 @@ export default function VoicePanel() {
           {mode === 'design' && (
             <Section title="Thuộc tính giọng nói" desc="Kết hợp các thẻ để mô tả giọng AI mong muốn">
               <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-                <TagGroup label="Giới tính" tags={GENDER_TAGS} selected={sel.gender} onPick={v => pick('gender', v)} color="#00C9B8" />
-                <TagGroup label="Độ tuổi"   tags={AGE_TAGS}    selected={sel.age}    onPick={v => pick('age', v)}    color="#A78BFA" />
-                <TagGroup label="Cao độ"    tags={PITCH_TAGS}  selected={sel.pitch}  onPick={v => pick('pitch', v)}  color="#FB923C" />
-                <TagGroup label="Phong cách" tags={STYLE_TAGS} selected={sel.style}  onPick={v => pick('style', v)}  color="#F472B6" />
-                <TagGroup label="Giọng vùng" tags={ACCENT_TAGS} selected={sel.accent} onPick={v => pick('accent', v)} color="#34D399" />
+                <TagGroup label="Giới tính" tags={GENDER_TAGS} selected={sel.gender} onPick={v => pick('gender', v)} color="var(--accent)" />
+                <TagGroup label="Độ tuổi"   tags={AGE_TAGS}    selected={sel.age}    onPick={v => pick('age', v)}    color="var(--purple)" />
+                <TagGroup label="Cao độ"    tags={PITCH_TAGS}  selected={sel.pitch}  onPick={v => pick('pitch', v)}  color="var(--orange)" />
+                <TagGroup label="Phong cách" tags={STYLE_TAGS} selected={sel.style}  onPick={v => pick('style', v)}  color="var(--purple)" />
+                <TagGroup label="Giọng vùng" tags={ACCENT_TAGS} selected={sel.accent} onPick={v => pick('accent', v)} color="var(--success)" />
               </div>
             </Section>
           )}
@@ -224,15 +224,15 @@ function CurrentConfigCard({ mode, instruct, cloneName }) {
     <div style={{
       display: 'flex', alignItems: 'center', gap: 12,
       padding: '12px 16px', borderRadius: 12,
-      background: 'rgba(0,201,184,0.05)',
-      border: '1px solid rgba(0,201,184,0.15)',
+      background: 'rgba(var(--accent-rgb),0.05)',
+      border: '1px solid rgba(var(--accent-rgb),0.15)',
     }}>
       {/* Icon */}
       <div style={{
         width: 36, height: 36, borderRadius: 10, flexShrink: 0,
-        background: 'rgba(0,201,184,0.1)', border: '1px solid rgba(0,201,184,0.2)',
+        background: 'rgba(var(--accent-rgb),0.1)', border: '1px solid rgba(var(--accent-rgb),0.2)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        color: '#00C9B8',
+        color: 'var(--accent)',
       }}>
         {isDesign
           ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M8.46 8.46a5 5 0 0 0 0 7.07"/></svg>
@@ -242,10 +242,10 @@ function CurrentConfigCard({ mode, instruct, cloneName }) {
 
       {/* Text */}
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 3 }}>
+        <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 3 }}>
           Giọng đang dùng
         </div>
-        <div style={{ fontSize: 13, fontWeight: 600, color: hasDetail ? '#fff' : 'rgba(255,255,255,0.3)', fontStyle: hasDetail ? 'normal' : 'italic', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        <div style={{ fontSize: 13, fontWeight: 600, color: hasDetail ? 'var(--heading)' : 'var(--text-muted)', fontStyle: hasDetail ? 'normal' : 'italic', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
           {isDesign
             ? (instruct || 'Chưa chọn thuộc tính')
             : (cloneName || 'Chưa chọn hồ sơ')
@@ -256,9 +256,9 @@ function CurrentConfigCard({ mode, instruct, cloneName }) {
       {/* Mode badge */}
       <div style={{
         flexShrink: 0, padding: '3px 10px', borderRadius: 99, fontSize: 11, fontWeight: 700,
-        background: isDesign ? 'rgba(167,139,250,0.12)' : 'rgba(0,201,184,0.12)',
-        color: isDesign ? '#A78BFA' : '#00C9B8',
-        border: `1px solid ${isDesign ? 'rgba(167,139,250,0.25)' : 'rgba(0,201,184,0.25)'}`,
+        background: isDesign ? 'rgba(var(--purple-rgb),0.12)' : 'rgba(var(--accent-rgb),0.12)',
+        color: isDesign ? 'var(--purple)' : 'var(--accent)',
+        border: `1px solid ${isDesign ? 'rgba(var(--purple-rgb),0.25)' : 'rgba(var(--accent-rgb),0.25)'}`,
       }}>
         {isDesign ? 'Thiết kế' : 'Nhân bản'}
       </div>
@@ -285,7 +285,7 @@ function Spinner() {
 function TagGroup({ label, tags, selected, onPick, color }) {
   return (
     <div>
-      <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>
+      <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>
         {label}
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
@@ -294,9 +294,9 @@ function TagGroup({ label, tags, selected, onPick, color }) {
           return (
             <button key={tag} onClick={() => onPick(tag)} style={{
               padding: '6px 14px', borderRadius: 99, fontSize: 13, fontWeight: active ? 600 : 400,
-              border: `1px solid ${active ? color : 'rgba(255,255,255,0.1)'}`,
-              background: active ? `${color}18` : 'rgba(255,255,255,0.03)',
-              color: active ? color : 'rgba(255,255,255,0.4)',
+              border: `1px solid ${active ? color : 'var(--border)'}`,
+              background: active ? `color-mix(in srgb, ${color} 10%, transparent)` : 'rgba(var(--ink-rgb),0.03)',
+              color: active ? color : 'var(--text-muted)',
               cursor: 'pointer', transition: 'all 0.15s', fontFamily: 'inherit',
             }}>
               {VI_LABEL[tag] ?? tag}

@@ -16,7 +16,7 @@ const useStore = create(
 
       setUser: (user) => set({ user }),
       setTokens: (accessToken, refreshToken) => set({ accessToken, refreshToken }),
-      setTheme: (theme) => set({ theme }),
+      setTheme: (theme) => set({ theme: theme === 'light' ? 'light' : 'dark' }),
       setLanguage: (language) => set({ language }),
       setSubtitleSize: (subtitleSize) => set({ subtitleSize }),
       setSubtitleFont: (subtitleFont) => set({ subtitleFont }),

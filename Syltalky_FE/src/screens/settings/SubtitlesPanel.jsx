@@ -34,13 +34,13 @@ export default function SubtitlesPanel() {
               style={{
                 flex: 1, padding: '10px 8px', borderRadius: 9, cursor: 'pointer',
                 fontFamily: 'inherit', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
-                border: `1.5px solid ${subtitleSize === s.id ? '#00C9B8' : 'rgba(255,255,255,0.08)'}`,
-                background: subtitleSize === s.id ? 'rgba(0,201,184,0.08)' : 'rgba(255,255,255,0.03)',
+                border: `1.5px solid ${subtitleSize === s.id ? 'var(--accent)' : 'rgba(var(--ink-rgb),0.08)'}`,
+                background: subtitleSize === s.id ? 'rgba(var(--accent-rgb),0.08)' : 'rgba(var(--ink-rgb),0.03)',
                 transition: 'all 0.15s',
               }}
             >
-              <span style={{ fontSize: s.px * 0.7 + 8, lineHeight: 1, color: subtitleSize === s.id ? '#00C9B8' : 'rgba(255,255,255,0.5)' }}>A</span>
-              <span style={{ fontSize: 11, fontWeight: 600, color: subtitleSize === s.id ? '#00C9B8' : 'rgba(255,255,255,0.4)' }}>{s.label}</span>
+              <span style={{ fontSize: s.px * 0.7 + 8, lineHeight: 1, color: subtitleSize === s.id ? 'var(--accent)' : 'var(--text-secondary)' }}>A</span>
+              <span style={{ fontSize: 11, fontWeight: 600, color: subtitleSize === s.id ? 'var(--accent)' : 'var(--text-muted)' }}>{s.label}</span>
             </button>
           ))}
         </div>
@@ -55,15 +55,15 @@ export default function SubtitlesPanel() {
               style={{
                 padding: '12px 16px', borderRadius: 9, cursor: 'pointer',
                 fontFamily: f.family, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                border: `1.5px solid ${subtitleFont === f.id ? '#00C9B8' : 'rgba(255,255,255,0.08)'}`,
-                background: subtitleFont === f.id ? 'rgba(0,201,184,0.08)' : 'rgba(255,255,255,0.03)',
+                border: `1.5px solid ${subtitleFont === f.id ? 'var(--accent)' : 'rgba(var(--ink-rgb),0.08)'}`,
+                background: subtitleFont === f.id ? 'rgba(var(--accent-rgb),0.08)' : 'rgba(var(--ink-rgb),0.03)',
                 transition: 'all 0.15s',
               }}
             >
-              <span style={{ fontSize: 14, color: subtitleFont === f.id ? '#00C9B8' : 'rgba(255,255,255,0.6)' }}>
+              <span style={{ fontSize: 14, color: subtitleFont === f.id ? 'var(--accent)' : 'var(--text-secondary)' }}>
                 {f.label}
               </span>
-              <span style={{ fontSize: 13, color: subtitleFont === f.id ? 'rgba(0,201,184,0.6)' : 'rgba(255,255,255,0.25)' }}>
+              <span style={{ fontSize: 13, color: subtitleFont === f.id ? 'rgba(var(--accent-rgb),0.6)' : 'var(--text-muted)' }}>
                 Xin chào
               </span>
             </button>
@@ -81,7 +81,7 @@ export default function SubtitlesPanel() {
           {/* Fake video bg */}
           <div style={{
             position: 'absolute', inset: 0,
-            background: 'linear-gradient(135deg, rgba(0,201,184,0.05) 0%, rgba(0,153,204,0.05) 100%)',
+            background: 'linear-gradient(135deg, rgba(var(--accent-rgb),0.05) 0%, rgba(0,153,204,0.05) 100%)',
             borderRadius: 10,
           }}/>
           <div style={{

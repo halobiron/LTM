@@ -97,14 +97,14 @@ export default function CloneTab({ onActiveVoiceChange, activeProfileId }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <Section title="Hồ sơ giọng nói" desc="Chọn hồ sơ để dùng trong cuộc họp, hoặc tạo mới">
         {loadingProfiles ? (
-          <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.3)', padding: '8px 0' }}>Đang tải...</div>
+          <div style={{ fontSize: 13, color: 'var(--text-muted)', padding: '8px 0' }}>Đang tải...</div>
         ) : profiles.length === 0 ? (
           <div style={{
             padding: '28px 20px', borderRadius: 10, textAlign: 'center',
-            border: '1.5px dashed rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.02)',
+            border: '1.5px dashed rgba(var(--ink-rgb),0.1)', background: 'rgba(var(--ink-rgb),0.02)',
           }}>
             <div style={{ fontSize: 28, marginBottom: 8, opacity: 0.4 }}>🎙</div>
-            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.35)' }}>Chưa có hồ sơ giọng nào</div>
+            <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>Chưa có hồ sơ giọng nào</div>
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -118,13 +118,13 @@ export default function CloneTab({ onActiveVoiceChange, activeProfileId }) {
           onClick={() => setView('create')}
           style={{
             marginTop: 4, padding: '10px 18px', borderRadius: 9, cursor: 'pointer',
-            background: 'rgba(0,201,184,0.07)', border: '1.5px dashed rgba(0,201,184,0.3)',
-            color: '#00C9B8', fontWeight: 600, fontSize: 13, fontFamily: 'inherit',
+            background: 'rgba(var(--accent-rgb),0.07)', border: '1.5px dashed rgba(var(--accent-rgb),0.3)',
+            color: 'var(--accent)', fontWeight: 600, fontSize: 13, fontFamily: 'inherit',
             display: 'flex', alignItems: 'center', gap: 8, transition: 'all 0.15s',
             alignSelf: 'flex-start',
           }}
-          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,201,184,0.12)'; e.currentTarget.style.borderColor = 'rgba(0,201,184,0.5)' }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,201,184,0.07)'; e.currentTarget.style.borderColor = 'rgba(0,201,184,0.3)' }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(var(--accent-rgb),0.12)'; e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),0.5)' }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(var(--accent-rgb),0.07)'; e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),0.3)' }}
         >
           <span style={{ fontSize: 16, lineHeight: 1 }}>+</span> Tạo hồ sơ mới
         </button>
@@ -181,18 +181,18 @@ function ProfileCard({ profile, isActive, onDelete, onSetActive, onRename }) {
       onClick={() => !isActive && !editing && onSetActive(profile.id)}
       style={{
         padding: '12px 14px', borderRadius: 10,
-        border: `1.5px solid ${isActive ? '#00C9B8' : 'rgba(255,255,255,0.08)'}`,
-        background: isActive ? 'rgba(0,201,184,0.06)' : 'rgba(255,255,255,0.02)',
+        border: `1.5px solid ${isActive ? 'var(--accent)' : 'rgba(var(--ink-rgb),0.08)'}`,
+        background: isActive ? 'rgba(var(--accent-rgb),0.06)' : 'rgba(var(--ink-rgb),0.02)',
         display: 'flex', alignItems: 'center', gap: 12, transition: 'all 0.15s',
         cursor: isActive || editing ? 'default' : 'pointer',
       }}
-      onMouseEnter={e => { if (!isActive && !editing) { e.currentTarget.style.borderColor = 'rgba(0,201,184,0.3)'; e.currentTarget.style.background = 'rgba(0,201,184,0.03)' } }}
-      onMouseLeave={e => { if (!isActive && !editing) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.background = 'rgba(255,255,255,0.02)' } }}
+      onMouseEnter={e => { if (!isActive && !editing) { e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),0.3)'; e.currentTarget.style.background = 'rgba(var(--accent-rgb),0.03)' } }}
+      onMouseLeave={e => { if (!isActive && !editing) { e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb),0.08)'; e.currentTarget.style.background = 'rgba(var(--ink-rgb),0.02)' } }}
     >
       <div style={{
         width: 8, height: 8, borderRadius: '50%', flexShrink: 0,
-        background: isActive ? '#00C9B8' : 'rgba(255,255,255,0.15)',
-        boxShadow: isActive ? '0 0 6px #00C9B8' : 'none',
+        background: isActive ? 'var(--accent)' : 'rgba(var(--ink-rgb),0.15)',
+        boxShadow: isActive ? '0 0 6px var(--accent)' : 'none',
         transition: 'all 0.2s',
       }} />
 
@@ -206,17 +206,17 @@ function ProfileCard({ profile, isActive, onDelete, onSetActive, onRename }) {
             onClick={e => e.stopPropagation()}
             style={{
               width: '100%', padding: '4px 8px', borderRadius: 6, fontSize: 13, fontWeight: 600,
-              background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(0,201,184,0.5)',
-              color: '#fff', outline: 'none', fontFamily: 'inherit', boxSizing: 'border-box',
+              background: 'rgba(var(--ink-rgb),0.08)', border: '1px solid rgba(var(--accent-rgb),0.5)',
+              color: 'var(--heading)', outline: 'none', fontFamily: 'inherit', boxSizing: 'border-box',
             }}
           />
         ) : (
           <>
-            <div style={{ fontSize: 13, fontWeight: 600, color: isActive ? '#fff' : 'rgba(255,255,255,0.65)' }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: isActive ? 'var(--heading)' : 'var(--text-secondary)' }}>
               {profile.name}
             </div>
             {isActive && (
-              <div style={{ fontSize: 11, color: '#00C9B8', marginTop: 2 }}>Đang dùng</div>
+              <div style={{ fontSize: 11, color: 'var(--accent)', marginTop: 2 }}>Đang dùng</div>
             )}
           </>
         )}
@@ -231,8 +231,8 @@ function ProfileCard({ profile, isActive, onDelete, onSetActive, onRename }) {
               disabled={saving}
               title="Lưu tên"
               style={{
-                width: 30, height: 30, borderRadius: 7, border: '1px solid rgba(0,201,184,0.4)',
-                background: 'rgba(0,201,184,0.1)', color: '#00C9B8',
+                width: 30, height: 30, borderRadius: 7, border: '1px solid rgba(var(--accent-rgb),0.4)',
+                background: 'rgba(var(--accent-rgb),0.1)', color: 'var(--accent)',
                 cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
                 transition: 'all 0.15s', flexShrink: 0,
               }}
@@ -246,8 +246,8 @@ function ProfileCard({ profile, isActive, onDelete, onSetActive, onRename }) {
               onClick={handleEditCancel}
               title="Huỷ"
               style={{
-                width: 30, height: 30, borderRadius: 7, border: '1px solid rgba(255,255,255,0.1)',
-                background: 'transparent', color: 'rgba(255,255,255,0.4)',
+                width: 30, height: 30, borderRadius: 7, border: '1px solid rgba(var(--ink-rgb),0.1)',
+                background: 'transparent', color: 'var(--text-muted)',
                 cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
                 transition: 'all 0.15s', flexShrink: 0,
               }}
@@ -257,14 +257,14 @@ function ProfileCard({ profile, isActive, onDelete, onSetActive, onRename }) {
           </>
         ) : confirmDelete ? (
           <>
-            <span style={{ fontSize: 11, color: '#F87171' }}>Xoá?</span>
+            <span style={{ fontSize: 11, color: 'var(--danger)' }}>Xoá?</span>
             <button
               onClick={handleDelete}
               disabled={deleting}
               style={{
                 padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 700,
-                border: '1px solid rgba(248,113,113,0.5)', background: 'rgba(248,113,113,0.12)',
-                color: '#F87171', cursor: 'pointer', fontFamily: 'inherit',
+                border: '1px solid rgba(var(--danger-rgb),0.5)', background: 'rgba(var(--danger-rgb),0.12)',
+                color: 'var(--danger)', cursor: 'pointer', fontFamily: 'inherit',
               }}
             >
               {deleting ? '...' : 'Xác nhận'}
@@ -273,8 +273,8 @@ function ProfileCard({ profile, isActive, onDelete, onSetActive, onRename }) {
               onClick={cancelDelete}
               style={{
                 padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 600,
-                border: '1px solid rgba(255,255,255,0.1)', background: 'transparent',
-                color: 'rgba(255,255,255,0.4)', cursor: 'pointer', fontFamily: 'inherit',
+                border: '1px solid rgba(var(--ink-rgb),0.1)', background: 'transparent',
+                color: 'var(--text-muted)', cursor: 'pointer', fontFamily: 'inherit',
               }}
             >
               Huỷ
@@ -286,13 +286,13 @@ function ProfileCard({ profile, isActive, onDelete, onSetActive, onRename }) {
               onClick={e => { e.stopPropagation(); setEditName(profile.name); setEditing(true) }}
               title="Đổi tên"
               style={{
-                width: 30, height: 30, borderRadius: 7, border: '1px solid rgba(255,255,255,0.08)',
-                background: 'transparent', color: 'rgba(255,255,255,0.3)',
+                width: 30, height: 30, borderRadius: 7, border: '1px solid rgba(var(--ink-rgb),0.08)',
+                background: 'transparent', color: 'var(--text-muted)',
                 cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
                 transition: 'all 0.15s', flexShrink: 0,
               }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(0,201,184,0.35)'; e.currentTarget.style.color = '#00C9B8'; e.currentTarget.style.background = 'rgba(0,201,184,0.06)' }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = 'rgba(255,255,255,0.3)'; e.currentTarget.style.background = 'transparent' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),0.35)'; e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.background = 'rgba(var(--accent-rgb),0.06)' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb),0.08)'; e.currentTarget.style.color = 'var(--text-muted)'; e.currentTarget.style.background = 'transparent' }}
             >
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
@@ -302,13 +302,13 @@ function ProfileCard({ profile, isActive, onDelete, onSetActive, onRename }) {
               onClick={handleDelete}
               title="Xoá hồ sơ"
               style={{
-                width: 30, height: 30, borderRadius: 7, border: '1px solid rgba(255,255,255,0.08)',
-                background: 'transparent', color: 'rgba(255,255,255,0.3)',
+                width: 30, height: 30, borderRadius: 7, border: '1px solid rgba(var(--ink-rgb),0.08)',
+                background: 'transparent', color: 'var(--text-muted)',
                 cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
                 transition: 'all 0.15s', flexShrink: 0,
               }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(248,113,113,0.4)'; e.currentTarget.style.color = '#F87171'; e.currentTarget.style.background = 'rgba(248,113,113,0.06)' }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = 'rgba(255,255,255,0.3)'; e.currentTarget.style.background = 'transparent' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(var(--danger-rgb),0.4)'; e.currentTarget.style.color = 'var(--danger)'; e.currentTarget.style.background = 'rgba(var(--danger-rgb),0.06)' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb),0.08)'; e.currentTarget.style.color = 'var(--text-muted)'; e.currentTarget.style.background = 'transparent' }}
             >
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/>
@@ -329,17 +329,17 @@ function StepIndicator({ current, labels }) {
           {i > 0 && (
             <div style={{
               flex: 1, height: 2, marginTop: 13, borderRadius: 2,
-              background: current > i ? '#00C9B8' : 'rgba(255,255,255,0.08)',
+              background: current > i ? 'var(--accent)' : 'rgba(var(--ink-rgb),0.08)',
               transition: 'background 0.3s',
             }} />
           )}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, minWidth: 64 }}>
             <div style={{
               width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
-              background: current === i + 1 ? '#00C9B8' : current > i + 1 ? 'rgba(0,201,184,0.15)' : 'rgba(255,255,255,0.06)',
-              border: `2px solid ${current >= i + 1 ? '#00C9B8' : 'rgba(255,255,255,0.1)'}`,
+              background: current === i + 1 ? 'var(--accent)' : current > i + 1 ? 'rgba(var(--accent-rgb),0.15)' : 'rgba(var(--ink-rgb),0.06)',
+              border: `2px solid ${current >= i + 1 ? 'var(--accent)' : 'rgba(var(--ink-rgb),0.1)'}`,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: current === i + 1 ? '#0a0a0a' : current > i + 1 ? '#00C9B8' : 'rgba(255,255,255,0.25)',
+              color: current === i + 1 ? 'var(--on-accent)' : current > i + 1 ? 'var(--accent)' : 'var(--text-muted)',
               fontSize: 11, fontWeight: 700, transition: 'all 0.25s',
             }}>
               {current > i + 1
@@ -349,7 +349,7 @@ function StepIndicator({ current, labels }) {
             </div>
             <span style={{
               fontSize: 10, fontWeight: 600, textAlign: 'center', letterSpacing: '0.04em', textTransform: 'uppercase',
-              color: current >= i + 1 ? 'rgba(255,255,255,0.65)' : 'rgba(255,255,255,0.2)',
+              color: current >= i + 1 ? 'var(--text-secondary)' : 'var(--text-faint)',
               transition: 'color 0.25s', whiteSpace: 'nowrap',
             }}>
               {label}
@@ -385,17 +385,17 @@ function SimpleAudioPlayer({ blob }) {
     <div style={{
       display: 'flex', alignItems: 'center', gap: 14,
       padding: '14px 18px', borderRadius: 12,
-      background: playing ? 'rgba(0,201,184,0.06)' : 'rgba(255,255,255,0.03)',
-      border: `1px solid ${playing ? 'rgba(0,201,184,0.22)' : 'rgba(255,255,255,0.08)'}`,
+      background: playing ? 'rgba(var(--accent-rgb),0.06)' : 'rgba(var(--ink-rgb),0.03)',
+      border: `1px solid ${playing ? 'rgba(var(--accent-rgb),0.22)' : 'rgba(var(--ink-rgb),0.08)'}`,
       transition: 'all 0.2s',
     }}>
       <button
         onClick={toggle}
         style={{
           width: 42, height: 42, borderRadius: '50%', flexShrink: 0,
-          background: playing ? '#00C9B8' : 'rgba(0,201,184,0.1)',
-          border: `1.5px solid ${playing ? '#00C9B8' : 'rgba(0,201,184,0.3)'}`,
-          color: playing ? '#0a0a0a' : '#00C9B8',
+          background: playing ? 'var(--accent)' : 'rgba(var(--accent-rgb),0.1)',
+          border: `1.5px solid ${playing ? 'var(--accent)' : 'rgba(var(--accent-rgb),0.3)'}`,
+          color: playing ? 'var(--on-accent)' : 'var(--accent)',
           cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
           transition: 'all 0.2s',
         }}
@@ -406,10 +406,10 @@ function SimpleAudioPlayer({ blob }) {
         }
       </button>
       <div style={{ flex: 1 }}>
-        <div style={{ fontSize: 13, fontWeight: 600, color: playing ? '#00C9B8' : 'rgba(255,255,255,0.7)' }}>
+        <div style={{ fontSize: 13, fontWeight: 600, color: playing ? 'var(--accent)' : 'var(--text-secondary)' }}>
           {playing ? 'Đang phát...' : 'Nghe lại bản ghi âm'}
         </div>
-        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', marginTop: 2 }}>
+        <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>
           Nhấn để {playing ? 'dừng' : 'phát'}
         </div>
       </div>
@@ -417,7 +417,7 @@ function SimpleAudioPlayer({ blob }) {
         <div style={{ display: 'flex', gap: 3, alignItems: 'center', marginRight: 4 }}>
           {[1, 2, 3, 4].map(i => (
             <div key={i} style={{
-              width: 3, height: 16, borderRadius: 3, background: '#00C9B8', flexShrink: 0,
+              width: 3, height: 16, borderRadius: 3, background: 'var(--accent)', flexShrink: 0,
               animation: `wavebar 0.6s ease-in-out ${i * 0.1}s infinite alternate`,
             }} />
           ))}
@@ -615,12 +615,12 @@ function CreateProfileView({ onBack, onCreated }) {
         onClick={onBack}
         style={{
           alignSelf: 'flex-start', display: 'flex', alignItems: 'center', gap: 6,
-          padding: '6px 12px', borderRadius: 7, border: '1px solid rgba(255,255,255,0.1)',
-          background: 'transparent', color: 'rgba(255,255,255,0.45)', fontSize: 12, fontWeight: 600,
+          padding: '6px 12px', borderRadius: 7, border: '1px solid rgba(var(--ink-rgb),0.1)',
+          background: 'transparent', color: 'var(--text-secondary)', fontSize: 12, fontWeight: 600,
           cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s', marginBottom: 24,
         }}
-        onMouseEnter={e => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)' }}
-        onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.45)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)' }}
+        onMouseEnter={e => { e.currentTarget.style.color = 'var(--heading)'; e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb),0.2)' }}
+        onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb),0.1)' }}
       >
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="15 18 9 12 15 6"/>
@@ -641,9 +641,9 @@ function CreateProfileView({ onBack, onCreated }) {
                 onClick={() => { setInputMode(opt.id); resetAll() }}
                 style={{
                   flex: 1, padding: '10px 12px', borderRadius: 8, cursor: 'pointer', fontFamily: 'inherit',
-                  border: `1.5px solid ${inputMode === opt.id ? '#00C9B8' : 'rgba(255,255,255,0.08)'}`,
-                  background: inputMode === opt.id ? 'rgba(0,201,184,0.08)' : 'rgba(255,255,255,0.03)',
-                  color: inputMode === opt.id ? '#00C9B8' : 'rgba(255,255,255,0.5)',
+                  border: `1.5px solid ${inputMode === opt.id ? 'var(--accent)' : 'rgba(var(--ink-rgb),0.08)'}`,
+                  background: inputMode === opt.id ? 'rgba(var(--accent-rgb),0.08)' : 'rgba(var(--ink-rgb),0.03)',
+                  color: inputMode === opt.id ? 'var(--accent)' : 'var(--text-secondary)',
                   fontSize: 13, fontWeight: 600, transition: 'all 0.15s',
                 }}
               >
@@ -658,14 +658,14 @@ function CreateProfileView({ onBack, onCreated }) {
               {/* Prompt card */}
               <div style={{
                 padding: '14px 16px', borderRadius: 10,
-                background: recording ? 'rgba(248,113,113,0.06)' : 'rgba(0,201,184,0.05)',
-                border: `1px solid ${recording ? 'rgba(248,113,113,0.2)' : 'rgba(0,201,184,0.15)'}`,
+                background: recording ? 'rgba(var(--danger-rgb),0.06)' : 'rgba(var(--accent-rgb),0.05)',
+                border: `1px solid ${recording ? 'rgba(var(--danger-rgb),0.2)' : 'rgba(var(--accent-rgb),0.15)'}`,
                 transition: 'all 0.3s',
               }}>
-                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8, color: recording ? '#F87171' : '#00C9B8' }}>
+                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8, color: recording ? 'var(--danger)' : 'var(--accent)' }}>
                   {recording ? '🎙 Đọc đoạn văn bên dưới' : 'Văn bản mẫu — đọc to và rõ ràng'}
                 </div>
-                <p style={{ margin: 0, fontSize: 14, lineHeight: 1.7, color: recording ? '#fff' : 'rgba(255,255,255,0.7)', fontWeight: recording ? 500 : 400 }}>
+                <p style={{ margin: 0, fontSize: 14, lineHeight: 1.7, color: recording ? 'var(--heading)' : 'var(--text-secondary)', fontWeight: recording ? 500 : 400 }}>
                   {RECORD_PROMPT}
                 </p>
               </div>
@@ -674,10 +674,10 @@ function CreateProfileView({ onBack, onCreated }) {
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
                 <div style={{ position: 'relative', width: 88, height: 88 }}>
                   <svg width="88" height="88" viewBox="0 0 88 88" style={{ transform: 'rotate(-90deg)' }}>
-                    <circle cx="44" cy="44" r="38" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="4"/>
+                    <circle cx="44" cy="44" r="38" fill="none" stroke="rgba(var(--ink-rgb),0.06)" strokeWidth="4"/>
                     <circle
                       cx="44" cy="44" r="38" fill="none"
-                      stroke={recording ? '#F87171' : '#00C9B8'}
+                      stroke={recording ? 'var(--danger)' : 'var(--accent)'}
                       strokeWidth="4" strokeLinecap="round"
                       strokeDasharray={2 * Math.PI * 38}
                       strokeDashoffset={2 * Math.PI * 38 * (1 - recSeconds / MAX_DURATION)}
@@ -689,12 +689,12 @@ function CreateProfileView({ onBack, onCreated }) {
                     alignItems: 'center', justifyContent: 'center', gap: 2,
                   }}>
                     {recording && (
-                      <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#F87171', boxShadow: '0 0 8px #F87171', animation: 'pulse 1s ease-in-out infinite' }} />
+                      <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--danger)', boxShadow: '0 0 8px var(--danger)', animation: 'pulse 1s ease-in-out infinite' }} />
                     )}
-                    <span style={{ fontSize: 17, fontWeight: 700, color: recording ? '#F87171' : 'rgba(255,255,255,0.45)', fontVariantNumeric: 'tabular-nums' }}>
+                    <span style={{ fontSize: 17, fontWeight: 700, color: recording ? 'var(--danger)' : 'var(--text-secondary)', fontVariantNumeric: 'tabular-nums' }}>
                       {String(Math.floor(recSeconds / 60)).padStart(2, '0')}:{String(Math.floor(recSeconds % 60)).padStart(2, '0')}
                     </span>
-                    {!recording && <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.2)' }}>{MAX_DURATION}s</span>}
+                    {!recording && <span style={{ fontSize: 10, color: 'var(--text-faint)' }}>{MAX_DURATION}s</span>}
                   </div>
                 </div>
                 <style>{`@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }`}</style>
@@ -704,12 +704,12 @@ function CreateProfileView({ onBack, onCreated }) {
                     onClick={startRecording}
                     style={{
                       display: 'flex', alignItems: 'center', gap: 8, padding: '10px 22px', borderRadius: 9,
-                      border: '1.5px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.05)',
-                      color: 'rgba(255,255,255,0.65)', fontSize: 13, fontWeight: 600,
+                      border: '1.5px solid rgba(var(--ink-rgb),0.12)', background: 'rgba(var(--ink-rgb),0.05)',
+                      color: 'var(--text-secondary)', fontSize: 13, fontWeight: 600,
                       cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.2s',
                     }}
-                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)' }}
-                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)' }}
+                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(var(--ink-rgb),0.08)'; e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb),0.2)' }}
+                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(var(--ink-rgb),0.05)'; e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb),0.12)' }}
                   >
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/></svg>
                     Bắt đầu thu âm
@@ -721,8 +721,8 @@ function CreateProfileView({ onBack, onCreated }) {
                     onClick={stopRecording}
                     style={{
                       display: 'flex', alignItems: 'center', gap: 8, padding: '10px 22px', borderRadius: 9,
-                      border: '1.5px solid rgba(248,113,113,0.4)', background: 'rgba(248,113,113,0.08)',
-                      color: '#F87171', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.2s',
+                      border: '1.5px solid rgba(var(--danger-rgb),0.4)', background: 'rgba(var(--danger-rgb),0.08)',
+                      color: 'var(--danger)', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.2s',
                     }}
                   >
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
@@ -738,9 +738,9 @@ function CreateProfileView({ onBack, onCreated }) {
                   style={{
                     alignSelf: 'flex-end', display: 'flex', alignItems: 'center', gap: 8,
                     padding: '10px 22px', borderRadius: 9,
-                    background: 'linear-gradient(135deg,#00C9B8,#0099CC)', border: 'none',
-                    color: '#fff', fontWeight: 700, fontSize: 13, cursor: 'pointer',
-                    fontFamily: 'inherit', boxShadow: '0 3px 12px rgba(0,201,184,0.2)', transition: 'all 0.2s',
+                    background: 'linear-gradient(135deg,var(--button-start),var(--button-end))', border: 'none',
+                    color: 'var(--on-accent)', fontWeight: 700, fontSize: 13, cursor: 'pointer',
+                    fontFamily: 'inherit', boxShadow: '0 3px 12px rgba(var(--accent-rgb),0.2)', transition: 'all 0.2s',
                   }}
                 >
                   Xem lại
@@ -756,25 +756,25 @@ function CreateProfileView({ onBack, onCreated }) {
               <label style={{
                 display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
                 padding: '28px 16px', borderRadius: 10, cursor: 'pointer',
-                border: `1.5px dashed ${audioBlob ? 'rgba(0,201,184,0.4)' : 'rgba(255,255,255,0.12)'}`,
-                background: audioBlob ? 'rgba(0,201,184,0.04)' : 'rgba(255,255,255,0.02)',
+                border: `1.5px dashed ${audioBlob ? 'rgba(var(--accent-rgb),0.4)' : 'rgba(var(--ink-rgb),0.12)'}`,
+                background: audioBlob ? 'rgba(var(--accent-rgb),0.04)' : 'rgba(var(--ink-rgb),0.02)',
                 transition: 'all 0.15s',
               }}
-                onMouseEnter={e => { if (!audioBlob) { e.currentTarget.style.borderColor = 'rgba(0,201,184,0.35)'; e.currentTarget.style.background = 'rgba(0,201,184,0.04)' } }}
-                onMouseLeave={e => { if (!audioBlob) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; e.currentTarget.style.background = 'rgba(255,255,255,0.02)' } }}
+                onMouseEnter={e => { if (!audioBlob) { e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),0.35)'; e.currentTarget.style.background = 'rgba(var(--accent-rgb),0.04)' } }}
+                onMouseLeave={e => { if (!audioBlob) { e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb),0.12)'; e.currentTarget.style.background = 'rgba(var(--ink-rgb),0.02)' } }}
               >
                 <input type="file" accept="audio/*" onChange={handleFileUpload} style={{ display: 'none' }} />
                 {audioBlob ? (
                   <>
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00C9B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                    <span style={{ fontSize: 12, color: '#00C9B8', fontWeight: 600 }}>Tệp đã chọn — nhấn để thay đổi</span>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span style={{ fontSize: 12, color: 'var(--accent)', fontWeight: 600 }}>Tệp đã chọn — nhấn để thay đổi</span>
                   </>
                 ) : (
                   <>
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(var(--ink-rgb),0.3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
                     </svg>
-                    <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', textAlign: 'center' }}>
+                    <span style={{ fontSize: 12, color: 'var(--text-muted)', textAlign: 'center' }}>
                       Nhấn để chọn tệp âm thanh<br/>
                       <span style={{ opacity: 0.6 }}>MP3, WAV, WebM, OGG, FLAC...</span>
                     </span>
@@ -788,9 +788,9 @@ function CreateProfileView({ onBack, onCreated }) {
                   style={{
                     alignSelf: 'flex-end', display: 'flex', alignItems: 'center', gap: 8,
                     padding: '10px 22px', borderRadius: 9,
-                    background: 'linear-gradient(135deg,#00C9B8,#0099CC)', border: 'none',
-                    color: '#fff', fontWeight: 700, fontSize: 13, cursor: 'pointer',
-                    fontFamily: 'inherit', boxShadow: '0 3px 12px rgba(0,201,184,0.2)', transition: 'all 0.2s',
+                    background: 'linear-gradient(135deg,var(--button-start),var(--button-end))', border: 'none',
+                    color: 'var(--on-accent)', fontWeight: 700, fontSize: 13, cursor: 'pointer',
+                    fontFamily: 'inherit', boxShadow: '0 3px 12px rgba(var(--accent-rgb),0.2)', transition: 'all 0.2s',
                   }}
                 >
                   Tiếp tục
@@ -810,7 +810,7 @@ function CreateProfileView({ onBack, onCreated }) {
           {inputMode === 'record' && (
             <>
               <SimpleAudioPlayer blob={audioBlob} />
-              <p style={{ margin: 0, fontSize: 12, color: 'rgba(255,255,255,0.35)', lineHeight: 1.6 }}>
+              <p style={{ margin: 0, fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.6 }}>
                 Hệ thống sẽ dùng đoạn văn mẫu bạn vừa đọc để học giọng của bạn.
               </p>
             </>
@@ -832,8 +832,8 @@ function CreateProfileView({ onBack, onCreated }) {
                   style={{
                     alignSelf: 'flex-start', display: 'flex', alignItems: 'center', gap: 8,
                     padding: '9px 20px', borderRadius: 9,
-                    background: transcribing ? 'rgba(0,201,184,0.25)' : 'rgba(0,201,184,0.1)',
-                    border: '1px solid rgba(0,201,184,0.3)', color: '#00C9B8',
+                    background: transcribing ? 'rgba(var(--accent-rgb),0.25)' : 'rgba(var(--accent-rgb),0.1)',
+                    border: '1px solid rgba(var(--accent-rgb),0.3)', color: 'var(--accent)',
                     fontWeight: 600, fontSize: 13, fontFamily: 'inherit',
                     cursor: transcribing ? 'default' : 'pointer', transition: 'all 0.15s',
                   }}
@@ -844,7 +844,7 @@ function CreateProfileView({ onBack, onCreated }) {
 
               {transcriptReady && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
                     Bản ghi lời nói — chỉnh sửa nếu cần
                   </div>
                   <textarea
@@ -853,20 +853,20 @@ function CreateProfileView({ onBack, onCreated }) {
                     rows={5}
                     style={{
                       width: '100%', padding: '10px 14px', borderRadius: 9, resize: 'vertical',
-                      background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.09)',
-                      color: '#fff', fontSize: 13, outline: 'none', fontFamily: 'inherit',
+                      background: 'rgba(var(--ink-rgb),0.05)', border: '1px solid rgba(var(--ink-rgb),0.09)',
+                      color: 'var(--heading)', fontSize: 13, outline: 'none', fontFamily: 'inherit',
                       transition: 'border-color 0.15s', boxSizing: 'border-box', lineHeight: 1.6,
                     }}
-                    onFocus={e => e.target.style.borderColor = '#00C9B8'}
-                    onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.09)'}
+                    onFocus={e => e.target.style.borderColor = 'var(--accent)'}
+                    onBlur={e => e.target.style.borderColor = 'rgba(var(--ink-rgb),0.09)'}
                   />
                   <button
                     onClick={handleTranscribe}
                     disabled={transcribing}
                     style={{
                       alignSelf: 'flex-start', padding: '5px 12px', borderRadius: 6, fontSize: 11, fontWeight: 600,
-                      border: '1px solid rgba(255,255,255,0.1)', background: 'transparent',
-                      color: 'rgba(255,255,255,0.35)', cursor: 'pointer', fontFamily: 'inherit',
+                      border: '1px solid rgba(var(--ink-rgb),0.1)', background: 'transparent',
+                      color: 'var(--text-muted)', cursor: 'pointer', fontFamily: 'inherit',
                     }}
                   >
                     {transcribing ? 'Đang nhận dạng...' : 'Nhận dạng lại'}
@@ -884,10 +884,10 @@ function CreateProfileView({ onBack, onCreated }) {
               style={{
                 flex: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                 padding: '10px', borderRadius: 9, cursor: step2CanProceed ? 'pointer' : 'default',
-                background: step2CanProceed ? 'linear-gradient(135deg,#00C9B8,#0099CC)' : 'rgba(255,255,255,0.06)',
-                border: 'none', color: step2CanProceed ? '#fff' : 'rgba(255,255,255,0.3)',
+                background: step2CanProceed ? 'linear-gradient(135deg,var(--button-start),var(--button-end))' : 'rgba(var(--ink-rgb),0.06)',
+                border: 'none', color: step2CanProceed ? 'var(--on-accent)' : 'var(--text-muted)',
                 fontWeight: 700, fontSize: 13, fontFamily: 'inherit',
-                boxShadow: step2CanProceed ? '0 3px 12px rgba(0,201,184,0.2)' : 'none', transition: 'all 0.2s',
+                boxShadow: step2CanProceed ? '0 3px 12px rgba(var(--accent-rgb),0.2)' : 'none', transition: 'all 0.2s',
               }}
             >
               Tiếp tục
@@ -897,11 +897,11 @@ function CreateProfileView({ onBack, onCreated }) {
               onClick={retake}
               style={{
                 flex: 1, padding: '10px', borderRadius: 9, cursor: 'pointer',
-                background: 'transparent', border: '1px solid rgba(255,255,255,0.1)',
-                color: 'rgba(255,255,255,0.45)', fontWeight: 600, fontSize: 13, fontFamily: 'inherit', transition: 'all 0.15s',
+                background: 'transparent', border: '1px solid rgba(var(--ink-rgb),0.1)',
+                color: 'var(--text-secondary)', fontWeight: 600, fontSize: 13, fontFamily: 'inherit', transition: 'all 0.15s',
               }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.22)'; e.currentTarget.style.color = '#fff' }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = 'rgba(255,255,255,0.45)' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb),0.22)'; e.currentTarget.style.color = 'var(--heading)' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb),0.1)'; e.currentTarget.style.color = 'var(--text-secondary)' }}
             >
               {inputMode === 'record' ? 'Thu lại' : 'Đổi tệp'}
             </button>
@@ -915,7 +915,7 @@ function CreateProfileView({ onBack, onCreated }) {
           {!processed ? (
             <>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <label style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
                   Tên hồ sơ
                 </label>
                 <input
@@ -926,16 +926,16 @@ function CreateProfileView({ onBack, onCreated }) {
                   autoFocus
                   style={{
                     width: '100%', padding: '10px 14px', borderRadius: 9,
-                    background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.09)',
-                    color: '#fff', fontSize: 14, outline: 'none', fontFamily: 'inherit', boxSizing: 'border-box',
+                    background: 'rgba(var(--ink-rgb),0.05)', border: '1px solid rgba(var(--ink-rgb),0.09)',
+                    color: 'var(--heading)', fontSize: 14, outline: 'none', fontFamily: 'inherit', boxSizing: 'border-box',
                     transition: 'border-color 0.15s',
                   }}
-                  onFocus={e => e.target.style.borderColor = '#00C9B8'}
-                  onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.09)'}
+                  onFocus={e => e.target.style.borderColor = 'var(--accent)'}
+                  onBlur={e => e.target.style.borderColor = 'rgba(var(--ink-rgb),0.09)'}
                 />
               </div>
 
-              {processError && <p style={{ margin: 0, fontSize: 12, color: '#F87171' }}>{processError}</p>}
+              {processError && <p style={{ margin: 0, fontSize: 12, color: 'var(--danger)' }}>{processError}</p>}
 
               <div style={{ display: 'flex', gap: 8 }}>
                 <button
@@ -945,10 +945,10 @@ function CreateProfileView({ onBack, onCreated }) {
                     flex: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                     padding: '11px', borderRadius: 9,
                     cursor: (!profileName.trim() || processing) ? 'default' : 'pointer',
-                    background: (!profileName.trim() || processing) ? 'rgba(255,255,255,0.06)' : 'linear-gradient(135deg,#00C9B8,#0099CC)',
-                    border: 'none', color: (!profileName.trim() || processing) ? 'rgba(255,255,255,0.3)' : '#fff',
+                    background: (!profileName.trim() || processing) ? 'rgba(var(--ink-rgb),0.06)' : 'linear-gradient(135deg,var(--button-start),var(--button-end))',
+                    border: 'none', color: (!profileName.trim() || processing) ? 'var(--text-muted)' : 'var(--on-accent)',
                     fontWeight: 700, fontSize: 14, fontFamily: 'inherit',
-                    boxShadow: (!profileName.trim() || processing) ? 'none' : '0 4px 16px rgba(0,201,184,0.25)',
+                    boxShadow: (!profileName.trim() || processing) ? 'none' : '0 4px 16px rgba(var(--accent-rgb),0.25)',
                     transition: 'all 0.2s',
                   }}
                 >
@@ -958,11 +958,11 @@ function CreateProfileView({ onBack, onCreated }) {
                   onClick={backToStep2}
                   style={{
                     flex: 1, padding: '11px', borderRadius: 9, cursor: 'pointer',
-                    background: 'transparent', border: '1px solid rgba(255,255,255,0.1)',
-                    color: 'rgba(255,255,255,0.45)', fontWeight: 600, fontSize: 13, fontFamily: 'inherit', transition: 'all 0.15s',
+                    background: 'transparent', border: '1px solid rgba(var(--ink-rgb),0.1)',
+                    color: 'var(--text-secondary)', fontWeight: 600, fontSize: 13, fontFamily: 'inherit', transition: 'all 0.15s',
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.22)'; e.currentTarget.style.color = '#fff' }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = 'rgba(255,255,255,0.45)' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb),0.22)'; e.currentTarget.style.color = 'var(--heading)' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb),0.1)'; e.currentTarget.style.color = 'var(--text-secondary)' }}
                 >
                   Quay lại
                 </button>
@@ -972,11 +972,11 @@ function CreateProfileView({ onBack, onCreated }) {
             <div style={{
               display: 'flex', flexDirection: 'column', gap: 14,
               padding: '18px', borderRadius: 12,
-              background: 'rgba(0,201,184,0.05)', border: '1px solid rgba(0,201,184,0.18)',
+              background: 'rgba(var(--accent-rgb),0.05)', border: '1px solid rgba(var(--accent-rgb),0.18)',
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#00C9B8', boxShadow: '0 0 6px #00C9B8' }} />
-                <span style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>Giọng đã xử lý xong — nghe thử trước khi lưu</span>
+                <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--accent)', boxShadow: '0 0 6px var(--accent)' }} />
+                <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--heading)' }}>Giọng đã xử lý xong — nghe thử trước khi lưu</span>
               </div>
 
               <textarea
@@ -985,15 +985,15 @@ function CreateProfileView({ onBack, onCreated }) {
                 rows={3}
                 style={{
                   width: '100%', padding: '10px 14px', borderRadius: 9, resize: 'vertical',
-                  background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.09)',
-                  color: '#fff', fontSize: 14, outline: 'none', fontFamily: 'inherit',
+                  background: 'rgba(var(--ink-rgb),0.05)', border: '1px solid rgba(var(--ink-rgb),0.09)',
+                  color: 'var(--heading)', fontSize: 14, outline: 'none', fontFamily: 'inherit',
                   transition: 'border-color 0.15s', boxSizing: 'border-box', lineHeight: 1.6,
                 }}
-                onFocus={e => e.target.style.borderColor = '#00C9B8'}
-                onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.09)'}
+                onFocus={e => e.target.style.borderColor = 'var(--accent)'}
+                onBlur={e => e.target.style.borderColor = 'rgba(var(--ink-rgb),0.09)'}
               />
 
-              {demoError && <p style={{ margin: 0, fontSize: 12, color: '#F87171' }}>{demoError}</p>}
+              {demoError && <p style={{ margin: 0, fontSize: 12, color: 'var(--danger)' }}>{demoError}</p>}
 
               <button
                 onClick={handleDemo}
@@ -1001,8 +1001,8 @@ function CreateProfileView({ onBack, onCreated }) {
                 style={{
                   alignSelf: 'flex-start', display: 'flex', alignItems: 'center', gap: 8,
                   padding: '8px 18px', borderRadius: 8, cursor: demoing ? 'default' : 'pointer',
-                  background: 'rgba(0,201,184,0.12)', border: '1px solid rgba(0,201,184,0.3)',
-                  color: '#00C9B8', fontWeight: 600, fontSize: 13, fontFamily: 'inherit', transition: 'all 0.15s',
+                  background: 'rgba(var(--accent-rgb),0.12)', border: '1px solid rgba(var(--accent-rgb),0.3)',
+                  color: 'var(--accent)', fontWeight: 600, fontSize: 13, fontFamily: 'inherit', transition: 'all 0.15s',
                 }}
               >
                 {demoing
@@ -1016,9 +1016,9 @@ function CreateProfileView({ onBack, onCreated }) {
                   onClick={() => onCreated(processed)}
                   style={{
                     flex: 2, padding: '10px', borderRadius: 9, cursor: 'pointer',
-                    background: 'linear-gradient(135deg,#00C9B8,#0099CC)', border: 'none',
-                    color: '#fff', fontWeight: 700, fontSize: 14, fontFamily: 'inherit',
-                    boxShadow: '0 4px 16px rgba(0,201,184,0.25)', transition: 'all 0.2s',
+                    background: 'linear-gradient(135deg,var(--button-start),var(--button-end))', border: 'none',
+                    color: 'var(--on-accent)', fontWeight: 700, fontSize: 14, fontFamily: 'inherit',
+                    boxShadow: '0 4px 16px rgba(var(--accent-rgb),0.25)', transition: 'all 0.2s',
                   }}
                 >
                   Lưu hồ sơ này
@@ -1027,10 +1027,10 @@ function CreateProfileView({ onBack, onCreated }) {
                   onClick={handleDiscard}
                   style={{
                     flex: 1, padding: '10px', borderRadius: 9, cursor: 'pointer',
-                    background: 'transparent', border: '1px solid rgba(248,113,113,0.3)',
-                    color: '#F87171', fontWeight: 600, fontSize: 14, fontFamily: 'inherit', transition: 'all 0.15s',
+                    background: 'transparent', border: '1px solid rgba(var(--danger-rgb),0.3)',
+                    color: 'var(--danger)', fontWeight: 600, fontSize: 14, fontFamily: 'inherit', transition: 'all 0.15s',
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(248,113,113,0.08)' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(var(--danger-rgb),0.08)' }}
                   onMouseLeave={e => { e.currentTarget.style.background = 'transparent' }}
                 >
                   Xoá &amp; làm lại

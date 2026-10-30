@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import ThemeToggle from '../../components/ThemeToggle'
+import { useId, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useGoogleLogin } from '@react-oauth/google'
 import { api } from '../../api/client'
@@ -9,7 +10,7 @@ import useBreakpoint from '../../hooks/useBreakpoint'
 export default function LoginScreen() {
   const navigate = useNavigate()
   const { setUser, setTokens } = useStore()
-  const { isMobile } = useBreakpoint()
+  const { isMobile, isTablet } = useBreakpoint()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPass, setShowPass] = useState(false)
@@ -33,33 +34,18 @@ export default function LoginScreen() {
     }
   }
 
-  const handleGoogle = useGoogleLogin({
-    onSuccess: async ({ access_token }) => {
-      setGoogleLoading(true)
-      setError('')
-      try {
-        const data = await api.post('/auth/google', { credential: access_token })
-        setTokens(data.access_token, data.refresh_token)
-        setUser(data.user)
-        navigate(data.needs_profile ? '/complete-profile' : '/home')
-      } catch (err) {
-        setError(err.message)
-      } finally {
-        setGoogleLoading(false)
-      }
-    },
-    onError: () => setError('Đăng nhập Google thất bại'),
-  })
+
 
   return (
-    <div style={{ width: '100vw', height: '100vh', display: 'flex', overflow: 'hidden', background: '#07090F' }}>
-      {!isMobile && <AuthLeft />}
+    <div className="auth-page" style={{ width: '100vw', height: '100dvh', display: 'flex', overflow: 'hidden', background: 'var(--bg)' }}>
+      {!isTablet && <AuthLeft />}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: isMobile ? '40px 24px' : '60px 64px', overflowY: 'auto' }}>
-        <form onSubmit={submit} style={{ maxWidth: 360, width: '100%', marginTop: 'auto', marginBottom: 'auto', alignSelf: isMobile ? 'center' : 'auto' }}>
-          <p style={{ fontSize: 12, color: '#00C9B8', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>
+        <form className="auth-form" onSubmit={submit} style={{ maxWidth: 400, width: '100%', marginTop: 'auto', marginBottom: 'auto', alignSelf: 'center' }}>
+          <div className="auth-tools"><Link to="/" className="auth-back">← Trang chủ</Link><ThemeToggle compact /></div>
+          <p style={{ fontSize: 12, color: 'var(--accent)', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>
             Chào mừng trở lại
           </p>
-          <h2 style={{ fontSize: 34, fontWeight: 800, color: '#fff', letterSpacing: '-0.8px', margin: '0 0 40px' }}>
+          <h2 style={{ fontSize: 34, fontWeight: 800, color: 'var(--heading)', letterSpacing: '-0.8px', margin: '0 0 40px' }}>
             Đăng nhập
           </h2>
 
@@ -68,24 +54,24 @@ export default function LoginScreen() {
             autoComplete="current-password" showToggle onToggle={() => setShowPass(s => !s)} showPass={showPass} />
 
           <div style={{ textAlign: 'right', marginBottom: 28, marginTop: -8 }}>
-            <Link to="/forgot-password" style={{ fontSize: 12, color: '#00C9B8', textDecoration: 'none' }}>
+            <Link to="/forgot-password" style={{ fontSize: 12, color: 'var(--accent)', textDecoration: 'none' }}>
               Quên mật khẩu?
             </Link>
           </div>
 
-          {error && <p style={{ color: '#F87171', fontSize: 13, marginBottom: 16 }}>{error}</p>}
+          {error && <p role="alert" style={{ color: 'var(--danger)', fontSize: 13, marginBottom: 16 }}>{error}</p>}
 
           <button type="submit" disabled={loading} style={btnStyle(loading)}>
             {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
           </button>
 
-          <Divider />
+          {import.meta.env.VITE_GOOGLE_CLIENT_ID && <Divider />}
 
-          <GoogleButton loading={googleLoading} onClick={handleGoogle} label="Đăng nhập với Google" />
+          {import.meta.env.VITE_GOOGLE_CLIENT_ID && <GoogleAuthButton loading={googleLoading} setGoogleLoading={setGoogleLoading} setError={setError} label="Đăng nhập với Google" />}
 
-          <p style={{ textAlign: 'center', marginTop: 28, fontSize: 13, color: 'rgba(255,255,255,0.3)' }}>
+          <p style={{ textAlign: 'center', marginTop: 28, fontSize: 13, color: 'var(--text-secondary)' }}>
             Chưa có tài khoản?{' '}
-            <Link to="/register" style={{ color: '#00C9B8', fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: 3 }}>
+            <Link to="/register" style={{ color: 'var(--accent)', fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: 3 }}>
               Đăng ký
             </Link>
           </p>
@@ -96,13 +82,15 @@ export default function LoginScreen() {
 }
 
 function Field({ label, type, value, onChange, autoComplete, autoFocus, showToggle, onToggle, showPass }) {
+  const id = useId()
   return (
     <div style={{ marginBottom: 24 }}>
-      <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>
+      <label htmlFor={id} style={{ display: 'block', fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>
         {label}
       </label>
       <div style={{ position: 'relative' }}>
         <input
+          id={id}
           autoFocus={autoFocus}
           type={type}
           value={value}
@@ -111,14 +99,14 @@ function Field({ label, type, value, onChange, autoComplete, autoFocus, showTogg
           required
           style={{
             width: '100%', padding: showToggle ? '13px 42px 13px 0' : '13px 0',
-            background: 'transparent', border: 'none', borderBottom: '1.5px solid rgba(255,255,255,0.2)',
-            color: '#fff', fontSize: 15, outline: 'none', transition: 'border-color 0.2s',
+            background: 'transparent', border: 'none', borderBottom: '1.5px solid rgba(var(--ink-rgb),0.2)',
+            color: 'var(--heading)', fontSize: 15, outline: 'none', transition: 'border-color 0.2s',
           }}
-          onFocus={e => e.target.style.borderBottomColor = '#00C9B8'}
-          onBlur={e => e.target.style.borderBottomColor = 'rgba(255,255,255,0.2)'}
+          onFocus={e => e.target.style.borderBottomColor = 'var(--accent)'}
+          onBlur={e => e.target.style.borderBottomColor = 'rgba(var(--ink-rgb),0.2)'}
         />
         {showToggle && (
-          <button type="button" onClick={onToggle} style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.35)', padding: 4 }}>
+          <button type="button" aria-label={showPass ? "Ẩn mật khẩu" : "Hiện mật khẩu"} aria-pressed={showPass} onClick={onToggle} style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 4 }}>
             {showPass
               ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
               : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -133,18 +121,18 @@ function Field({ label, type, value, onChange, autoComplete, autoFocus, showTogg
 function btnStyle(loading) {
   return {
     width: '100%', padding: '14px', borderRadius: 10, border: 'none',
-    background: loading ? 'rgba(0,201,184,0.5)' : 'linear-gradient(135deg, #00C9B8, #0099CC)',
-    color: '#fff', fontWeight: 700, fontSize: 15, cursor: loading ? 'default' : 'pointer',
-    boxShadow: loading ? 'none' : '0 8px 32px rgba(0,201,184,0.4)', transition: 'all 0.2s',
+    background: loading ? 'rgba(var(--accent-rgb),0.5)' : 'linear-gradient(135deg, var(--button-start), var(--button-end))',
+    color: 'var(--on-accent)', fontWeight: 700, fontSize: 15, cursor: loading ? 'default' : 'pointer',
+    boxShadow: loading ? 'none' : '0 8px 32px rgba(var(--accent-rgb),0.4)', transition: 'all 0.2s',
   }
 }
 
 function Divider() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '20px 0' }}>
-      <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,0.1)' }} />
-      <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.25)', fontWeight: 500 }}>hoặc</span>
-      <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,0.1)' }} />
+      <div style={{ flex: 1, height: 1, background: 'rgba(var(--ink-rgb),0.1)' }} />
+      <span style={{ fontSize: 12, color: 'var(--text-faint)', fontWeight: 500 }}>hoặc</span>
+      <div style={{ flex: 1, height: 1, background: 'rgba(var(--ink-rgb),0.1)' }} />
     </div>
   )
 }
@@ -157,15 +145,15 @@ function GoogleButton({ loading, onClick, label }) {
       disabled={loading}
       style={{
         width: '100%', padding: '13px', borderRadius: 10,
-        border: '1.5px solid rgba(255,255,255,0.15)',
-        background: loading ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.05)',
-        color: loading ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.8)',
+        border: '1.5px solid rgba(var(--ink-rgb),0.15)',
+        background: loading ? 'rgba(var(--ink-rgb),0.03)' : 'rgba(var(--ink-rgb),0.05)',
+        color: loading ? 'rgba(var(--ink-rgb),0.3)' : 'rgba(var(--ink-rgb),0.8)',
         fontWeight: 600, fontSize: 14, cursor: loading ? 'default' : 'pointer',
         display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
         transition: 'all 0.2s', fontFamily: '"Be Vietnam Pro", sans-serif',
       }}
-      onMouseEnter={e => { if (!loading) e.currentTarget.style.background = 'rgba(255,255,255,0.09)' }}
-      onMouseLeave={e => { e.currentTarget.style.background = loading ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.05)' }}
+      onMouseEnter={e => { if (!loading) e.currentTarget.style.background = 'rgba(var(--ink-rgb),0.09)' }}
+      onMouseLeave={e => { e.currentTarget.style.background = loading ? 'rgba(var(--ink-rgb),0.03)' : 'rgba(var(--ink-rgb),0.05)' }}
     >
       {loading ? (
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
@@ -184,4 +172,28 @@ function GoogleButton({ loading, onClick, label }) {
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </button>
   )
+}
+
+// Mount the OAuth hook only when a client ID is configured.
+function GoogleAuthButton({ loading, setGoogleLoading, setError, label }) {
+  const navigate = useNavigate()
+  const { setUser, setTokens } = useStore()
+  const handleGoogle = useGoogleLogin({
+    onSuccess: async ({ access_token }) => {
+      setGoogleLoading(true)
+      setError('')
+      try {
+        const data = await api.post('/auth/google', { credential: access_token })
+        setTokens(data.access_token, data.refresh_token)
+        setUser(data.user)
+        navigate(data.needs_profile ? '/complete-profile' : '/home')
+      } catch (err) {
+        setError(err.message)
+      } finally {
+        setGoogleLoading(false)
+      }
+    },
+    onError: () => setError('Đăng nhập Google thất bại'),
+  })
+  return <GoogleButton loading={loading} onClick={handleGoogle} label={label} />
 }

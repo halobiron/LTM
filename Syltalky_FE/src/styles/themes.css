@@ -1,0 +1,109 @@
+/* Shared semantic palette. Media stays dark so captions remain readable on video. */
+:root, [data-theme="dark"], .media-surface {
+  color-scheme: dark;
+  --bg: #07090F;
+  --surface: #0F1117;
+  --surface-alt: #080B14;
+  --surface-raised: #141720;
+  --surface-hover: #1A1E2C;
+  --heading: #FFFFFF;
+  --text: #E8EAF0;
+  --text-secondary: #A8B4C8;
+  --text-muted: #8B96AA;
+  --text-faint: #79869B;
+  --ink-rgb: 255, 255, 255;
+  --surface-rgb: 15, 17, 23;
+  --border: rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.2);
+  --accent: #00C9B8;
+  --accent-strong: #00D4C0;
+  --accent-rgb: 0, 201, 184;
+  --purple: #A78BFA;
+  --purple-rgb: 167, 139, 250;
+  --danger: #F87171;
+  --danger-rgb: 248, 113, 113;
+  --success: #34D399;
+  --success-rgb: 52, 211, 153;
+  --warning: #FBBF24;
+  --warning-rgb: 251, 191, 36;
+  --blue: #60A5FA;
+  --blue-rgb: 96, 165, 250;
+  --orange: #FB923C;
+  --orange-rgb: 251, 146, 60;
+  --button-start: #00C9B8;
+  --button-end: #0099CC;
+  --on-accent: #FFFFFF;
+  --shadow-rgb: 0, 0, 0;
+  --auth-art: linear-gradient(145deg, #060A14, #0A1628 50%, #071520);
+  --hero-heading: linear-gradient(90deg, #00D4C0, #A78BFA);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #F4F7FA;
+  --surface: #FFFFFF;
+  --surface-alt: #EDF3F6;
+  --surface-raised: #FFFFFF;
+  --surface-hover: #E7EFF4;
+  --heading: #142E3D;
+  --text: #243C4D;
+  --text-secondary: #506579;
+  --text-muted: #5E7285;
+  --text-faint: #5E7285;
+  --ink-rgb: 22, 43, 58;
+  --surface-rgb: 255, 255, 255;
+  --border: rgba(22,43,58,0.1);
+  --border-strong: rgba(22,43,58,0.24);
+  --accent: #007F75;
+  --accent-strong: #006C63;
+  --accent-rgb: 0, 127, 117;
+  --purple: #7150BB;
+  --purple-rgb: 113, 80, 187;
+  --danger: #BC3547;
+  --danger-rgb: 188, 53, 71;
+  --success: #107C60;
+  --success-rgb: 16, 124, 96;
+  --warning: #916000;
+  --warning-rgb: 145, 96, 0;
+  --blue: #246AB8;
+  --blue-rgb: 36, 106, 184;
+  --orange: #A65810;
+  --orange-rgb: 166, 88, 16;
+  --button-start: #008276;
+  --button-end: #0076A1;
+  --shadow-rgb: 56, 80, 100;
+  --auth-art: linear-gradient(145deg, #EAF7F3, #E9F1FA 55%, #F5F9FC);
+  --hero-heading: linear-gradient(90deg, #007F75, #7150BB);
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 8px 12px;
+  flex-shrink: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+.theme-toggle:hover { background: var(--surface-hover); color: var(--accent); }
+.theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.auth-tools { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
+.auth-tools .auth-back { margin: 0; }
+
+/* Imported code highlighting remains readable in a light document. */
+:root[data-theme="light"] .ai-summary-md .hljs { background: #EDF3F6; color: #243C4D; }
+:root[data-theme="light"] .ai-summary-md :is(.hljs-keyword, .hljs-selector-tag, .hljs-literal) { color: #7150BB; }
+:root[data-theme="light"] .ai-summary-md :is(.hljs-string, .hljs-attr, .hljs-title) { color: #007F75; }
+:root[data-theme="light"] .ai-summary-md :is(.hljs-comment, .hljs-quote) { color: #5E7285; }
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle { transition: none; }
+}

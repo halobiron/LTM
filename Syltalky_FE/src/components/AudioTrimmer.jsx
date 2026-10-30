@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 
 const BAR_COUNT = 80
-const ACCENT    = '#00C9B8'
+const ACCENT    = 'var(--accent)'
 
 export default function AudioTrimmer({ audioBlob, maxDuration = 15, onChange }) {
   const [bars, setBars]           = useState([])
@@ -189,8 +189,8 @@ export default function AudioTrimmer({ audioBlob, maxDuration = 15, onChange }) 
   // ── Render ─────────────────────────────────────────────────────────────────
   if (!duration) {
     return (
-      <div style={{ height: 88, borderRadius: 10, border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.25)' }}>Đang phân tích âm thanh...</div>
+      <div style={{ height: 88, borderRadius: 10, border: '1px solid rgba(var(--ink-rgb), 0.08)', background: 'rgba(var(--ink-rgb), 0.02)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Đang phân tích âm thanh...</div>
       </div>
     )
   }
@@ -216,7 +216,7 @@ export default function AudioTrimmer({ audioBlob, maxDuration = 15, onChange }) 
         onMouseDown={canSlide ? handleMouseDown : undefined}
         style={{
           position: 'relative', height: 88, borderRadius: 10,
-          background: 'rgba(0,0,0,0.35)', border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--surface-alt)', border: '1px solid rgba(var(--ink-rgb), 0.08)',
           cursor: !canSlide ? 'default' : dragging ? 'grabbing' : 'grab',
           overflow: 'hidden', userSelect: 'none',
         }}
@@ -231,7 +231,7 @@ export default function AudioTrimmer({ audioBlob, maxDuration = 15, onChange }) 
               <div key={i} style={{
                 flex: 1, borderRadius: 2,
                 height: `${Math.round(h * 72)}px`,
-                background: isHead && inSel ? ACCENT : inSel ? 'rgba(0,201,184,0.45)' : 'rgba(255,255,255,0.12)',
+                background: isHead && inSel ? ACCENT : inSel ? 'rgba(var(--accent-rgb), 0.45)' : 'rgba(var(--ink-rgb), 0.12)',
                 transition: 'background 0.05s',
               }} />
             )
@@ -241,7 +241,7 @@ export default function AudioTrimmer({ audioBlob, maxDuration = 15, onChange }) 
         {/* Dark overlay */}
         <div style={{
           position: 'absolute', inset: 0, pointerEvents: 'none',
-          background: `linear-gradient(to right,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.55) ${selOff * 100}%,transparent ${selOff * 100}%,transparent ${(selOff + selW) * 100}%,rgba(0,0,0,0.55) ${(selOff + selW) * 100}%,rgba(0,0,0,0.55) 100%)`,
+          background: `linear-gradient(to right,rgba(var(--ink-rgb), 0.08) 0%,rgba(var(--ink-rgb), 0.08) ${selOff * 100}%,transparent ${selOff * 100}%,transparent ${(selOff + selW) * 100}%,rgba(var(--ink-rgb), 0.08) ${(selOff + selW) * 100}%,rgba(var(--ink-rgb), 0.08) 100%)`,
         }} />
 
         {/* Selection border */}
@@ -255,14 +255,14 @@ export default function AudioTrimmer({ audioBlob, maxDuration = 15, onChange }) 
         <div style={{
           position: 'absolute', left: `calc(${(selOff + selW / 2) * 100}% - 22px)`,
           top: '50%', transform: 'translateY(-50%)',
-          background: 'rgba(0,201,184,0.9)', color: '#000', fontSize: 10, fontWeight: 800,
+          background: 'rgba(var(--accent-rgb), 0.9)', color: 'var(--on-accent)', fontSize: 10, fontWeight: 800,
           padding: '2px 7px', borderRadius: 99, pointerEvents: 'none', whiteSpace: 'nowrap',
         }}>
           {(trimEnd - trimStart).toFixed(1)}s
         </div>
 
         {canSlide && !dragging && (
-          <div style={{ position: 'absolute', bottom: 6, right: 8, pointerEvents: 'none', fontSize: 9, color: 'rgba(255,255,255,0.25)', fontWeight: 600, letterSpacing: '0.05em' }}>
+          <div style={{ position: 'absolute', bottom: 6, right: 8, pointerEvents: 'none', fontSize: 9, color: 'var(--text-muted)', fontWeight: 600, letterSpacing: '0.05em' }}>
             KÉO ĐỂ DI CHUYỂN
           </div>
         )}
@@ -270,9 +270,9 @@ export default function AudioTrimmer({ audioBlob, maxDuration = 15, onChange }) 
 
       {/* Time ruler */}
       <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 2px' }}>
-        <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', fontVariantNumeric: 'tabular-nums' }}>0:00.0</span>
-        <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', fontVariantNumeric: 'tabular-nums' }}>{fmt(duration / 2)}</span>
-        <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', fontVariantNumeric: 'tabular-nums' }}>{fmt(duration)}</span>
+        <span style={{ fontSize: 10, color: 'var(--text-muted)', fontVariantNumeric: 'tabular-nums' }}>0:00.0</span>
+        <span style={{ fontSize: 10, color: 'var(--text-muted)', fontVariantNumeric: 'tabular-nums' }}>{fmt(duration / 2)}</span>
+        <span style={{ fontSize: 10, color: 'var(--text-muted)', fontVariantNumeric: 'tabular-nums' }}>{fmt(duration)}</span>
       </div>
 
       {/* Play button + scrubber */}
@@ -285,13 +285,13 @@ export default function AudioTrimmer({ audioBlob, maxDuration = 15, onChange }) 
             width: 76, flexShrink: 0,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
             padding: '7px 0', borderRadius: 8, cursor: 'pointer',
-            background: playing ? 'rgba(0,201,184,0.18)' : 'rgba(255,255,255,0.05)',
-            border: `1px solid ${playing ? 'rgba(0,201,184,0.5)' : 'rgba(255,255,255,0.1)'}`,
-            color: playing ? ACCENT : 'rgba(255,255,255,0.55)',
+            background: playing ? 'rgba(var(--accent-rgb), 0.18)' : 'rgba(var(--ink-rgb), 0.05)',
+            border: `1px solid ${playing ? 'rgba(var(--accent-rgb), 0.5)' : 'rgba(var(--ink-rgb), 0.1)'}`,
+            color: playing ? ACCENT : 'var(--text-secondary)',
             fontSize: 12, fontWeight: 600, fontFamily: 'inherit', transition: 'all 0.15s',
           }}
-          onMouseEnter={e => { if (!playing) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; e.currentTarget.style.color = '#fff' } }}
-          onMouseLeave={e => { if (!playing) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = 'rgba(255,255,255,0.55)' } }}
+          onMouseEnter={e => { if (!playing) { e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb), 0.2)'; e.currentTarget.style.color = 'var(--heading)' } }}
+          onMouseLeave={e => { if (!playing) { e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb), 0.1)'; e.currentTarget.style.color = 'var(--text-secondary)' } }}
         >
           {playing
             ? <><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg> Dừng</>
@@ -303,7 +303,7 @@ export default function AudioTrimmer({ audioBlob, maxDuration = 15, onChange }) 
         <div style={{
           flex: 1, display: 'flex', alignItems: 'center', gap: 8,
           padding: '6px 12px', borderRadius: 8,
-          background: 'rgba(0,201,184,0.05)', border: '1px solid rgba(0,201,184,0.12)',
+          background: 'rgba(var(--accent-rgb), 0.05)', border: '1px solid rgba(var(--accent-rgb), 0.12)',
         }}>
           <span style={{ fontSize: 11, fontVariantNumeric: 'tabular-nums', color: ACCENT, fontWeight: 700, flexShrink: 0, width: 44, display: 'inline-block' }}>
             {fmt(trimStart + dotRatio * (trimEnd - trimStart))}
@@ -315,7 +315,7 @@ export default function AudioTrimmer({ audioBlob, maxDuration = 15, onChange }) 
             style={{ flex: 1, height: 20, cursor: 'pointer', position: 'relative', display: 'flex', alignItems: 'center' }}
           >
             {/* Track background */}
-            <div style={{ position: 'absolute', left: 0, right: 0, height: 4, borderRadius: 2, background: 'rgba(0,201,184,0.15)' }} />
+            <div style={{ position: 'absolute', left: 0, right: 0, height: 4, borderRadius: 2, background: 'rgba(var(--accent-rgb), 0.15)' }} />
 
             {/* Played fill */}
             <div style={{
@@ -332,8 +332,8 @@ export default function AudioTrimmer({ audioBlob, maxDuration = 15, onChange }) 
                 left: `${dotRatio * 100}%`,
                 transform: 'translateX(-50%)',
                 width: 14, height: 14, borderRadius: '50%',
-                background: ACCENT, border: '2px solid #fff',
-                boxShadow: `0 0 8px ${ACCENT}88`,
+                background: ACCENT, border: '2px solid var(--heading)',
+                boxShadow: `0 0 8px rgba(var(--accent-rgb), 0.53)`,
                 cursor: scrubbing ? 'grabbing' : 'grab',
                 zIndex: 2,
                 transition: scrubbing ? 'none' : 'left 0.05s linear',

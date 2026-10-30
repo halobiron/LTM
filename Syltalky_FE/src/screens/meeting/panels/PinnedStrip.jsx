@@ -48,14 +48,14 @@ function PinCodeBlock({ children }) {
   }
 
   return (
-    <div style={{ borderRadius: 8, overflow: 'hidden', background: 'rgba(0,0,0,0.45)', border: '1px solid rgba(255,255,255,0.08)', margin: '3px 0' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '3px 6px 3px 10px', background: 'rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-        <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.35)', fontFamily: 'monospace', fontWeight: 600, letterSpacing: '0.05em' }}>{lang}</span>
+    <div className="media-surface" style={{ borderRadius: 8, overflow: 'hidden', background: '#111525', border: '1px solid rgba(var(--ink-rgb),0.08)', margin: '3px 0' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '3px 6px 3px 10px', background: 'rgba(var(--ink-rgb),0.04)', borderBottom: '1px solid rgba(var(--ink-rgb),0.06)' }}>
+        <span style={{ fontSize: 9, color: 'var(--text-muted)', fontFamily: 'monospace', fontWeight: 600, letterSpacing: '0.05em' }}>{lang}</span>
         <button onClick={copy} style={{
           minWidth: 46, textAlign: 'center', padding: '2px 7px', borderRadius: 4,
-          border: `1px solid ${copied ? 'rgba(52,211,153,0.3)' : 'rgba(255,255,255,0.1)'}`,
-          background: copied ? 'rgba(52,211,153,0.15)' : 'rgba(255,255,255,0.05)',
-          color: copied ? '#34D399' : 'rgba(255,255,255,0.4)',
+          border: `1px solid ${copied ? 'rgba(var(--success-rgb),0.3)' : 'rgba(var(--ink-rgb),0.1)'}`,
+          background: copied ? 'rgba(var(--success-rgb),0.15)' : 'rgba(var(--ink-rgb),0.05)',
+          color: copied ? 'var(--success)' : 'var(--text-muted)',
           fontSize: 9, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
           transition: 'background 0.3s ease, color 0.3s ease, border-color 0.3s ease',
         }}>
@@ -87,7 +87,7 @@ function PinMarkdown({ text }) {
           <a
             href={href} target="_blank" rel="noopener noreferrer"
             onClick={e => { if (!e.ctrlKey && !e.metaKey && !e.shiftKey) { e.preventDefault(); window.open(href, '_blank', 'noopener,noreferrer') } }}
-            style={{ color: '#00C9B8', textDecoration: 'underline', textUnderlineOffset: 3, cursor: 'pointer' }}
+            style={{ color: 'var(--accent)', textDecoration: 'underline', textUnderlineOffset: 3, cursor: 'pointer' }}
           >
             {children}
           </a>
@@ -111,9 +111,9 @@ function UnpinBtn({ onClick }) {
       title="Bỏ ghim"
       style={{
         width: 22, height: 22, borderRadius: 6, padding: 0,
-        border: `1px solid ${hov ? 'rgba(248,113,113,0.35)' : 'rgba(255,255,255,0.08)'}`,
-        background: hov ? 'rgba(248,113,113,0.12)' : 'rgba(255,255,255,0.04)',
-        color: hov ? '#F87171' : 'rgba(248,113,113,0.6)',
+        border: `1px solid ${hov ? 'rgba(var(--danger-rgb),0.35)' : 'rgba(var(--ink-rgb),0.08)'}`,
+        background: hov ? 'rgba(var(--danger-rgb),0.12)' : 'rgba(var(--ink-rgb),0.04)',
+        color: hov ? 'var(--danger)' : 'rgba(var(--danger-rgb),0.6)',
         cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
         transition: 'all 0.15s',
       }}
@@ -135,9 +135,9 @@ function JumpBtn({ onClick }) {
       title="Đến tin nhắn gốc"
       style={{
         width: 22, height: 22, borderRadius: 6, padding: 0,
-        border: `1px solid ${hov ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.08)'}`,
-        background: hov ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.04)',
-        color: hov ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.45)',
+        border: `1px solid ${hov ? 'rgba(var(--ink-rgb),0.2)' : 'rgba(var(--ink-rgb),0.08)'}`,
+        background: hov ? 'rgba(var(--ink-rgb),0.1)' : 'rgba(var(--ink-rgb),0.04)',
+        color: hov ? 'var(--text)' : 'var(--text-muted)',
         cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
         transition: 'all 0.15s',
       }}
@@ -159,13 +159,13 @@ function PinRow({ pin, isHostOrCohost, userInfoMap, onUnpin, onJump }) {
     <div style={{
       display: 'flex', gap: 9, padding: '8px 8px',
       borderRadius: 8, marginBottom: 4,
-      background: 'rgba(255,255,255,0.03)',
-      border: '1px solid rgba(255,255,255,0.05)',
+      background: 'rgba(var(--ink-rgb),0.03)',
+      border: '1px solid rgba(var(--ink-rgb),0.05)',
     }}>
       <UserAvatar name={displayName} avatarUrl={avatarUrl} size={26} />
 
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontSize: 12, fontWeight: 600, color: '#fff', marginBottom: 3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+        <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--heading)', marginBottom: 3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
           {displayName}
         </div>
         <PinMarkdown text={pin.text} />
@@ -192,8 +192,8 @@ export default function PinnedStrip({ pins, isHostOrCohost, userInfoMap = {}, on
 
   return (
     <div style={{
-      borderBottom: '1px solid rgba(255,255,255,0.06)',
-      background: 'rgba(0,201,184,0.04)',
+      borderBottom: '1px solid rgba(var(--ink-rgb),0.06)',
+      background: 'rgba(var(--accent-rgb),0.04)',
       flexShrink: 0,
       borderRadius: 12,
       margin: '8px 8px 0',
@@ -201,14 +201,14 @@ export default function PinnedStrip({ pins, isHostOrCohost, userInfoMap = {}, on
       padding: 10,
     }}>
       <style>{`
-        .pin-md { font-size: 12px; color: rgba(255,255,255,0.75); line-height: 1.5; word-break: break-word; }
+        .pin-md { font-size: 12px; color: var(--text-secondary); line-height: 1.5; word-break: break-word; }
         .pin-md > *:first-child { margin-top: 0 !important; }
         .pin-md > *:last-child { margin-bottom: 0 !important; }
         .pin-md p { margin: 0 0 3px; }
         .pin-md p:last-child { margin-bottom: 0; }
-        .pin-md strong { color: #fff; font-weight: 700; }
-        .pin-md em { color: rgba(255,255,255,0.8); font-style: italic; }
-        .pin-md code { font-family: monospace; font-size: 11px; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.1); border-radius: 3px; padding: 1px 4px; color: #7dd3fc; }
+        .pin-md strong { color: var(--heading); font-weight: 700; }
+        .pin-md em { color: var(--text); font-style: italic; }
+        .pin-md code { font-family: monospace; font-size: 11px; background: var(--surface-alt); border: 1px solid rgba(var(--ink-rgb),0.1); border-radius: 3px; padding: 1px 4px; color: var(--blue); }
         .pin-md pre code { background: none; border: none; padding: 0; color: inherit; }
         .pin-md ul, .pin-md ol { margin: 2px 0; padding-left: 16px; }
         .pin-md li { margin-bottom: 1px; }
@@ -221,13 +221,13 @@ export default function PinnedStrip({ pins, isHostOrCohost, userInfoMap = {}, on
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         marginBottom: 8,
       }}>
-        <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.5)' }}>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00C9B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, fontWeight: 600, color: 'var(--text-secondary)' }}>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="12" y1="17" x2="12" y2="22"/>
             <path d="M5 17h14l-1.5-3V8a5.5 5.5 0 0 0-11 0v6L5 17z"/>
           </svg>
           Tin nhắn ghim
-          <span style={{ background: 'rgba(0,201,184,0.18)', color: '#00C9B8', padding: '1px 6px', borderRadius: 99, fontSize: 10, fontWeight: 700 }}>
+          <span style={{ background: 'rgba(var(--accent-rgb),0.18)', color: 'var(--accent)', padding: '1px 6px', borderRadius: 99, fontSize: 10, fontWeight: 700 }}>
             {pins.length}/5
           </span>
         </span>
@@ -238,9 +238,9 @@ export default function PinnedStrip({ pins, isHostOrCohost, userInfoMap = {}, on
             style={{
               display: 'flex', alignItems: 'center', gap: 4,
               padding: '3px 9px', borderRadius: 99,
-              border: '1px solid rgba(0,201,184,0.25)',
-              background: showAll ? 'rgba(0,201,184,0.12)' : 'rgba(0,201,184,0.06)',
-              color: '#00C9B8', fontSize: 11, fontWeight: 600,
+              border: '1px solid rgba(var(--accent-rgb),0.25)',
+              background: showAll ? 'rgba(var(--accent-rgb),0.12)' : 'rgba(var(--accent-rgb),0.06)',
+              color: 'var(--accent)', fontSize: 11, fontWeight: 600,
               cursor: 'pointer', fontFamily: 'inherit',
               transition: 'background 0.15s',
             }}
@@ -284,4 +284,4 @@ export default function PinnedStrip({ pins, isHostOrCohost, userInfoMap = {}, on
   )
 }
 
-const rawStyle = { fontSize: 12, color: 'rgba(255,255,255,0.75)', lineHeight: 1.5, wordBreak: 'break-word', display: 'block' }
+const rawStyle = { fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5, wordBreak: 'break-word', display: 'block' }

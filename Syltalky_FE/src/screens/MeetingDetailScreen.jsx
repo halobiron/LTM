@@ -65,9 +65,9 @@ export default function MeetingDetailScreen() {
     return (
       <div style={{
         flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: '#07090F', fontFamily: '"Be Vietnam Pro", sans-serif',
+        background: 'var(--bg)', fontFamily: '"Be Vietnam Pro", sans-serif',
       }}>
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(0,201,184,0.6)" strokeWidth="2.5" strokeLinecap="round"
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(var(--accent-rgb), 0.6)" strokeWidth="2.5" strokeLinecap="round"
           style={{ animation: 'spin 0.7s linear infinite' }}>
           <path d="M12 2a10 10 0 0 1 10 10"/>
         </svg>
@@ -85,12 +85,12 @@ export default function MeetingDetailScreen() {
   return (
     <div style={{
       flex: 1, height: '100%', overflowY: tab === 'chat' ? 'hidden' : 'auto',
-      fontFamily: '"Be Vietnam Pro", sans-serif', color: '#E8EAF0',
-      background: '#07090F',
+      fontFamily: '"Be Vietnam Pro", sans-serif', color: 'var(--text)',
+      background: 'var(--bg)',
     }}>
       <div aria-hidden style={{
         position: 'fixed', top: 0, left: isMobile ? 0 : 240, right: 0, bottom: 0, pointerEvents: 'none', zIndex: 0,
-        background: 'radial-gradient(ellipse 50% 40% at 60% 15%, rgba(167,139,250,0.055) 0%, transparent 65%)',
+        background: 'radial-gradient(ellipse 50% 40% at 60% 15%, rgba(var(--purple-rgb), 0.055) 0%, transparent 65%)',
       }} />
 
       <div style={{
@@ -104,11 +104,11 @@ export default function MeetingDetailScreen() {
         <button onClick={() => navigate('/library')} style={{
           display: 'flex', alignItems: 'center', gap: 7, marginBottom: 32,
           background: 'none', border: 'none', cursor: 'pointer', padding: 0,
-          color: 'rgba(255,255,255,0.35)', fontSize: 13, fontWeight: 600, fontFamily: 'inherit',
+          color: 'var(--text-muted)', fontSize: 13, fontWeight: 600, fontFamily: 'inherit',
           transition: 'color 0.15s',
         }}
-          onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}
-          onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.35)'}
+          onMouseEnter={e => e.currentTarget.style.color = 'var(--text)'}
+          onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
             <polyline points="15 18 9 12 15 6"/>
@@ -119,14 +119,14 @@ export default function MeetingDetailScreen() {
         {/* Header */}
         <div style={{ marginBottom: 36 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-            <h1 style={{ margin: 0, fontSize: isMobile ? 26 : 36, fontWeight: 900, letterSpacing: '-1px', color: '#fff' }}>
+            <h1 style={{ margin: 0, fontSize: isMobile ? 26 : 36, fontWeight: 900, letterSpacing: '-1px', color: 'var(--heading)' }}>
               {meeting.room_code}
             </h1>
             {summary && (
               <span style={{
                 display: 'flex', alignItems: 'center', gap: 5,
                 padding: '4px 10px', borderRadius: 8, fontSize: 11, fontWeight: 700,
-                background: 'rgba(167,139,250,0.15)', color: '#A78BFA', border: '1px solid rgba(167,139,250,0.25)',
+                background: 'rgba(var(--purple-rgb), 0.15)', color: 'var(--purple)', border: '1px solid rgba(var(--purple-rgb), 0.25)',
               }}>
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                   <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
@@ -148,7 +148,7 @@ export default function MeetingDetailScreen() {
             ].map(({ icon, label }) => (
               <div key={icon} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                 <MetaIcon type={icon} />
-                <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', fontWeight: 500 }}>{label}</span>
+                <span style={{ fontSize: 13, color: 'var(--text-secondary)', fontWeight: 500 }}>{label}</span>
               </div>
             ))}
           </div>
@@ -157,17 +157,17 @@ export default function MeetingDetailScreen() {
         {/* Tab switcher */}
         {isMobile ? (
           <div style={{ marginBottom: 24, marginLeft: -16, marginRight: -16 }}>
-            <div style={{ display: 'flex', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+            <div style={{ display: 'flex', borderBottom: '1px solid rgba(var(--ink-rgb), 0.06)' }}>
               {[
-                { key: 'summary', label: 'Tóm tắt', color: '#A78BFA',
+                { key: 'summary', label: 'Tóm tắt', color: 'var(--purple)',
                   icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg> },
-                { key: 'chat', label: 'Hỏi đáp', color: '#60A5FA',
+                { key: 'chat', label: 'Hỏi đáp', color: 'var(--blue)',
                   icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> },
-                { key: 'transcript', label: 'Bản ghi', color: '#00C9B8',
+                { key: 'transcript', label: 'Bản ghi', color: 'var(--accent)',
                   icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> },
-                { key: 'polls', label: 'Bình chọn', color: '#34D399',
+                { key: 'polls', label: 'Bình chọn', color: 'var(--success)',
                   icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> },
-                { key: 'notes', label: 'Ghi chú', color: '#FBBF24',
+                { key: 'notes', label: 'Ghi chú', color: 'var(--warning)',
                   icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> },
               ].map(t => {
                 const active = tab === t.key
@@ -176,7 +176,7 @@ export default function MeetingDetailScreen() {
                     flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4,
                     padding: '10px 4px 0', border: 'none', cursor: 'pointer',
                     background: 'transparent', fontFamily: 'inherit', position: 'relative',
-                    color: active ? t.color : 'rgba(255,255,255,0.3)',
+                    color: active ? t.color : 'var(--text-muted)',
                     transition: 'color 0.18s',
                   }}>
                     {t.icon}
@@ -195,21 +195,21 @@ export default function MeetingDetailScreen() {
         ) : (
           <div style={{
             display: 'flex', gap: 4, marginBottom: 28,
-            background: 'rgba(255,255,255,0.04)', borderRadius: 12, padding: 4,
+            background: 'rgba(var(--ink-rgb), 0.04)', borderRadius: 12, padding: 4,
             width: 'fit-content',
           }}>
             {[
-              { key: 'summary', label: 'Tóm tắt AI', color: '#A78BFA', bg: 'rgba(167,139,250,0.2)' },
-              { key: 'chat', label: 'Hỏi đáp', color: '#60A5FA', bg: 'rgba(96,165,250,0.15)' },
-              { key: 'transcript', label: `Bản ghi (${transcript.length})`, color: '#00C9B8', bg: 'rgba(0,201,184,0.15)' },
-              { key: 'polls', label: `Bình chọn${meeting.polls?.length ? ` (${meeting.polls.length})` : ''}`, color: '#34D399', bg: 'rgba(52,211,153,0.15)' },
-              { key: 'notes', label: `Ghi chú chung${meeting.notes?.length ? ` (${meeting.notes.length})` : ''}`, color: '#FBBF24', bg: 'rgba(251,191,36,0.15)' },
+              { key: 'summary', label: 'Tóm tắt AI', color: 'var(--purple)', bg: 'rgba(var(--purple-rgb), 0.2)' },
+              { key: 'chat', label: 'Hỏi đáp', color: 'var(--blue)', bg: 'rgba(var(--blue-rgb), 0.15)' },
+              { key: 'transcript', label: `Bản ghi (${transcript.length})`, color: 'var(--accent)', bg: 'rgba(var(--accent-rgb), 0.15)' },
+              { key: 'polls', label: `Bình chọn${meeting.polls?.length ? ` (${meeting.polls.length})` : ''}`, color: 'var(--success)', bg: 'rgba(var(--success-rgb), 0.15)' },
+              { key: 'notes', label: `Ghi chú chung${meeting.notes?.length ? ` (${meeting.notes.length})` : ''}`, color: 'var(--warning)', bg: 'rgba(var(--warning-rgb), 0.15)' },
             ].map(t => (
               <button key={t.key} onClick={() => setTab(t.key)} style={{
                 padding: '8px 20px', borderRadius: 9, border: 'none', cursor: 'pointer',
                 flexShrink: 0,
                 background: tab === t.key ? t.bg : 'transparent',
-                color: tab === t.key ? t.color : 'rgba(255,255,255,0.35)',
+                color: tab === t.key ? t.color : 'var(--text-muted)',
                 fontSize: 13, fontWeight: 700, fontFamily: 'inherit', transition: 'all 0.15s',
                 whiteSpace: 'nowrap',
               }}>
@@ -225,17 +225,17 @@ export default function MeetingDetailScreen() {
             {summaryTooShort ? (
               <div style={{
                 padding: '60px 24px', textAlign: 'center',
-                border: '1px dashed rgba(255,255,255,0.07)', borderRadius: 18,
+                border: '1px dashed rgba(var(--ink-rgb), 0.07)', borderRadius: 18,
                 display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16,
               }}>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(var(--ink-rgb), 0.15)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                 </svg>
                 <div>
-                  <p style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.22)', margin: '0 0 6px' }}>
+                  <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-muted)', margin: '0 0 6px' }}>
                     Nội dung quá ngắn để tóm tắt
                   </p>
-                  <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.12)', margin: 0 }}>
+                  <p style={{ fontSize: 12, color: 'var(--text-faint)', margin: 0 }}>
                     Cuộc họp cần có ít nhất 5 lượt phát biểu để AI tạo tóm tắt.
                   </p>
                 </div>
@@ -243,38 +243,38 @@ export default function MeetingDetailScreen() {
             ) : !summary ? (
               <div style={{
                 padding: '60px 24px', textAlign: 'center',
-                border: '1px dashed rgba(255,255,255,0.07)', borderRadius: 18,
+                border: '1px dashed rgba(var(--ink-rgb), 0.07)', borderRadius: 18,
                 display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16,
               }}>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.5" strokeLinecap="round"
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(var(--ink-rgb), 0.12)" strokeWidth="1.5" strokeLinecap="round"
                   style={{ animation: 'spin 1.2s linear infinite' }}>
                   <path d="M12 2a10 10 0 0 1 10 10"/>
                 </svg>
                 <div>
-                  <p style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.22)', margin: '0 0 6px' }}>
+                  <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-muted)', margin: '0 0 6px' }}>
                     Đang tạo tóm tắt…
                   </p>
-                  <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.12)', margin: 0 }}>
+                  <p style={{ fontSize: 12, color: 'var(--text-faint)', margin: 0 }}>
                     AI đang xử lý bản ghi cuộc họp, vui lòng quay lại sau.
                   </p>
                 </div>
               </div>
             ) : (
               <div style={{
-                background: 'rgba(167,139,250,0.05)', border: '1px solid rgba(167,139,250,0.12)',
+                background: 'rgba(var(--purple-rgb), 0.05)', border: '1px solid rgba(var(--purple-rgb), 0.12)',
                 borderRadius: 18, padding: '28px 32px',
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
                   <div style={{
                     width: 32, height: 32, borderRadius: 9,
-                    background: 'rgba(167,139,250,0.15)', border: '1px solid rgba(167,139,250,0.25)',
+                    background: 'rgba(var(--purple-rgb), 0.15)', border: '1px solid rgba(var(--purple-rgb), 0.25)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                   }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" strokeWidth="2" strokeLinecap="round">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" strokeWidth="2" strokeLinecap="round">
                       <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
                     </svg>
                   </div>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: '#A78BFA', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--purple)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                     AI · Tóm tắt cuộc họp
                   </span>
                 </div>
@@ -292,9 +292,9 @@ export default function MeetingDetailScreen() {
             {transcript.length === 0 ? (
               <div style={{
                 padding: '60px 24px', textAlign: 'center',
-                border: '1px dashed rgba(255,255,255,0.07)', borderRadius: 18,
+                border: '1px dashed rgba(var(--ink-rgb), 0.07)', borderRadius: 18,
               }}>
-                <p style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.22)', margin: 0 }}>
+                <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-muted)', margin: 0 }}>
                   Không có bản ghi
                 </p>
               </div>
@@ -303,17 +303,17 @@ export default function MeetingDetailScreen() {
                 {transcript.map((entry, i) => (
                   <div key={i} style={{
                     display: 'flex', gap: 14, padding: '10px 16px', borderRadius: 12,
-                    background: 'rgba(255,255,255,0.025)',
-                    border: '1px solid rgba(255,255,255,0.04)',
+                    background: 'rgba(var(--ink-rgb), 0.025)',
+                    border: '1px solid rgba(var(--ink-rgb), 0.04)',
                   }}>
-                    <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.2)', flexShrink: 0, paddingTop: 3, minWidth: 64 }}>
+                    <span style={{ fontSize: 11, color: 'var(--text-muted)', flexShrink: 0, paddingTop: 3, minWidth: 64 }}>
                       {fmtTime(entry.timestamp)}
                     </span>
                     <div style={{ flex: 1 }}>
-                      <span style={{ fontSize: 12, fontWeight: 700, color: '#00C9B8', marginRight: 8 }}>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--accent)', marginRight: 8 }}>
                         {entry.display_name}
                       </span>
-                      <span style={{ fontSize: 14, color: 'rgba(255,255,255,0.75)', lineHeight: 1.55 }}>
+                      <span style={{ fontSize: 14, color: 'var(--text)', lineHeight: 1.55 }}>
                         {entry.text}
                       </span>
                     </div>
@@ -337,30 +337,30 @@ export default function MeetingDetailScreen() {
             {!(meeting.notes?.length) && (
               <div style={{
                 padding: '60px 24px', textAlign: 'center',
-                border: '1px dashed rgba(255,255,255,0.07)', borderRadius: 18,
+                border: '1px dashed rgba(var(--ink-rgb), 0.07)', borderRadius: 18,
               }}>
-                <p style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.22)', margin: 0 }}>
+                <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-muted)', margin: 0 }}>
                   Không có ghi chú nào trong cuộc họp này
                 </p>
               </div>
             )}
             {(meeting.notes || []).map(note => (
               <div key={note.id} style={{
-                background: 'rgba(251,191,36,0.04)', border: '1px solid rgba(251,191,36,0.12)',
+                background: 'rgba(var(--warning-rgb), 0.04)', border: '1px solid rgba(var(--warning-rgb), 0.12)',
                 borderRadius: 18, padding: '24px 28px',
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
                   </svg>
-                  <span style={{ fontSize: 14, fontWeight: 700, color: '#fff' }}>{note.title}</span>
+                  <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--heading)' }}>{note.title}</span>
                 </div>
                 {note.plain_html ? (
-                  <div className="ai-summary-md" style={{ lineHeight: 1.7, color: 'rgba(255,255,255,0.82)' }}
+                  <div className="ai-summary-md" style={{ lineHeight: 1.7, color: 'var(--text)' }}
                     dangerouslySetInnerHTML={{ __html: note.plain_html }} />
                 ) : (
-                  <pre style={{ margin: 0, fontFamily: 'inherit', fontSize: 14, lineHeight: 1.7, color: 'rgba(255,255,255,0.82)', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
-                    {note.plain_text || <em style={{ color: 'rgba(255,255,255,0.3)', fontStyle: 'italic' }}>(trống)</em>}
+                  <pre style={{ margin: 0, fontFamily: 'inherit', fontSize: 14, lineHeight: 1.7, color: 'var(--text)', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+                    {note.plain_text || <em style={{ color: 'var(--text-muted)', fontStyle: 'italic' }}>(trống)</em>}
                   </pre>
                 )}
               </div>
@@ -374,9 +374,9 @@ export default function MeetingDetailScreen() {
             {!(meeting.polls?.length) && (
               <div style={{
                 padding: '60px 24px', textAlign: 'center',
-                border: '1px dashed rgba(255,255,255,0.07)', borderRadius: 18,
+                border: '1px dashed rgba(var(--ink-rgb), 0.07)', borderRadius: 18,
               }}>
-                <p style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.22)', margin: 0 }}>
+                <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-muted)', margin: 0 }}>
                   Không có bình chọn nào trong cuộc họp này
                 </p>
               </div>
@@ -386,14 +386,14 @@ export default function MeetingDetailScreen() {
               const maxCount = Math.max(...(poll.options || []).map(o => poll.tallies?.[o.id] || 0))
               return (
                 <div key={poll.id} style={{
-                  background: 'rgba(52,211,153,0.04)', border: '1px solid rgba(52,211,153,0.12)',
+                  background: 'rgba(var(--success-rgb), 0.04)', border: '1px solid rgba(var(--success-rgb), 0.12)',
                   borderRadius: 18, padding: '24px 28px',
                 }}>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 10 }}>
-                    {poll.anonymous && <span style={{ padding: '2px 8px', borderRadius: 99, fontSize: 10, fontWeight: 700, color: '#A78BFA', background: 'rgba(167,139,250,0.15)' }}>Ẩn danh</span>}
-                    {poll.multi_choice && <span style={{ padding: '2px 8px', borderRadius: 99, fontSize: 10, fontWeight: 700, color: '#00C9B8', background: 'rgba(0,201,184,0.15)' }}>Chọn nhiều</span>}
+                    {poll.anonymous && <span style={{ padding: '2px 8px', borderRadius: 99, fontSize: 10, fontWeight: 700, color: 'var(--purple)', background: 'rgba(var(--purple-rgb), 0.15)' }}>Ẩn danh</span>}
+                    {poll.multi_choice && <span style={{ padding: '2px 8px', borderRadius: 99, fontSize: 10, fontWeight: 700, color: 'var(--accent)', background: 'rgba(var(--accent-rgb), 0.15)' }}>Chọn nhiều</span>}
                   </div>
-                  <div style={{ fontSize: 20, fontWeight: 700, color: '#fff', marginBottom: 14 }}>{poll.question}</div>
+                  <div style={{ fontSize: 20, fontWeight: 700, color: 'var(--heading)', marginBottom: 14 }}>{poll.question}</div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                     {[...(poll.options || [])].sort((a, b) => {
                       const ca = poll.tallies?.[a.id] || 0
@@ -406,21 +406,21 @@ export default function MeetingDetailScreen() {
                       return (
                         <div key={opt.id} style={{
                           borderRadius: 10,
-                          background: isWinner ? 'rgba(52,211,153,0.08)' : 'rgba(255,255,255,0.03)',
-                          border: isWinner ? '1px solid rgba(52,211,153,0.35)' : '1px solid rgba(255,255,255,0.08)',
+                          background: isWinner ? 'rgba(var(--success-rgb), 0.08)' : 'rgba(var(--ink-rgb), 0.03)',
+                          border: isWinner ? '1px solid rgba(var(--success-rgb), 0.35)' : '1px solid rgba(var(--ink-rgb), 0.08)',
                         }}>
                           <div style={{ position: 'relative', padding: '10px 14px', overflow: 'hidden', borderRadius: 10 }}>
-                            <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${pct}%`, background: isWinner ? 'rgba(52,211,153,0.15)' : 'rgba(52,211,153,0.08)' }} />
+                            <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${pct}%`, background: isWinner ? 'rgba(var(--success-rgb), 0.15)' : 'rgba(var(--success-rgb), 0.08)' }} />
                             <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                              <span style={{ color: isWinner ? '#34D399' : '#fff', fontSize: 14, fontWeight: isWinner ? 700 : 400, display: 'flex', alignItems: 'center', gap: 6 }}>
+                              <span style={{ color: isWinner ? 'var(--success)' : 'var(--heading)', fontSize: 14, fontWeight: isWinner ? 700 : 400, display: 'flex', alignItems: 'center', gap: 6 }}>
                                 {isWinner && (
-                                  <svg width="13" height="13" viewBox="0 0 24 24" fill="#34D399" stroke="none">
+                                  <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--success)" stroke="none">
                                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                                   </svg>
                                 )}
                                 {opt.text}
                               </span>
-                              <span style={{ fontSize: 12, color: isWinner ? '#34D399' : 'rgba(255,255,255,0.55)', fontWeight: isWinner ? 700 : 400 }}>{count} · {pct}%</span>
+                              <span style={{ fontSize: 12, color: isWinner ? 'var(--success)' : 'var(--text-secondary)', fontWeight: isWinner ? 700 : 400 }}>{count} · {pct}%</span>
                             </div>
                           </div>
                           {!poll.anonymous && poll.voters?.[opt.id]?.length > 0 && (
@@ -432,7 +432,7 @@ export default function MeetingDetailScreen() {
                       )
                     })}
                   </div>
-                  <div style={{ marginTop: 10, fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>
+                  <div style={{ marginTop: 10, fontSize: 11, color: 'var(--text-muted)' }}>
                     {totalVotes} lượt bình chọn
                   </div>
                 </div>
@@ -504,21 +504,21 @@ function MeetingChat({ meetingId, accessToken, hasSummary }) {
   if (!hasSummary) return (
     <div style={{
       flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
-      border: '1px solid rgba(255,255,255,0.07)', borderRadius: 20,
-      background: 'rgba(255,255,255,0.015)', animation: 'tabIn 0.2s ease',
+      border: '1px solid rgba(var(--ink-rgb), 0.07)', borderRadius: 20,
+      background: 'rgba(var(--ink-rgb), 0.015)', animation: 'tabIn 0.2s ease',
     }}>
       <div style={{ textAlign: 'center' }}>
         <div style={{
           width: 44, height: 44, borderRadius: 13, margin: '0 auto 14px',
-          background: 'rgba(96,165,250,0.08)', border: '1px solid rgba(96,165,250,0.15)',
+          background: 'rgba(var(--blue-rgb), 0.08)', border: '1px solid rgba(var(--blue-rgb), 0.15)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(96,165,250,0.5)" strokeWidth="1.8" strokeLinecap="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(var(--blue-rgb), 0.5)" strokeWidth="1.8" strokeLinecap="round">
             <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
           </svg>
         </div>
-        <p style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.22)', margin: '0 0 6px' }}>Hỏi đáp chưa sẵn sàng</p>
-        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.12)', margin: 0 }}>Vui lòng chờ tóm tắt cuộc họp hoàn thành trước.</p>
+        <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-muted)', margin: '0 0 6px' }}>Hỏi đáp chưa sẵn sàng</p>
+        <p style={{ fontSize: 12, color: 'var(--text-faint)', margin: 0 }}>Vui lòng chờ tóm tắt cuộc họp hoàn thành trước.</p>
       </div>
     </div>
   )
@@ -529,29 +529,29 @@ function MeetingChat({ meetingId, accessToken, hasSummary }) {
     <div style={{
       display: 'flex', flexDirection: 'column',
       flex: 1, minHeight: 0, borderRadius: 20, overflow: 'hidden',
-      border: '1px solid rgba(96,165,250,0.12)',
-      background: 'rgba(255,255,255,0.015)',
+      border: '1px solid rgba(var(--blue-rgb), 0.12)',
+      background: 'rgba(var(--ink-rgb), 0.015)',
       animation: 'tabIn 0.2s ease',
     }}>
 
       {/* Header bar */}
       <div style={{
         flexShrink: 0, display: 'flex', alignItems: 'center', gap: 10,
-        padding: '14px 20px', borderBottom: '1px solid rgba(255,255,255,0.06)',
-        background: 'rgba(96,165,250,0.04)',
+        padding: '14px 20px', borderBottom: '1px solid rgba(var(--ink-rgb), 0.06)',
+        background: 'rgba(var(--blue-rgb), 0.04)',
       }}>
         <div style={{
           width: 28, height: 28, borderRadius: 8,
-          background: 'rgba(96,165,250,0.12)', border: '1px solid rgba(96,165,250,0.2)',
+          background: 'rgba(var(--blue-rgb), 0.12)', border: '1px solid rgba(var(--blue-rgb), 0.2)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" strokeWidth="2" strokeLinecap="round">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2" strokeLinecap="round">
             <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
           </svg>
         </div>
         <div>
-          <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>Hỏi đáp</span>
-          <span style={{ marginLeft: 8, fontSize: 11, color: 'rgba(96,165,250,0.6)', fontWeight: 500 }}>
+          <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>Hỏi đáp</span>
+          <span style={{ marginLeft: 8, fontSize: 11, color: 'rgba(var(--blue-rgb), 0.6)', fontWeight: 500 }}>
             AI · dựa trên nội dung cuộc họp
           </span>
         </div>
@@ -561,7 +561,7 @@ function MeetingChat({ meetingId, accessToken, hasSummary }) {
       <div ref={scrollAreaRef} style={{
         flex: 1, overflowY: 'auto', padding: '20px 20px 4px',
         display: 'flex', flexDirection: 'column',
-        scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.08) transparent',
+        scrollbarWidth: 'thin', scrollbarColor: 'rgba(var(--ink-rgb), 0.08) transparent',
       }}>
 
         {/* Empty state — centered inside scroll area */}
@@ -573,18 +573,18 @@ function MeetingChat({ meetingId, accessToken, hasSummary }) {
             <div style={{ textAlign: 'center' }}>
               <div style={{
                 width: 52, height: 52, borderRadius: 16, margin: '0 auto 14px',
-                background: 'linear-gradient(135deg, rgba(96,165,250,0.15), rgba(96,165,250,0.05))',
-                border: '1px solid rgba(96,165,250,0.18)',
+                background: 'linear-gradient(135deg, rgba(var(--blue-rgb), 0.15), rgba(var(--blue-rgb), 0.05))',
+                border: '1px solid rgba(var(--blue-rgb), 0.18)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" strokeWidth="1.8" strokeLinecap="round">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="1.8" strokeLinecap="round">
                   <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
                 </svg>
               </div>
-              <p style={{ margin: '0 0 5px', fontSize: 15, fontWeight: 800, color: 'rgba(255,255,255,0.65)', letterSpacing: '-0.3px' }}>
+              <p style={{ margin: '0 0 5px', fontSize: 15, fontWeight: 800, color: 'var(--text-secondary)', letterSpacing: '-0.3px' }}>
                 Hỏi về cuộc họp này
               </p>
-              <p style={{ margin: 0, fontSize: 12, color: 'rgba(255,255,255,0.22)' }}>
+              <p style={{ margin: 0, fontSize: 12, color: 'var(--text-muted)' }}>
                 AI trả lời dựa trên toàn bộ nội dung cuộc họp
               </p>
             </div>
@@ -596,12 +596,12 @@ function MeetingChat({ meetingId, accessToken, hasSummary }) {
                   onClick={() => handleSend(s)}
                   style={{
                     padding: '8px 14px', borderRadius: 20,
-                    background: 'rgba(96,165,250,0.07)', border: '1px solid rgba(96,165,250,0.15)',
-                    color: 'rgba(96,165,250,0.8)', fontSize: 12, fontWeight: 600,
+                    background: 'rgba(var(--blue-rgb), 0.07)', border: '1px solid rgba(var(--blue-rgb), 0.15)',
+                    color: 'rgba(var(--blue-rgb), 0.8)', fontSize: 12, fontWeight: 600,
                     cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(96,165,250,0.14)'; e.currentTarget.style.borderColor = 'rgba(96,165,250,0.3)'; e.currentTarget.style.color = '#93C5FD' }}
-                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(96,165,250,0.07)'; e.currentTarget.style.borderColor = 'rgba(96,165,250,0.15)'; e.currentTarget.style.color = 'rgba(96,165,250,0.8)' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(var(--blue-rgb), 0.14)'; e.currentTarget.style.borderColor = 'rgba(var(--blue-rgb), 0.3)'; e.currentTarget.style.color = 'var(--blue)' }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(var(--blue-rgb), 0.07)'; e.currentTarget.style.borderColor = 'rgba(var(--blue-rgb), 0.15)'; e.currentTarget.style.color = 'rgba(var(--blue-rgb), 0.8)' }}
                 >
                   {s}
                 </button>
@@ -624,17 +624,17 @@ function MeetingChat({ meetingId, accessToken, hasSummary }) {
                 <div style={{
                   width: 28, height: 28, borderRadius: 8, flexShrink: 0,
                   background: m.role === 'user'
-                    ? 'linear-gradient(135deg, rgba(96,165,250,0.25), rgba(96,165,250,0.1))'
-                    : 'linear-gradient(135deg, rgba(167,139,250,0.2), rgba(167,139,250,0.08))',
-                  border: `1px solid ${m.role === 'user' ? 'rgba(96,165,250,0.3)' : 'rgba(167,139,250,0.25)'}`,
+                    ? 'linear-gradient(135deg, rgba(var(--blue-rgb), 0.25), rgba(var(--blue-rgb), 0.1))'
+                    : 'linear-gradient(135deg, rgba(var(--purple-rgb), 0.2), rgba(var(--purple-rgb), 0.08))',
+                  border: `1px solid ${m.role === 'user' ? 'rgba(var(--blue-rgb), 0.3)' : 'rgba(var(--purple-rgb), 0.25)'}`,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>
                   {m.role === 'user' ? (
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" strokeWidth="2" strokeLinecap="round">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2" strokeLinecap="round">
                       <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
                     </svg>
                   ) : (
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" strokeWidth="2" strokeLinecap="round">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" strokeWidth="2" strokeLinecap="round">
                       <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
                     </svg>
                   )}
@@ -646,11 +646,11 @@ function MeetingChat({ meetingId, accessToken, hasSummary }) {
                   padding: m.role === 'user' ? '10px 15px' : '12px 16px',
                   borderRadius: m.role === 'user' ? '16px 4px 16px 16px' : '4px 16px 16px 16px',
                   background: m.role === 'user'
-                    ? 'linear-gradient(135deg, rgba(96,165,250,0.18), rgba(96,165,250,0.08))'
-                    : 'rgba(255,255,255,0.04)',
-                  border: `1px solid ${m.role === 'user' ? 'rgba(96,165,250,0.22)' : 'rgba(255,255,255,0.08)'}`,
+                    ? 'linear-gradient(135deg, rgba(var(--blue-rgb), 0.18), rgba(var(--blue-rgb), 0.08))'
+                    : 'rgba(var(--ink-rgb), 0.04)',
+                  border: `1px solid ${m.role === 'user' ? 'rgba(var(--blue-rgb), 0.22)' : 'rgba(var(--ink-rgb), 0.08)'}`,
                   fontSize: 13.5, lineHeight: 1.65, fontFamily: 'inherit',
-                  color: m.role === 'user' ? '#BAD8FD' : 'rgba(255,255,255,0.82)',
+                  color: m.role === 'user' ? 'var(--blue)' : 'var(--text)',
                 }}>
                   {m.role === 'assistant'
                     ? <div className="ai-summary-md" style={{ margin: 0 }}><ReactMarkdown>{m.content}</ReactMarkdown></div>
@@ -665,23 +665,23 @@ function MeetingChat({ meetingId, accessToken, hasSummary }) {
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, animation: 'msgIn 0.22s ease' }}>
                 <div style={{
                   width: 28, height: 28, borderRadius: 8, flexShrink: 0,
-                  background: 'linear-gradient(135deg, rgba(167,139,250,0.2), rgba(167,139,250,0.08))',
-                  border: '1px solid rgba(167,139,250,0.25)',
+                  background: 'linear-gradient(135deg, rgba(var(--purple-rgb), 0.2), rgba(var(--purple-rgb), 0.08))',
+                  border: '1px solid rgba(var(--purple-rgb), 0.25)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" strokeWidth="2" strokeLinecap="round">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" strokeWidth="2" strokeLinecap="round">
                     <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
                   </svg>
                 </div>
                 <div style={{
                   padding: '12px 16px', borderRadius: '4px 16px 16px 16px',
-                  background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+                  background: 'rgba(var(--ink-rgb), 0.04)', border: '1px solid rgba(var(--ink-rgb), 0.08)',
                   display: 'flex', alignItems: 'center', gap: 5,
                 }}>
                   {[0, 1, 2].map(i => (
                     <div key={i} style={{
                       width: 6, height: 6, borderRadius: '50%',
-                      background: 'rgba(167,139,250,0.6)',
+                      background: 'rgba(var(--purple-rgb), 0.6)',
                       animation: `typingDot 1.4s ${i * 0.16}s ease-in-out infinite`,
                     }} />
                   ))}
@@ -697,8 +697,8 @@ function MeetingChat({ meetingId, accessToken, hasSummary }) {
       {/* Input area — pinned at bottom */}
       <div style={{
         flexShrink: 0,
-        borderTop: `1px solid ${focused ? 'rgba(96,165,250,0.2)' : 'rgba(255,255,255,0.06)'}`,
-        background: focused ? 'rgba(96,165,250,0.03)' : 'rgba(255,255,255,0.02)',
+        borderTop: `1px solid ${focused ? 'rgba(var(--blue-rgb), 0.2)' : 'rgba(var(--ink-rgb), 0.06)'}`,
+        background: focused ? 'rgba(var(--blue-rgb), 0.03)' : 'rgba(var(--ink-rgb), 0.02)',
         transition: 'all 0.2s',
       }}>
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10, padding: '12px 14px 12px 16px' }}>
@@ -717,14 +717,14 @@ function MeetingChat({ meetingId, accessToken, hasSummary }) {
             rows={1}
             style={{
               flex: 1, padding: '9px 12px',
-              background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+              background: 'rgba(var(--ink-rgb), 0.04)', border: '1px solid rgba(var(--ink-rgb), 0.08)',
               borderRadius: 12, outline: 'none', resize: 'none',
-              color: '#fff', fontSize: 13.5, fontFamily: 'inherit', lineHeight: 1.55,
+              color: 'var(--heading)', fontSize: 13.5, fontFamily: 'inherit', lineHeight: 1.55,
               maxHeight: 120, overflowY: 'auto', boxSizing: 'border-box',
               transition: 'border-color 0.15s',
             }}
-            onFocusCapture={e => { e.target.style.borderColor = 'rgba(96,165,250,0.3)' }}
-            onBlurCapture={e => { e.target.style.borderColor = 'rgba(255,255,255,0.08)' }}
+            onFocusCapture={e => { e.target.style.borderColor = 'rgba(var(--blue-rgb), 0.3)' }}
+            onBlurCapture={e => { e.target.style.borderColor = 'rgba(var(--ink-rgb), 0.08)' }}
           />
           <button
             onClick={() => handleSend()}
@@ -732,9 +732,9 @@ function MeetingChat({ meetingId, accessToken, hasSummary }) {
             style={{
               flexShrink: 0, width: 38, height: 38, borderRadius: 11, border: 'none',
               background: input.trim() && !loading
-                ? 'linear-gradient(135deg, #60A5FA, #3B82F6)'
-                : 'rgba(255,255,255,0.06)',
-              color: input.trim() && !loading ? '#fff' : 'rgba(255,255,255,0.18)',
+                ? 'linear-gradient(135deg, var(--blue), #3B82F6)'
+                : 'rgba(var(--ink-rgb), 0.06)',
+              color: input.trim() && !loading ? 'var(--on-accent)' : 'var(--text-faint)',
               cursor: input.trim() && !loading ? 'pointer' : 'default',
               boxShadow: input.trim() && !loading ? '0 4px 12px rgba(59,130,246,0.4)' : 'none',
               transition: 'all 0.18s',
@@ -754,7 +754,7 @@ function MeetingChat({ meetingId, accessToken, hasSummary }) {
           </button>
         </div>
         <div style={{ textAlign: 'center', paddingBottom: 8 }}>
-          <span style={{ fontSize: 10.5, color: 'rgba(255,255,255,0.12)' }}>
+          <span style={{ fontSize: 10.5, color: 'var(--text-faint)' }}>
             Enter để gửi · Shift+Enter xuống dòng
           </span>
         </div>
@@ -771,7 +771,7 @@ function MeetingChat({ meetingId, accessToken, hasSummary }) {
 }
 
 function MetaIcon({ type }) {
-  const stroke = 'rgba(255,255,255,0.3)'
+  const stroke = 'rgba(var(--ink-rgb), 0.3)'
   const props = { width: 13, height: 13, viewBox: '0 0 24 24', fill: 'none', stroke, strokeWidth: '2', strokeLinecap: 'round' }
   if (type === 'user') return <svg {...props}><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
   if (type === 'calendar') return <svg {...props}><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -802,8 +802,8 @@ function VoterButton({ voters }) {
         style={{
           display: 'flex', alignItems: 'center', gap: 5,
           padding: '3px 8px 3px 5px', borderRadius: 99,
-          border: `1px solid ${open ? 'rgba(255,255,255,0.18)' : 'rgba(255,255,255,0.09)'}`,
-          background: open ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.04)',
+          border: `1px solid ${open ? 'rgba(var(--ink-rgb), 0.18)' : 'rgba(var(--ink-rgb), 0.09)'}`,
+          background: open ? 'rgba(var(--ink-rgb), 0.08)' : 'rgba(var(--ink-rgb), 0.04)',
           cursor: 'pointer', transition: 'all 0.15s', fontFamily: 'inherit',
         }}
       >
@@ -814,12 +814,12 @@ function VoterButton({ voters }) {
             </div>
           ))}
         </div>
-        <span style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.5)', whiteSpace: 'nowrap' }}>
+        <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>
           {voters.length} người
         </span>
         <svg
           width="10" height="10" viewBox="0 0 24 24" fill="none"
-          stroke="rgba(255,255,255,0.35)" strokeWidth="2.5" strokeLinecap="round"
+          stroke="rgba(var(--ink-rgb), 0.35)" strokeWidth="2.5" strokeLinecap="round"
           style={{ transition: 'transform 0.18s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }}
         >
           <polyline points="6 9 12 15 18 9"/>
@@ -829,20 +829,20 @@ function VoterButton({ voters }) {
       {open && (
         <div style={{
           position: 'absolute', top: 'calc(100% + 5px)', left: 0, zIndex: 40,
-          background: '#0F1220', border: '1px solid rgba(255,255,255,0.1)',
+          background: 'var(--surface-raised)', border: '1px solid rgba(var(--ink-rgb), 0.1)',
           borderRadius: 10, padding: 5, minWidth: 170, maxWidth: 220,
           maxHeight: 200, overflowY: 'auto',
-          boxShadow: '0 8px 28px rgba(0,0,0,0.6)',
+          boxShadow: '0 8px 28px rgba(var(--shadow-rgb), 0.6)',
           animation: 'voterPopIn 0.15s cubic-bezier(0.22,1,0.36,1)',
         }}>
           <style>{`@keyframes voterPopIn { from { opacity:0; transform:scale(0.95) translateY(4px) } to { opacity:1; transform:scale(1) translateY(0) } }`}</style>
-          <div style={{ padding: '3px 6px 5px', fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.07em', textTransform: 'uppercase' }}>
+          <div style={{ padding: '3px 6px 5px', fontSize: 10, fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.07em', textTransform: 'uppercase' }}>
             Đã bình chọn
           </div>
           {voters.map(v => (
             <div key={v.user_id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 8px', borderRadius: 7 }}>
               <UserAvatar name={v.display_name} avatarUrl={v.avatar_url} size={22} />
-              <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.8)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <span style={{ fontSize: 12, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {v.display_name || 'Người dùng'}
               </span>
             </div>

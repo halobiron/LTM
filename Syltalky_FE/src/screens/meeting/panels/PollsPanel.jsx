@@ -16,7 +16,7 @@ export default function PollsPanel({ polls, isHostOrCohost, currentUserId, curre
       {isHostOrCohost && (
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
-          padding: '8px 14px', borderBottom: '1px solid rgba(255,255,255,0.06)',
+          padding: '8px 14px', borderBottom: '1px solid rgba(var(--ink-rgb),0.06)',
           flexShrink: 0,
         }}>
           <button onClick={() => setShowModal(true)} style={createBtn}>
@@ -47,7 +47,7 @@ export default function PollsPanel({ polls, isHostOrCohost, currentUserId, curre
         )}
       </div>
 
-      {error && <div style={{ padding: 10, color: '#F87171', fontSize: 12 }}>{error}</div>}
+      {error && <div style={{ padding: 10, color: 'var(--danger)', fontSize: 12 }}>{error}</div>}
 
       {showModal && (
         <CreatePollModal
@@ -114,15 +114,15 @@ function OpenPollCard({ poll, isHostOrCohost, currentUser, userInfoMap = {}, onV
       {/* Badges row — only when badges exist */}
       {hasBadges && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, alignItems: 'center', marginBottom: 8 }}>
-          {poll.anonymous && <Badge color="#A78BFA" bg="rgba(167,139,250,0.12)">Ẩn danh</Badge>}
-          {poll.multi_choice && <Badge color="#00C9B8" bg="rgba(0,201,184,0.12)">Chọn nhiều</Badge>}
-          {poll.multi_choice && maxSel > 0 && <Badge color="#60A5FA" bg="rgba(96,165,250,0.12)">Tối đa {maxSel}</Badge>}
+          {poll.anonymous && <Badge color="var(--purple)" bg="rgba(var(--purple-rgb),0.12)">Ẩn danh</Badge>}
+          {poll.multi_choice && <Badge color="var(--accent)" bg="rgba(var(--accent-rgb),0.12)">Chọn nhiều</Badge>}
+          {poll.multi_choice && maxSel > 0 && <Badge color="var(--blue)" bg="rgba(var(--blue-rgb),0.12)">Tối đa {maxSel}</Badge>}
         </div>
       )}
 
       {/* Question + menu on the same row */}
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8, marginBottom: 4 }}>
-        <div style={{ flex: 1, fontSize: 18, fontWeight: 800, color: '#fff', lineHeight: 1.35, letterSpacing: '-0.2px' }}>
+        <div style={{ flex: 1, fontSize: 18, fontWeight: 800, color: 'var(--heading)', lineHeight: 1.35, letterSpacing: '-0.2px' }}>
           {poll.question}
         </div>
         {isHostOrCohost && (
@@ -158,9 +158,9 @@ function OpenPollCard({ poll, isHostOrCohost, currentUser, userInfoMap = {}, onV
                 style={{
                   position: 'relative', width: '100%', textAlign: 'left',
                   padding: '9px 12px', borderRadius: 9,
-                  background: checked ? 'rgba(0,201,184,0.06)' : 'rgba(255,255,255,0.03)',
-                  border: `1.5px solid ${checked ? 'rgba(0,201,184,0.45)' : 'rgba(255,255,255,0.08)'}`,
-                  color: '#fff', fontSize: 13, fontFamily: 'inherit',
+                  background: checked ? 'rgba(var(--accent-rgb),0.06)' : 'rgba(var(--ink-rgb),0.03)',
+                  border: `1.5px solid ${checked ? 'rgba(var(--accent-rgb),0.45)' : 'rgba(var(--ink-rgb),0.08)'}`,
+                  color: 'var(--heading)', fontSize: 13, fontFamily: 'inherit',
                   cursor: atLimit ? 'not-allowed' : 'pointer',
                   overflow: 'hidden', transition: 'border-color 0.15s, background 0.15s',
                   opacity: atLimit ? 0.5 : 1,
@@ -169,7 +169,7 @@ function OpenPollCard({ poll, isHostOrCohost, currentUser, userInfoMap = {}, onV
                 {/* Ghost progress bar */}
                 <div style={{
                   position: 'absolute', left: 0, top: 0, bottom: 0, width: `${pct}%`,
-                  background: checked || isMine ? 'rgba(0,201,184,0.12)' : 'rgba(255,255,255,0.04)',
+                  background: checked || isMine ? 'rgba(var(--accent-rgb),0.12)' : 'rgba(var(--ink-rgb),0.04)',
                   transition: 'width 0.4s cubic-bezier(0.22,1,0.36,1)',
                   pointerEvents: 'none',
                 }} />
@@ -179,16 +179,16 @@ function OpenPollCard({ poll, isHostOrCohost, currentUser, userInfoMap = {}, onV
                     <span style={{
                       width: 16, height: 16, flexShrink: 0,
                       borderRadius: poll.multi_choice ? 4 : '50%',
-                      border: `2px solid ${checked ? '#00C9B8' : 'rgba(255,255,255,0.22)'}`,
-                      background: checked ? '#00C9B8' : 'transparent',
+                      border: `2px solid ${checked ? 'var(--accent)' : 'rgba(var(--ink-rgb),0.22)'}`,
+                      background: checked ? 'var(--accent)' : 'transparent',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       transition: 'all 0.15s',
                     }}>
-                      {checked && <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#0B0D12" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>}
+                      {checked && <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--on-accent)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>}
                     </span>
                     <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{opt.text}</span>
                   </div>
-                  <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', flexShrink: 0 }}>
+                  <span style={{ fontSize: 11, color: 'var(--text-muted)', flexShrink: 0 }}>
                     {count} · {pct}%
                   </span>
                 </div>
@@ -204,7 +204,7 @@ function OpenPollCard({ poll, isHostOrCohost, currentUser, userInfoMap = {}, onV
 
       {/* Footer */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 12 }}>
-        <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>
+        <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>
           {totalVotes} lượt bình chọn
         </span>
         <div style={{ display: 'flex', gap: 6 }}>
@@ -228,10 +228,10 @@ function HandshakeSVG({ size = 22 }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 512 512">
       <path fill="#FEEFDD" d="M392.59,189.479l-9.721,19.076v0.061l-15.836,31.182h-0.061l-0.428,0.917l-0.978,1.835l-25.496,22.806l-0.061,0.061l-0.673,0.611l-27.758,24.824l-0.367,0.306l-23.906,21.338l-3.546,3.18l-0.795,0.733l-5.38,4.769l-0.856,0.796h-0.061l-19.015,17.058h-0.061c-0.367,0.366-0.795,0.672-1.162,1.04l-0.306,0.306l-1.712,1.528l-0.367-0.367l-12.351-13.818l-3.546-3.974l-4.769-5.319l-3.302-3.73l-0.367-0.366l-3.363-3.792l-17.609-19.687l-3.668-4.096v-0.061l-1.712-1.896l-1.957-2.14l-0.183-0.184l-17.12-19.26l-3.669-4.035v-0.061l-3.668-4.036l-17.425-19.566l-3.546-3.974l10.639-9.538l11.311-10.149l32.222-28.798l21.889-19.565l15.835-14.184l5.442-4.83l3.179-1.529l39.803-19.626h0.061l7.276-3.608l11.495-5.686l27.758,26.963L392.59,189.479z"/>
-      <polygon fill="#FFFFFF" points="479.106,138.303 416.252,194.492 408.976,200.973 390.695,217.359 382.869,208.616 382.869,208.555 331.999,151.693 303.446,119.716 294.764,109.994 313.045,93.669 320.321,87.127 383.236,30.999 416.008,67.684"/>
+      <polygon fill="var(--heading)" points="479.106,138.303 416.252,194.492 408.976,200.973 390.695,217.359 382.869,208.616 382.869,208.555 331.999,151.693 303.446,119.716 294.764,109.994 313.045,93.669 320.321,87.127 383.236,30.999 416.008,67.684"/>
       <polygon fill="#484860" points="512,123.629 510.227,125.219 423.589,202.685 416.252,194.492 356.272,127.42 320.321,87.127 313.045,78.996 392.774,7.765 401.456,0 440.281,43.411"/>
       <polygon fill="#E7D1A2" points="357.495,231.789 357.067,232.278 333.1,259.119 333.038,259.18 332.427,259.852 307.726,287.427 307.42,287.794 287.549,310.049 283.086,315.063 282.535,315.675 277.583,321.177 258.935,342.026 258.813,342.21 258.262,341.721 256.428,340.07 238.147,323.745 232.766,318.915 229.342,315.858 228.67,315.246 225.185,312.128 206.414,295.375 205.008,294.153 200.911,290.484 200.911,290.423 196.876,286.816 196.815,286.755 177.25,269.329 173.153,265.661 173.153,265.599 169.057,261.992 147.657,242.855 146.801,241.082 146.251,240.042 143.622,234.967 129.804,207.821 120.633,189.784 198.283,114.335 208.737,119.471 223.717,126.869 230.015,129.987 246.706,138.242 256.306,142.95 260.097,144.784 274.954,158.052 301.734,181.957 323.867,201.767"/>
-      <polygon fill="#FFFFFF" points="217.236,109.994 208.737,119.471 129.804,207.821 121.305,217.359 103.024,200.973 95.748,194.492 32.894,138.303 128.764,30.999 191.679,87.127 198.955,93.669"/>
+      <polygon fill="var(--heading)" points="217.236,109.994 208.737,119.471 129.804,207.821 121.305,217.359 103.024,200.973 95.748,194.492 32.894,138.303 128.764,30.999 191.679,87.127 198.955,93.669"/>
       <polygon fill="#404D5D" points="198.955,78.996 191.679,87.127 95.748,194.492 88.411,202.685 53.744,171.686 0,123.629 110.544,0 121.366,9.661"/>
       <path fill="#E7D1A2" d="M326.992,204.04c-7.618-6.808-19.314-6.152-26.122,1.467c-6.808,7.618-6.152,19.314,1.467,26.122l44.855,40.087c7.618,6.808,19.314,6.152,26.122-1.467c6.809-7.618,6.152-19.314-1.466-26.122L326.992,204.04z"/>
       <path fill="#E7D1A2" d="M302.379,231.816c-7.618-6.809-19.514-5.928-26.569,1.966c-7.055,7.894-6.598,19.813,1.02,26.622l44.855,40.087c7.618,6.809,19.514,5.928,26.569-1.966c7.055-7.894,6.598-19.813-1.02-26.622L302.379,231.816z"/>
@@ -297,7 +297,7 @@ function ClosedPollCard({ poll, isHostOrCohost, userInfoMap = {}, onDelete }) {
     <div style={{ ...cardBase, opacity: 0.96 }}>
       {/* Top row: badge + menu */}
       <div style={topRow}>
-        <Badge color="#F87171" bg="rgba(248,113,113,0.12)">Đã đóng</Badge>
+        <Badge color="var(--danger)" bg="rgba(var(--danger-rgb),0.12)">Đã đóng</Badge>
         {isHostOrCohost && (
           <DropMenu open={menuOpen} setOpen={setMenuOpen}>
             <MenuRow danger onClick={() => { setMenuOpen(false); onDelete(poll.id) }}>
@@ -309,7 +309,7 @@ function ClosedPollCard({ poll, isHostOrCohost, userInfoMap = {}, onDelete }) {
       </div>
 
       {/* Question */}
-      <div style={{ fontSize: 18, fontWeight: 800, color: '#fff', marginBottom: 12, lineHeight: 1.35, letterSpacing: '-0.2px' }}>
+      <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--heading)', marginBottom: 12, lineHeight: 1.35, letterSpacing: '-0.2px' }}>
         {poll.question}
       </div>
 
@@ -317,8 +317,8 @@ function ClosedPollCard({ poll, isHostOrCohost, userInfoMap = {}, onDelete }) {
       {hasVotes ? (
         <div style={{
           borderRadius: 10, overflow: 'hidden',
-          border: '1px solid rgba(0,201,184,0.2)',
-          background: 'linear-gradient(135deg, rgba(0,201,184,0.1) 0%, rgba(0,153,204,0.07) 100%)',
+          border: '1px solid rgba(var(--accent-rgb),0.2)',
+          background: 'linear-gradient(135deg, rgba(var(--accent-rgb),0.1) 0%, rgba(0,153,204,0.07) 100%)',
         }}>
           <div style={{ padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 10 }}>
             <div style={{
@@ -329,26 +329,26 @@ function ClosedPollCard({ poll, isHostOrCohost, userInfoMap = {}, onDelete }) {
               {isTie ? <div style={{ marginTop: 8, marginLeft: 1 }}><HandshakeSVG size={22} /></div> : <CupSVG size={22} />}
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: 10, fontWeight: 700, color: '#00C9B8', letterSpacing: '0.07em', textTransform: 'uppercase', marginBottom: 2 }}>
+              <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--accent)', letterSpacing: '0.07em', textTransform: 'uppercase', marginBottom: 2 }}>
                 {isTie ? `Hòa · ${winners.length} lựa chọn` : 'Dẫn đầu'}
               </div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--heading)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {isTie ? winners.map(w => w.text).join(' & ') : winners[0]?.text}
               </div>
             </div>
             <div style={{ textAlign: 'right', flexShrink: 0 }}>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#00C9B8', lineHeight: 1, letterSpacing: '-0.5px' }}>
+              <div style={{ fontSize: 22, fontWeight: 800, color: 'var(--accent)', lineHeight: 1, letterSpacing: '-0.5px' }}>
                 {Math.round((maxCount / totalVotes) * 100)}%
               </div>
-              <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 1 }}>{maxCount} phiếu</div>
+              <div style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 1 }}>{maxCount} phiếu</div>
             </div>
           </div>
         </div>
       ) : (
         <div style={{
           padding: '10px 12px', borderRadius: 10,
-          background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)',
-          fontSize: 12, color: 'rgba(255,255,255,0.3)', textAlign: 'center',
+          background: 'rgba(var(--ink-rgb),0.03)', border: '1px solid rgba(var(--ink-rgb),0.06)',
+          fontSize: 12, color: 'var(--text-muted)', textAlign: 'center',
         }}>
           Chưa có lượt bình chọn nào
         </div>
@@ -361,13 +361,13 @@ function ClosedPollCard({ poll, isHostOrCohost, userInfoMap = {}, onDelete }) {
           display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5,
           width: '100%', marginTop: 8, padding: '7px 0',
           background: 'transparent', border: 'none',
-          borderTop: '1px solid rgba(255,255,255,0.05)',
-          color: 'rgba(255,255,255,0.38)', fontSize: 11, fontWeight: 600,
+          borderTop: '1px solid rgba(var(--ink-rgb),0.05)',
+          color: 'var(--text-muted)', fontSize: 11, fontWeight: 600,
           fontFamily: 'inherit', cursor: 'pointer', letterSpacing: '0.03em',
           transition: 'color 0.15s',
         }}
-        onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}
-        onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.38)'}
+        onMouseEnter={e => e.currentTarget.style.color = 'var(--text-secondary)'}
+        onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}
       >
         {expanded ? 'Thu gọn' : `Xem chi tiết · ${sortedOpts.length} lựa chọn`}
         <svg
@@ -393,33 +393,33 @@ function ClosedPollCard({ poll, isHostOrCohost, userInfoMap = {}, onDelete }) {
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 5 }}>
                   <span style={{
                     width: 18, height: 18, borderRadius: 5, flexShrink: 0,
-                    background: isWinner ? 'rgba(0,201,184,0.2)' : 'rgba(255,255,255,0.05)',
-                    border: `1px solid ${isWinner ? 'rgba(0,201,184,0.35)' : 'rgba(255,255,255,0.1)'}`,
+                    background: isWinner ? 'rgba(var(--accent-rgb),0.2)' : 'rgba(var(--ink-rgb),0.05)',
+                    border: `1px solid ${isWinner ? 'rgba(var(--accent-rgb),0.35)' : 'rgba(var(--ink-rgb),0.1)'}`,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontSize: 9, fontWeight: 700,
-                    color: isWinner ? '#00C9B8' : 'rgba(255,255,255,0.3)',
+                    color: isWinner ? 'var(--accent)' : 'var(--text-muted)',
                   }}>
                     {rank + 1}
                   </span>
                   <span style={{
                     flex: 1, fontSize: 13, fontWeight: isWinner ? 600 : 400,
-                    color: isWinner ? '#fff' : 'rgba(255,255,255,0.6)',
+                    color: isWinner ? 'var(--heading)' : 'var(--text-secondary)',
                     overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                   }}>
                     {opt.text}
                   </span>
-                  <span style={{ fontSize: 12, fontWeight: 700, flexShrink: 0, color: isWinner ? '#00C9B8' : 'rgba(255,255,255,0.35)' }}>
+                  <span style={{ fontSize: 12, fontWeight: 700, flexShrink: 0, color: isWinner ? 'var(--accent)' : 'var(--text-muted)' }}>
                     {pct}%
                   </span>
-                  <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)', flexShrink: 0, minWidth: 28, textAlign: 'right' }}>
+                  <span style={{ fontSize: 11, color: 'var(--text-faint)', flexShrink: 0, minWidth: 28, textAlign: 'right' }}>
                     {count}
                   </span>
                 </div>
-                <div style={{ height: 5, borderRadius: 3, background: 'rgba(255,255,255,0.05)', overflow: 'hidden', marginBottom: 5 }}>
+                <div style={{ height: 5, borderRadius: 3, background: 'rgba(var(--ink-rgb),0.05)', overflow: 'hidden', marginBottom: 5 }}>
                   <div style={{
                     height: '100%', borderRadius: 3,
                     width: mounted ? `${pct}%` : '0%',
-                    background: isWinner ? 'linear-gradient(90deg, #00C9B8, #0099CC)' : 'rgba(255,255,255,0.18)',
+                    background: isWinner ? 'linear-gradient(90deg, var(--accent), #0099CC)' : 'rgba(var(--ink-rgb),0.18)',
                     transition: mounted ? `width 0.7s cubic-bezier(0.22,1,0.36,1) ${rank * 60}ms` : 'none',
                   }} />
                 </div>
@@ -433,16 +433,16 @@ function ClosedPollCard({ poll, isHostOrCohost, userInfoMap = {}, onDelete }) {
           {/* Footer inside expanded */}
           <div style={{
             marginTop: 4, paddingTop: 10,
-            borderTop: '1px solid rgba(255,255,255,0.05)',
+            borderTop: '1px solid rgba(var(--ink-rgb),0.05)',
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#F87171' }} />
-              <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>
+              <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--danger)' }} />
+              <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>
                 Đã đóng · {totalVotes} lượt bình chọn
               </span>
             </div>
-            {poll.anonymous && <Badge color="#A78BFA" bg="rgba(167,139,250,0.1)">Ẩn danh</Badge>}
+            {poll.anonymous && <Badge color="var(--purple)" bg="rgba(var(--purple-rgb),0.1)">Ẩn danh</Badge>}
           </div>
         </div>
       )}
@@ -474,8 +474,8 @@ function VoterButton({ voters }) {
         style={{
           display: 'flex', alignItems: 'center', gap: 5,
           padding: '3px 8px 3px 5px', borderRadius: 99,
-          border: `1px solid ${open ? 'rgba(255,255,255,0.18)' : 'rgba(255,255,255,0.09)'}`,
-          background: open ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.04)',
+          border: `1px solid ${open ? 'rgba(var(--ink-rgb),0.18)' : 'rgba(var(--ink-rgb),0.09)'}`,
+          background: open ? 'rgba(var(--ink-rgb),0.08)' : 'rgba(var(--ink-rgb),0.04)',
           cursor: 'pointer', transition: 'all 0.15s', fontFamily: 'inherit',
         }}
       >
@@ -487,12 +487,12 @@ function VoterButton({ voters }) {
             </div>
           ))}
         </div>
-        <span style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.5)', whiteSpace: 'nowrap' }}>
+        <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>
           {voters.length} người
         </span>
         <svg
           width="10" height="10" viewBox="0 0 24 24" fill="none"
-          stroke="rgba(255,255,255,0.35)" strokeWidth="2.5" strokeLinecap="round"
+          stroke="var(--text-muted)" strokeWidth="2.5" strokeLinecap="round"
           style={{ transition: 'transform 0.18s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }}
         >
           <polyline points="6 9 12 15 18 9"/>
@@ -502,14 +502,14 @@ function VoterButton({ voters }) {
       {open && (
         <div style={{
           position: 'absolute', top: 'calc(100% + 5px)', left: 0, zIndex: 40,
-          background: '#0F1220', border: '1px solid rgba(255,255,255,0.1)',
+          background: 'var(--surface)', border: '1px solid rgba(var(--ink-rgb),0.1)',
           borderRadius: 10, padding: 5, minWidth: 170, maxWidth: 220,
           maxHeight: 200, overflowY: 'auto',
-          boxShadow: '0 8px 28px rgba(0,0,0,0.6)',
+          boxShadow: '0 8px 28px rgba(var(--shadow-rgb),0.6)',
           animation: 'voterPopIn 0.15s cubic-bezier(0.22,1,0.36,1)',
         }}>
           <style>{`@keyframes voterPopIn { from { opacity:0; transform:scale(0.95) translateY(-4px) } to { opacity:1; transform:scale(1) translateY(0) } }`}</style>
-          <div style={{ padding: '3px 6px 5px', fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.07em', textTransform: 'uppercase' }}>
+          <div style={{ padding: '3px 6px 5px', fontSize: 10, fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.07em', textTransform: 'uppercase' }}>
             Đã bình chọn
           </div>
           {voters.map(v => (
@@ -518,7 +518,7 @@ function VoterButton({ voters }) {
               padding: '5px 8px', borderRadius: 7,
             }}>
               <UserAvatar name={v.display_name} avatarUrl={v.avatar_url} size={22} />
-              <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.8)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <span style={{ fontSize: 12, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {v.display_name || 'Người dùng'}
               </span>
             </div>
@@ -547,9 +547,9 @@ function DropMenu({ open, setOpen, children }) {
         onClick={() => setOpen(o => !o)}
         style={{
           width: 26, height: 26, borderRadius: 7,
-          border: open ? '1px solid rgba(255,255,255,0.14)' : '1px solid rgba(255,255,255,0.07)',
-          background: open ? 'rgba(255,255,255,0.07)' : 'transparent',
-          color: 'rgba(255,255,255,0.45)', display: 'flex',
+          border: open ? '1px solid rgba(var(--ink-rgb),0.14)' : '1px solid rgba(var(--ink-rgb),0.07)',
+          background: open ? 'rgba(var(--ink-rgb),0.07)' : 'transparent',
+          color: 'var(--text-muted)', display: 'flex',
           alignItems: 'center', justifyContent: 'center', cursor: 'pointer', padding: 0,
         }}
         title="Tùy chọn"
@@ -561,9 +561,9 @@ function DropMenu({ open, setOpen, children }) {
       {open && (
         <div style={{
           position: 'absolute', top: 30, right: 0, zIndex: 20,
-          background: '#11141C', border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--surface-raised)', border: '1px solid rgba(var(--ink-rgb),0.08)',
           borderRadius: 9, padding: 4, minWidth: 140,
-          boxShadow: '0 8px 28px rgba(0,0,0,0.55)',
+          boxShadow: '0 8px 28px rgba(var(--shadow-rgb),0.55)',
           animation: 'dropMenuIn 0.15s cubic-bezier(0.22,1,0.36,1)',
         }}>
           <style>{`@keyframes dropMenuIn { from { opacity:0; transform:scale(0.95) translateY(-4px) } to { opacity:1; transform:scale(1) translateY(0) } }`}</style>
@@ -585,8 +585,8 @@ function MenuRow({ children, danger, onClick }) {
         display: 'flex', alignItems: 'center', gap: 8,
         width: '100%', padding: '7px 10px',
         textAlign: 'left', border: 'none',
-        background: hov ? (danger ? 'rgba(248,113,113,0.08)' : 'rgba(255,255,255,0.05)') : 'transparent',
-        color: danger ? (hov ? '#F87171' : 'rgba(248,113,113,0.7)') : (hov ? '#fff' : 'rgba(255,255,255,0.75)'),
+        background: hov ? (danger ? 'rgba(var(--danger-rgb),0.08)' : 'rgba(var(--ink-rgb),0.05)') : 'transparent',
+        color: danger ? (hov ? 'var(--danger)' : 'rgba(var(--danger-rgb),0.7)') : (hov ? 'var(--heading)' : 'var(--text-secondary)'),
         fontSize: 12, fontFamily: 'inherit', borderRadius: 6, cursor: 'pointer',
         transition: 'all 0.12s',
       }}
@@ -624,18 +624,18 @@ function EmptyState({ isHostOrCohost }) {
     }}>
       <div style={{
         width: 48, height: 48, borderRadius: 14,
-        background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)',
+        background: 'rgba(var(--ink-rgb),0.04)', border: '1px solid rgba(var(--ink-rgb),0.07)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-faint)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
           <line x1="18" y1="20" x2="18" y2="10"/>
           <line x1="12" y1="20" x2="12" y2="4"/>
           <line x1="6" y1="20" x2="6" y2="14"/>
         </svg>
       </div>
       <div>
-        <p style={{ margin: '0 0 3px', fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.32)' }}>Chưa có bình chọn</p>
-        <p style={{ margin: 0, fontSize: 11, color: 'rgba(255,255,255,0.18)', lineHeight: 1.55 }}>
+        <p style={{ margin: '0 0 3px', fontSize: 13, fontWeight: 600, color: 'var(--text-muted)' }}>Chưa có bình chọn</p>
+        <p style={{ margin: 0, fontSize: 11, color: 'var(--text-faint)', lineHeight: 1.55 }}>
           {isHostOrCohost ? 'Tạo bình chọn để thu thập ý kiến' : 'Host hoặc co-host có thể tạo bình chọn'}
         </p>
       </div>
@@ -647,8 +647,8 @@ function EmptyState({ isHostOrCohost }) {
 
 const cardBase = {
   padding: 14, marginBottom: 10, borderRadius: 12,
-  background: 'rgba(255,255,255,0.03)',
-  border: '1px solid rgba(255,255,255,0.07)',
+  background: 'rgba(var(--ink-rgb),0.03)',
+  border: '1px solid rgba(var(--ink-rgb),0.07)',
 }
 
 const topRow = {
@@ -659,15 +659,15 @@ const topRow = {
 const createBtn = {
   display: 'flex', alignItems: 'center', gap: 5,
   padding: '5px 11px', borderRadius: 8,
-  border: '1px solid rgba(0,201,184,0.3)',
-  background: 'rgba(0,201,184,0.1)', color: '#00C9B8',
+  border: '1px solid rgba(var(--accent-rgb),0.3)',
+  background: 'rgba(var(--accent-rgb),0.1)', color: 'var(--accent)',
   fontSize: 12, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer',
 }
 
 const voteBtn = (disabled) => ({
   padding: '6px 14px', borderRadius: 8, border: 'none',
-  background: disabled ? 'rgba(255,255,255,0.06)' : 'linear-gradient(135deg,#00C9B8,#0099CC)',
-  color: disabled ? 'rgba(255,255,255,0.3)' : '#fff',
+  background: disabled ? 'rgba(var(--ink-rgb),0.06)' : 'linear-gradient(135deg, var(--button-start), var(--button-end))',
+  color: disabled ? 'var(--text-muted)' : 'var(--on-accent)',
   fontSize: 12, fontWeight: 700, fontFamily: 'inherit',
   cursor: disabled ? 'default' : 'pointer',
   transition: 'opacity 0.15s',
@@ -683,9 +683,9 @@ function UnvoteBtn({ onClick, disabled }) {
       onMouseLeave={() => setHov(false)}
       style={{
         padding: '6px 14px', borderRadius: 8, fontFamily: 'inherit',
-        border: `1px solid ${hov && !disabled ? 'rgba(248,113,113,0.6)' : 'rgba(248,113,113,0.3)'}`,
-        background: hov && !disabled ? 'rgba(248,113,113,0.18)' : 'rgba(248,113,113,0.08)',
-        color: disabled ? 'rgba(255,255,255,0.3)' : '#F87171',
+        border: `1px solid ${hov && !disabled ? 'rgba(var(--danger-rgb),0.6)' : 'rgba(var(--danger-rgb),0.3)'}`,
+        background: hov && !disabled ? 'rgba(var(--danger-rgb),0.18)' : 'rgba(var(--danger-rgb),0.08)',
+        color: disabled ? 'var(--text-muted)' : 'var(--danger)',
         fontSize: 12, fontWeight: 700,
         cursor: disabled ? 'default' : 'pointer',
         transition: 'background 0.15s, border-color 0.15s',
