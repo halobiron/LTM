@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import useStore from '../../store'
 import UserAvatar from '../../components/UserAvatar'
 import OverviewPanel from './OverviewPanel'
+import AppearancePanel from './AppearancePanel'
 import DevicesPanel from './DevicesPanel'
 import SubtitlesPanel from './SubtitlesPanel'
 import VoicePanel from './VoicePanel'
@@ -14,6 +15,10 @@ const NAV = [
       {
         id: 'profile', label: 'Hồ sơ',
         icon: <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>,
+      },
+      {
+        id: 'appearance', label: 'Giao diện',
+        icon: <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>,
       },
     ],
   },
@@ -64,10 +69,10 @@ export default function SettingsModal({ onClose }) {
           from { opacity: 0; transform: scale(0.95) translateY(12px); }
           to   { opacity: 1; transform: scale(1) translateY(0); }
         }
-        .settings-nav-btn:hover { background: rgba(255,255,255,0.05) !important; color: rgba(255,255,255,0.8) !important; }
+        .settings-nav-btn:hover { background: rgba(var(--ink-rgb),0.05) !important; color: var(--text) !important; }
         .settings-scroll::-webkit-scrollbar { width: 4px; }
         .settings-scroll::-webkit-scrollbar-track { background: transparent; }
-        .settings-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+        .settings-scroll::-webkit-scrollbar-thumb { background: rgba(var(--ink-rgb),0.1); border-radius: 2px; }
       `}</style>
 
       <div
@@ -76,10 +81,10 @@ export default function SettingsModal({ onClose }) {
           width: isMobile ? '100%' : 800,
           height: isMobile ? '100%' : 'auto',
           maxHeight: isMobile ? '100%' : '86vh',
-          background: '#0B0D12',
+          background: 'var(--surface)',
           borderRadius: isMobile ? 0 : 20,
-          border: isMobile ? 'none' : '1px solid rgba(255,255,255,0.07)',
-          boxShadow: isMobile ? 'none' : '0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(0,201,184,0.04)',
+          border: isMobile ? 'none' : '1px solid rgba(var(--ink-rgb),0.07)',
+          boxShadow: isMobile ? 'none' : '0 40px 100px rgba(var(--shadow-rgb),0.7), 0 0 0 1px rgba(var(--accent-rgb),0.04)',
           display: 'flex', flexDirection: isMobile ? 'column' : 'row',
           overflow: 'hidden',
           animation: 'modal-in 0.2s cubic-bezier(0.22,1,0.36,1)',
@@ -88,17 +93,17 @@ export default function SettingsModal({ onClose }) {
         {/* ── Left sidebar (desktop) / Top tab bar (mobile) ── */}
         {isMobile ? (
           <div style={{
-            flexShrink: 0, background: '#080A0F',
-            borderBottom: '1px solid rgba(255,255,255,0.05)',
+            flexShrink: 0, background: 'var(--surface-alt)',
+            borderBottom: '1px solid rgba(var(--ink-rgb),0.05)',
           }}>
             {/* Mobile header */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px' }}>
-              <span style={{ fontSize: 15, fontWeight: 700, color: '#fff' }}>
+              <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--heading)' }}>
                 {NAV.flatMap(g => g.items).find(i => i.id === tab)?.label ?? 'Cài đặt'}
               </span>
               <button onClick={onClose} style={{
                 width: 30, height: 30, borderRadius: 8, border: 'none',
-                background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.5)',
+                background: 'rgba(var(--ink-rgb),0.07)', color: 'var(--text-secondary)',
                 cursor: 'pointer', fontSize: 13, display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>✕</button>
             </div>
@@ -113,9 +118,9 @@ export default function SettingsModal({ onClose }) {
                     style={{
                       display: 'flex', alignItems: 'center', gap: 6,
                       padding: '7px 14px', borderRadius: 8, flexShrink: 0,
-                      border: active ? '1px solid rgba(0,201,184,0.25)' : '1px solid rgba(255,255,255,0.07)',
-                      background: active ? 'rgba(0,201,184,0.1)' : 'transparent',
-                      color: active ? '#00C9B8' : 'rgba(255,255,255,0.45)',
+                      border: active ? '1px solid rgba(var(--accent-rgb),0.25)' : '1px solid rgba(var(--ink-rgb),0.07)',
+                      background: active ? 'rgba(var(--accent-rgb),0.1)' : 'transparent',
+                      color: active ? 'var(--accent)' : 'var(--text-secondary)',
                       fontFamily: 'inherit', fontSize: 13, fontWeight: active ? 600 : 400,
                       cursor: 'pointer',
                     }}
@@ -130,24 +135,24 @@ export default function SettingsModal({ onClose }) {
         ) : (
         <div style={{
           width: 220, flexShrink: 0,
-          background: '#080A0F',
-          borderRight: '1px solid rgba(255,255,255,0.05)',
+          background: 'var(--surface-alt)',
+          borderRight: '1px solid rgba(var(--ink-rgb),0.05)',
           display: 'flex', flexDirection: 'column',
         }}>
           {/* User card */}
-          <div style={{ padding: '24px 16px 20px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+          <div style={{ padding: '24px 16px 20px', borderBottom: '1px solid rgba(var(--ink-rgb),0.05)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <div style={{
                 width: 38, height: 38, borderRadius: '50%', flexShrink: 0, overflow: 'hidden',
-                border: '1.5px solid rgba(255,255,255,0.1)',
+                border: '1.5px solid rgba(var(--ink-rgb),0.1)',
               }}>
                 <UserAvatar name={user?.display_name} avatarUrl={user?.avatar_url} size={38} fontSize={15} />
               </div>
               <div style={{ overflow: 'hidden' }}>
-                <div style={{ fontSize: 13, fontWeight: 600, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--heading)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {user?.display_name}
                 </div>
-                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                <div style={{ fontSize: 11, color: 'var(--text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {user?.email}
                 </div>
               </div>
@@ -159,7 +164,7 @@ export default function SettingsModal({ onClose }) {
             {NAV.map(group => (
               <div key={group.group} style={{ marginBottom: 20 }}>
                 <div style={{
-                  fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.2)',
+                  fontSize: 10, fontWeight: 700, color: 'var(--text-faint)',
                   letterSpacing: '0.12em', textTransform: 'uppercase',
                   padding: '0 8px', marginBottom: 4,
                 }}>
@@ -177,8 +182,8 @@ export default function SettingsModal({ onClose }) {
                         width: '100%', padding: '8px 10px', borderRadius: 8,
                         border: 'none', cursor: 'pointer', textAlign: 'left',
                         fontFamily: 'inherit', fontSize: 13, fontWeight: active ? 600 : 400,
-                        background: active ? 'rgba(0,201,184,0.1)' : 'transparent',
-                        color: active ? '#00C9B8' : 'rgba(255,255,255,0.45)',
+                        background: active ? 'rgba(var(--accent-rgb),0.1)' : 'transparent',
+                        color: active ? 'var(--accent)' : 'var(--text-secondary)',
                         transition: 'all 0.15s',
                         position: 'relative',
                       }}
@@ -186,7 +191,7 @@ export default function SettingsModal({ onClose }) {
                       {active && (
                         <div style={{
                           position: 'absolute', left: 0, top: '20%', bottom: '20%',
-                          width: 3, borderRadius: 2, background: '#00C9B8',
+                          width: 3, borderRadius: 2, background: 'var(--accent)',
                         }}/>
                       )}
                       <span style={{ opacity: active ? 1 : 0.6, display: 'flex' }}>{item.icon}</span>
@@ -199,8 +204,8 @@ export default function SettingsModal({ onClose }) {
           </div>
 
           {/* Version */}
-          <div style={{ padding: '12px 18px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.15)' }}>PROPTIT · SylItalky</div>
+          <div style={{ padding: '12px 18px', borderTop: '1px solid rgba(var(--ink-rgb),0.05)' }}>
+            <div style={{ fontSize: 10, color: 'var(--text-faint)' }}>PROPTIT · SylItalky</div>
           </div>
         </div>
         )}
@@ -211,12 +216,12 @@ export default function SettingsModal({ onClose }) {
           {!isMobile && (
           <div style={{
             padding: '22px 32px 0',
-            borderBottom: '1px solid rgba(255,255,255,0.05)',
+            borderBottom: '1px solid rgba(var(--ink-rgb),0.05)',
             flexShrink: 0,
           }}>
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', paddingBottom: 18 }}>
               <div>
-                <h2 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#fff', letterSpacing: '-0.3px' }}>
+                <h2 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: 'var(--heading)', letterSpacing: '-0.3px' }}>
                   {NAV.flatMap(g => g.items).find(i => i.id === tab)?.label}
                 </h2>
               </div>
@@ -224,12 +229,12 @@ export default function SettingsModal({ onClose }) {
                 onClick={onClose}
                 style={{
                   width: 30, height: 30, borderRadius: 8, border: 'none',
-                  background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.5)',
+                  background: 'rgba(var(--ink-rgb),0.07)', color: 'var(--text-secondary)',
                   cursor: 'pointer', fontSize: 13, display: 'flex', alignItems: 'center', justifyContent: 'center',
                   transition: 'all 0.15s', flexShrink: 0,
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(248,113,113,0.15)'; e.currentTarget.style.color = '#F87171' }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.07)'; e.currentTarget.style.color = 'rgba(255,255,255,0.5)' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(var(--danger-rgb),0.15)'; e.currentTarget.style.color = 'var(--danger)' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(var(--ink-rgb),0.07)'; e.currentTarget.style.color = 'var(--text-secondary)' }}
               >✕</button>
             </div>
           </div>
@@ -238,6 +243,7 @@ export default function SettingsModal({ onClose }) {
           {/* Scrollable content */}
           <div className="settings-scroll" style={{ flex: 1, overflowY: 'auto', padding: isMobile ? '20px 16px' : '28px 32px' }}>
             {tab === 'profile'   && <OverviewPanel />}
+            {tab === 'appearance' && <AppearancePanel />}
             {tab === 'devices'   && <DevicesPanel />}
             {tab === 'subtitles' && <SubtitlesPanel />}
             {tab === 'voice'     && <VoicePanel />}

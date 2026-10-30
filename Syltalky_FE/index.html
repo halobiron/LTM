@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Syltalky</title>
+    <script>
+      // Apply the saved palette before the first paint; storage may be unavailable.
+      try {
+        const saved = JSON.parse(localStorage.getItem('syltalky-store') || 'null');
+        document.documentElement.dataset.theme = saved?.state?.theme === 'light' ? 'light' : 'dark';
+      } catch {
+        document.documentElement.dataset.theme = 'dark';
+      }
+    </script>
     <link rel="icon" type="image/png" href="/images/round_logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

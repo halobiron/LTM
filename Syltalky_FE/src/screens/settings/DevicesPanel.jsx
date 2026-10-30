@@ -89,16 +89,16 @@ export default function DevicesPanel() {
       {(!hasLabels || permError) && (
         <div style={{
           padding: '14px 18px', borderRadius: 10,
-          background: 'rgba(251,146,60,0.08)', border: '1px solid rgba(251,146,60,0.2)',
+          background: 'rgba(var(--orange-rgb),0.08)', border: '1px solid rgba(var(--orange-rgb),0.2)',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
         }}>
           <div>
-            <div style={{ fontSize: 13, fontWeight: 600, color: '#FB923C', marginBottom: 2 }}>Cần quyền truy cập thiết bị</div>
-            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>Cho phép trình duyệt truy cập camera và micro để chọn thiết bị</div>
+            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--orange)', marginBottom: 2 }}>Cần quyền truy cập thiết bị</div>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Cho phép trình duyệt truy cập camera và micro để chọn thiết bị</div>
           </div>
           <button onClick={() => loadDevices(true)} style={{
             flexShrink: 0, padding: '7px 14px', borderRadius: 8, border: 'none',
-            background: 'rgba(251,146,60,0.15)', color: '#FB923C',
+            background: 'rgba(var(--orange-rgb),0.15)', color: 'var(--orange)',
             fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
           }}>
             Cho phép
@@ -111,7 +111,7 @@ export default function DevicesPanel() {
         <div style={{
           width: '100%', aspectRatio: '16/9', borderRadius: 10, overflow: 'hidden',
           background: '#000', position: 'relative',
-          border: '1px solid rgba(255,255,255,0.07)',
+          border: '1px solid rgba(var(--ink-rgb),0.07)',
         }}>
           <video
             ref={videoRef}
@@ -125,10 +125,10 @@ export default function DevicesPanel() {
               position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
               alignItems: 'center', justifyContent: 'center', gap: 8,
             }}>
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M15 7a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h10z"/><path d="M23 7l-6 4 6 4V7z"/>
               </svg>
-              <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.2)' }}>Không có tín hiệu camera</span>
+              <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.55)' }}>Không có tín hiệu camera</span>
             </div>
           )}
         </div>
@@ -136,17 +136,17 @@ export default function DevicesPanel() {
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           padding: '10px 14px', borderRadius: 9,
-          background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)',
+          background: 'rgba(var(--ink-rgb),0.03)', border: '1px solid rgba(var(--ink-rgb),0.07)',
         }}>
           <div>
-            <div style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.75)' }}>Lật camera</div>
-            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', marginTop: 2 }}>Hiển thị video như gương</div>
+            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)' }}>Lật camera</div>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>Hiển thị video như gương</div>
           </div>
           <button
             onClick={() => setMirrorCamera(!mirrorCamera)}
             style={{
               width: 44, height: 24, borderRadius: 12, border: 'none',
-              background: mirrorCamera ? '#00C9B8' : 'rgba(255,255,255,0.12)',
+              background: mirrorCamera ? 'var(--accent)' : 'rgba(var(--ink-rgb),0.12)',
               cursor: 'pointer', position: 'relative', transition: 'background 0.2s', flexShrink: 0,
             }}
           >
@@ -154,7 +154,7 @@ export default function DevicesPanel() {
               position: 'absolute', top: 2,
               left: mirrorCamera ? 22 : 2,
               width: 20, height: 20, borderRadius: '50%',
-              background: '#fff',
+              background: 'var(--on-accent)',
               transition: 'left 0.2s',
               boxShadow: '0 1px 4px rgba(0,0,0,0.3)',
             }} />
@@ -207,7 +207,7 @@ export default function DevicesPanel() {
         />
       </Section>
 
-      <p style={{ margin: 0, fontSize: 12, color: 'rgba(255,255,255,0.2)', lineHeight: 1.6 }}>
+      <p style={{ margin: 0, fontSize: 12, color: 'var(--text-faint)', lineHeight: 1.6 }}>
         Cài đặt thiết bị được áp dụng cho cuộc họp tiếp theo. Thay đổi trong cuộc họp sẽ áp dụng ngay lập tức.
       </p>
     </div>
@@ -219,17 +219,17 @@ function ToggleRow({ label, desc, value, onToggle }) {
     <div style={{
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       padding: '10px 14px', borderRadius: 9,
-      background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)',
+      background: 'rgba(var(--ink-rgb),0.03)', border: '1px solid rgba(var(--ink-rgb),0.07)',
     }}>
       <div>
-        <div style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.75)' }}>{label}</div>
-        {desc && <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', marginTop: 2 }}>{desc}</div>}
+        <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)' }}>{label}</div>
+        {desc && <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>{desc}</div>}
       </div>
       <button
         onClick={onToggle}
         style={{
           width: 44, height: 24, borderRadius: 12, border: 'none',
-          background: value ? '#00C9B8' : 'rgba(255,255,255,0.12)',
+          background: value ? 'var(--accent)' : 'rgba(var(--ink-rgb),0.12)',
           cursor: 'pointer', position: 'relative', transition: 'background 0.2s', flexShrink: 0,
         }}
       >
@@ -237,7 +237,7 @@ function ToggleRow({ label, desc, value, onToggle }) {
           position: 'absolute', top: 2,
           left: value ? 22 : 2,
           width: 20, height: 20, borderRadius: '50%',
-          background: '#fff', transition: 'left 0.2s',
+          background: 'var(--on-accent)', transition: 'left 0.2s',
           boxShadow: '0 1px 4px rgba(0,0,0,0.3)',
         }} />
       </button>
@@ -248,14 +248,14 @@ function ToggleRow({ label, desc, value, onToggle }) {
 function DeviceSelect({ label, devices, value, onChange, icon, empty }) {
   if (devices.length === 0) {
     return (
-      <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.25)', fontStyle: 'italic' }}>{empty}</div>
+      <div style={{ fontSize: 13, color: 'var(--text-muted)', fontStyle: 'italic' }}>{empty}</div>
     )
   }
   return (
     <div style={{ position: 'relative' }}>
       <div style={{
         position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)',
-        color: 'rgba(255,255,255,0.35)', pointerEvents: 'none', display: 'flex',
+        color: 'var(--text-muted)', pointerEvents: 'none', display: 'flex',
       }}>
         {icon}
       </div>
@@ -264,20 +264,20 @@ function DeviceSelect({ label, devices, value, onChange, icon, empty }) {
         onChange={e => onChange(e.target.value)}
         style={{
           width: '100%', padding: '10px 14px 10px 36px', borderRadius: 9,
-          background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.09)',
-          color: '#fff', fontSize: 13, outline: 'none', cursor: 'pointer',
+          background: 'rgba(var(--ink-rgb),0.05)', border: '1px solid rgba(var(--ink-rgb),0.09)',
+          color: 'var(--heading)', fontSize: 13, outline: 'none', cursor: 'pointer',
           fontFamily: 'inherit', appearance: 'none',
         }}
       >
         {devices.map(d => (
-          <option key={d.deviceId} value={d.deviceId} style={{ background: '#0F1117' }}>
+          <option key={d.deviceId} value={d.deviceId} style={{ background: 'var(--surface)' }}>
             {d.label || `${label} ${devices.indexOf(d) + 1}`}
           </option>
         ))}
       </select>
       <div style={{
         position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)',
-        color: 'rgba(255,255,255,0.35)', pointerEvents: 'none',
+        color: 'var(--text-muted)', pointerEvents: 'none',
       }}>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="6 9 12 15 18 9"/></svg>
       </div>

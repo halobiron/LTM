@@ -69,7 +69,7 @@ export default function OverviewPanel() {
           <div style={{ position: 'relative', flexShrink: 0 }}>
             <div style={{
               width: 80, height: 80, borderRadius: '50%', overflow: 'hidden',
-              border: '3px solid rgba(255,255,255,0.08)', flexShrink: 0,
+              border: '3px solid rgba(var(--ink-rgb),0.08)', flexShrink: 0,
             }}>
               <UserAvatar name={user?.display_name} avatarUrl={avatarPreview} size={74} fontSize={30} />
             </div>
@@ -100,13 +100,13 @@ export default function OverviewPanel() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={handleAvatarPick}/>
-            <button onClick={() => fileRef.current.click()} style={ghostBtn('#00C9B8')}>
+            <button onClick={() => fileRef.current.click()} style={ghostBtn('var(--accent)')}>
               {avatarPreview ? 'Đổi ảnh' : 'Tải ảnh lên'}
             </button>
             {avatarPreview && (
-              <button onClick={handleRemoveAvatar} style={ghostBtn('#F87171')}>Xoá ảnh</button>
+              <button onClick={handleRemoveAvatar} style={ghostBtn('var(--danger)')}>Xoá ảnh</button>
             )}
-            <p style={{ margin: 0, fontSize: 11, color: 'rgba(255,255,255,0.25)' }}>JPG, PNG · Tối đa 5 MB</p>
+            <p style={{ margin: 0, fontSize: 11, color: 'var(--text-muted)' }}>JPG, PNG · Tối đa 5 MB</p>
           </div>
         </div>
       </Section>
@@ -117,11 +117,11 @@ export default function OverviewPanel() {
           <Field label="Tên hiển thị" value={name} onChange={setName} />
           <Field label="Email" value={user?.email ?? ''} readOnly />
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <span style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Giới tính</span>
+            <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Giới tính</span>
             <span style={{
               padding: '3px 10px', borderRadius: 99, fontSize: 12, fontWeight: 600,
-              background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.45)',
-              border: '1px solid rgba(255,255,255,0.1)',
+              background: 'rgba(var(--ink-rgb),0.06)', color: 'var(--text-secondary)',
+              border: '1px solid rgba(var(--ink-rgb),0.1)',
             }}>
               {user?.gender === 'male' ? 'Nam' : 'Nữ'}
             </span>
@@ -129,17 +129,17 @@ export default function OverviewPanel() {
         </div>
       </Section>
 
-      {error && <p style={{ fontSize: 13, color: '#F87171', margin: 0 }}>{error}</p>}
+      {error && <p style={{ fontSize: 13, color: 'var(--danger)', margin: 0 }}>{error}</p>}
 
       <div style={{ display: 'flex', gap: 10 }}>
         <button onClick={handleSave} disabled={saving} style={{
           padding: '10px 24px', borderRadius: 9,
-          background: saving ? 'rgba(0,201,184,0.4)' : success ? 'rgba(52,211,153,0.2)' : 'linear-gradient(135deg,#00C9B8,#0099CC)',
-          color: success ? '#34D399' : '#fff', fontWeight: 700, fontSize: 14,
+          background: saving ? 'rgba(var(--accent-rgb),0.4)' : success ? 'rgba(var(--success-rgb),0.2)' : 'linear-gradient(135deg,var(--button-start),var(--button-end))',
+          color: success ? 'var(--success)' : 'var(--on-accent)', fontWeight: 700, fontSize: 14,
           cursor: saving ? 'default' : 'pointer',
-          boxShadow: saving || success ? 'none' : '0 4px 16px rgba(0,201,184,0.25)',
+          boxShadow: saving || success ? 'none' : '0 4px 16px rgba(var(--accent-rgb),0.25)',
           fontFamily: 'inherit', transition: 'all 0.2s',
-          border: success ? '1px solid rgba(52,211,153,0.3)' : 'none',
+          border: success ? '1px solid rgba(var(--success-rgb),0.3)' : 'none',
         }}>
           {saving ? 'Đang lưu...' : success ? '✓ Đã lưu' : 'Lưu thay đổi'}
         </button>
@@ -159,7 +159,7 @@ export default function OverviewPanel() {
 function Field({ label, value, onChange, readOnly }) {
   return (
     <div>
-      <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 7 }}>
+      <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 7 }}>
         {label}
       </label>
       <input
@@ -168,14 +168,14 @@ function Field({ label, value, onChange, readOnly }) {
         readOnly={readOnly}
         style={{
           width: '100%', padding: '10px 14px', borderRadius: 9,
-          background: readOnly ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.05)',
-          border: '1px solid rgba(255,255,255,0.09)',
-          color: readOnly ? 'rgba(255,255,255,0.3)' : '#fff',
+          background: readOnly ? 'rgba(var(--ink-rgb),0.03)' : 'rgba(var(--ink-rgb),0.05)',
+          border: '1px solid rgba(var(--ink-rgb),0.09)',
+          color: readOnly ? 'var(--text-muted)' : 'var(--heading)',
           fontSize: 14, outline: 'none', transition: 'border-color 0.15s',
           fontFamily: 'inherit', boxSizing: 'border-box', cursor: readOnly ? 'default' : 'text',
         }}
-        onFocus={e => { if (!readOnly) e.target.style.borderColor = '#00C9B8' }}
-        onBlur={e => { if (!readOnly) e.target.style.borderColor = 'rgba(255,255,255,0.09)' }}
+        onFocus={e => { if (!readOnly) e.target.style.borderColor = 'var(--accent)' }}
+        onBlur={e => { if (!readOnly) e.target.style.borderColor = 'rgba(var(--ink-rgb),0.09)' }}
       />
     </div>
   )
@@ -184,8 +184,8 @@ function Field({ label, value, onChange, readOnly }) {
 function ghostBtn(color) {
   return {
     padding: '7px 16px', borderRadius: 8,
-    border: `1px solid ${color}30`,
-    background: `${color}0D`,
+    border: `1px solid color-mix(in srgb, ${color} 20%, transparent)`,
+    background: `color-mix(in srgb, ${color} 5%, transparent)`,
     color: color, fontSize: 13, fontWeight: 600,
     cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
   }
@@ -195,13 +195,13 @@ export function Section({ title, desc, children }) {
   return (
     <div style={{
       padding: '20px 22px', borderRadius: 12,
-      background: 'rgba(255,255,255,0.025)',
-      border: '1px solid rgba(255,255,255,0.06)',
+      background: 'rgba(var(--ink-rgb),0.025)',
+      border: '1px solid rgba(var(--ink-rgb),0.06)',
       display: 'flex', flexDirection: 'column', gap: 16,
     }}>
       <div>
-        <div style={{ fontSize: 14, fontWeight: 700, color: '#fff', marginBottom: 2 }}>{title}</div>
-        {desc && <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)' }}>{desc}</div>}
+        <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--heading)', marginBottom: 2 }}>{title}</div>
+        {desc && <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{desc}</div>}
       </div>
       {children}
     </div>

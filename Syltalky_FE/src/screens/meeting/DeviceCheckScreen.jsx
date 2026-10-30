@@ -212,11 +212,11 @@ export default function DeviceCheckScreen() {
   if (checking) {
     return (
       <div style={{
-        position: 'fixed', inset: 0, background: '#060810',
+        position: 'fixed', inset: 0, background: 'var(--bg)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontFamily: '"Be Vietnam Pro", sans-serif',
       }}>
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(0,201,184,0.6)" strokeWidth="2.5" strokeLinecap="round"
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(var(--accent-rgb),0.6)" strokeWidth="2.5" strokeLinecap="round"
           style={{ animation: 'spin 0.7s linear infinite' }}>
           <path d="M12 2a10 10 0 0 1 10 10"/>
         </svg>
@@ -228,34 +228,34 @@ export default function DeviceCheckScreen() {
   if (roomGone) {
     return (
       <div style={{
-        position: 'fixed', inset: 0, background: '#060810',
+        position: 'fixed', inset: 0, background: 'var(--bg)',
         fontFamily: '"Be Vietnam Pro", sans-serif',
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
       }}>
         <div aria-hidden style={{
           position: 'absolute', inset: 0, pointerEvents: 'none',
-          background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(248,113,113,0.05) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(var(--danger-rgb),0.05) 0%, transparent 70%)',
         }} />
 
         <div style={{ position: 'relative', textAlign: 'center', maxWidth: 360, padding: '0 24px' }}>
           <div style={{
             width: 64, height: 64, borderRadius: 20, margin: '0 auto 24px',
-            background: 'rgba(248,113,113,0.1)', border: '1px solid rgba(248,113,113,0.2)',
+            background: 'rgba(var(--danger-rgb),0.1)', border: '1px solid rgba(var(--danger-rgb),0.2)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F87171" strokeWidth="2" strokeLinecap="round">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" strokeWidth="2" strokeLinecap="round">
               <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
               <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
             </svg>
           </div>
 
-          <h2 style={{ margin: '0 0 10px', fontSize: 24, fontWeight: 900, color: '#fff', letterSpacing: '-0.5px' }}>
+          <h2 style={{ margin: '0 0 10px', fontSize: 24, fontWeight: 900, color: 'var(--heading)', letterSpacing: '-0.5px' }}>
             Phòng không tồn tại
           </h2>
-          <p style={{ margin: '0 0 10px', fontSize: 14, color: 'rgba(255,255,255,0.4)', lineHeight: 1.6 }}>
-            Mã phòng <span style={{ fontWeight: 700, color: 'rgba(255,255,255,0.65)', letterSpacing: '0.06em' }}>{roomCode}</span> không hợp lệ hoặc cuộc họp đã kết thúc.
+          <p style={{ margin: '0 0 10px', fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.6 }}>
+            Mã phòng <span style={{ fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.06em' }}>{roomCode}</span> không hợp lệ hoặc cuộc họp đã kết thúc.
           </p>
-          <p style={{ margin: '0 0 36px', fontSize: 13, color: 'rgba(255,255,255,0.25)' }}>
+          <p style={{ margin: '0 0 36px', fontSize: 13, color: 'var(--text-faint)' }}>
             Kiểm tra lại mã phòng hoặc tạo một phòng mới.
           </p>
 
@@ -265,10 +265,10 @@ export default function DeviceCheckScreen() {
               disabled={creating}
               style={{
                 width: '100%', padding: '14px', borderRadius: 13, border: 'none',
-                background: creating ? 'rgba(0,201,184,0.2)' : 'linear-gradient(135deg, #00C9B8, #009E8A)',
-                color: creating ? 'rgba(255,255,255,0.4)' : '#fff',
+                background: creating ? 'rgba(var(--accent-rgb),0.2)' : 'linear-gradient(135deg, var(--button-start), var(--button-end))',
+                color: creating ? 'var(--text-muted)' : 'var(--on-accent)',
                 fontSize: 14, fontWeight: 800, cursor: creating ? 'default' : 'pointer',
-                fontFamily: 'inherit', boxShadow: creating ? 'none' : '0 6px 20px rgba(0,201,184,0.28)',
+                fontFamily: 'inherit', boxShadow: creating ? 'none' : '0 6px 20px rgba(var(--accent-rgb),0.28)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                 transition: 'all 0.2s',
               }}
@@ -286,12 +286,12 @@ export default function DeviceCheckScreen() {
               onClick={() => navigate('/home')}
               style={{
                 width: '100%', padding: '13px', borderRadius: 13,
-                border: '1px solid rgba(255,255,255,0.08)', background: 'transparent',
-                color: 'rgba(255,255,255,0.45)', fontSize: 14, fontWeight: 600,
+                border: '1px solid rgba(var(--ink-rgb),0.08)', background: 'transparent',
+                color: 'var(--text-muted)', fontSize: 14, fontWeight: 600,
                 cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
               }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.16)'; e.currentTarget.style.color = 'rgba(255,255,255,0.7)' }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = 'rgba(255,255,255,0.45)' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb),0.16)'; e.currentTarget.style.color = 'var(--text-secondary)' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb),0.08)'; e.currentTarget.style.color = 'var(--text-muted)' }}
             >
               Về trang chủ
             </button>
@@ -304,7 +304,7 @@ export default function DeviceCheckScreen() {
   if (waiting || waitingDenied) {
     return (
       <div style={{
-        position: 'fixed', inset: 0, background: '#060810',
+        position: 'fixed', inset: 0, background: 'var(--bg)',
         fontFamily: '"Be Vietnam Pro", sans-serif',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>
@@ -313,21 +313,21 @@ export default function DeviceCheckScreen() {
             <>
               <div style={{
                 width: 64, height: 64, borderRadius: 20, marginBottom: 24,
-                background: 'rgba(255,107,138,0.1)', border: '1px solid rgba(255,107,138,0.2)',
+                background: 'rgba(var(--danger-rgb),0.1)', border: '1px solid rgba(var(--danger-rgb),0.2)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF6B8A" strokeWidth="2" strokeLinecap="round">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" strokeWidth="2" strokeLinecap="round">
                   <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
                 </svg>
               </div>
-              <h2 style={{ margin: '0 0 10px', fontSize: 22, fontWeight: 900, color: '#fff' }}>Yêu cầu bị từ chối</h2>
-              <p style={{ margin: '0 0 32px', fontSize: 14, color: 'rgba(255,255,255,0.38)', lineHeight: 1.6 }}>
+              <h2 style={{ margin: '0 0 10px', fontSize: 22, fontWeight: 900, color: 'var(--heading)' }}>Yêu cầu bị từ chối</h2>
+              <p style={{ margin: '0 0 32px', fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.6 }}>
                 Host đã không chấp nhận yêu cầu tham gia của bạn.
               </p>
               <button onClick={() => navigate('/home', { replace: true })} style={{
                 width: '100%', padding: '13px', borderRadius: 13,
-                border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)',
-                color: 'rgba(255,255,255,0.7)', fontSize: 14, fontWeight: 700,
+                border: '1px solid rgba(var(--ink-rgb),0.1)', background: 'rgba(var(--ink-rgb),0.05)',
+                color: 'var(--text-secondary)', fontSize: 14, fontWeight: 700,
                 cursor: 'pointer', fontFamily: 'inherit',
               }}>Về trang chủ</button>
             </>
@@ -335,34 +335,34 @@ export default function DeviceCheckScreen() {
             <>
               <div style={{
                 width: 64, height: 64, borderRadius: 20, marginBottom: 24,
-                background: 'rgba(0,201,184,0.08)', border: '1px solid rgba(0,201,184,0.2)',
+                background: 'rgba(var(--accent-rgb),0.08)', border: '1px solid rgba(var(--accent-rgb),0.2)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00C9B8" strokeWidth="2" strokeLinecap="round">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round">
                   <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
                   <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
                 </svg>
               </div>
-              <h2 style={{ margin: '0 0 10px', fontSize: 22, fontWeight: 900, color: '#fff' }}>Đang chờ xét duyệt</h2>
-              <p style={{ margin: '0 0 8px', fontSize: 14, color: 'rgba(255,255,255,0.38)', lineHeight: 1.6 }}>
-                Phòng <span style={{ color: 'rgba(255,255,255,0.65)', fontWeight: 700 }}>{roomCode}</span>
+              <h2 style={{ margin: '0 0 10px', fontSize: 22, fontWeight: 900, color: 'var(--heading)' }}>Đang chờ xét duyệt</h2>
+              <p style={{ margin: '0 0 8px', fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                Phòng <span style={{ color: 'var(--text-secondary)', fontWeight: 700 }}>{roomCode}</span>
               </p>
-              <p style={{ margin: '0 0 32px', fontSize: 13, color: 'rgba(255,255,255,0.28)', lineHeight: 1.6 }}>
+              <p style={{ margin: '0 0 32px', fontSize: 13, color: 'var(--text-faint)', lineHeight: 1.6 }}>
                 Host sẽ xét duyệt yêu cầu của bạn. Vui lòng chờ…
               </p>
               {/* Animated dots */}
               <div style={{ display: 'flex', gap: 7, marginBottom: 32 }}>
                 {[0,1,2].map(i => (
                   <div key={i} style={{
-                    width: 8, height: 8, borderRadius: '50%', background: '#00C9B8',
+                    width: 8, height: 8, borderRadius: '50%', background: 'var(--accent)',
                     animation: `liveDot 1.4s ease-in-out ${i * 0.22}s infinite`,
                   }} />
                 ))}
               </div>
               <button onClick={cancelWaiting} style={{
                 width: '100%', padding: '13px', borderRadius: 13,
-                border: '1px solid rgba(255,255,255,0.08)', background: 'transparent',
-                color: 'rgba(255,255,255,0.45)', fontSize: 14, fontWeight: 600,
+                border: '1px solid rgba(var(--ink-rgb),0.08)', background: 'transparent',
+                color: 'var(--text-muted)', fontSize: 14, fontWeight: 600,
                 cursor: 'pointer', fontFamily: 'inherit',
               }}>Huỷ yêu cầu</button>
             </>
@@ -376,7 +376,7 @@ export default function DeviceCheckScreen() {
   return (
     <div style={{
       position: 'fixed', inset: 0,
-      background: '#060810',
+      background: 'var(--bg)',
       fontFamily: '"Be Vietnam Pro", sans-serif',
       display: 'flex', flexDirection: 'column',
       overflow: 'hidden',
@@ -385,8 +385,8 @@ export default function DeviceCheckScreen() {
       <div aria-hidden style={{
         position: 'absolute', inset: 0, pointerEvents: 'none',
         background: `
-          radial-gradient(ellipse 60% 50% at 30% 50%, rgba(0,201,184,0.07) 0%, transparent 65%),
-          radial-gradient(ellipse 50% 50% at 75% 30%, rgba(167,139,250,0.06) 0%, transparent 65%)
+          radial-gradient(ellipse 60% 50% at 30% 50%, rgba(var(--accent-rgb),0.07) 0%, transparent 65%),
+          radial-gradient(ellipse 50% 50% at 75% 30%, rgba(var(--purple-rgb),0.06) 0%, transparent 65%)
         `,
       }} />
 
@@ -394,7 +394,7 @@ export default function DeviceCheckScreen() {
       <div style={{
         height: 56, flexShrink: 0, display: 'flex', alignItems: 'center',
         padding: '0 28px', position: 'relative', zIndex: 1,
-        borderBottom: '1px solid rgba(255,255,255,0.05)',
+        borderBottom: '1px solid rgba(var(--ink-rgb),0.05)',
       }}>
         <img
           src="/images/full_logo_transparent.png"
@@ -404,7 +404,7 @@ export default function DeviceCheckScreen() {
         />
         <span style={{
           display: 'none', fontSize: 16, fontWeight: 900,
-          background: 'linear-gradient(135deg, #00C9B8, #A78BFA)',
+          background: 'linear-gradient(135deg, var(--accent), var(--purple))',
           WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
         }}>Syltalky</span>
       </div>
@@ -425,10 +425,10 @@ export default function DeviceCheckScreen() {
         <div style={{ flex: isMobile ? 'none' : 1.3, width: isMobile ? '100%' : 'auto', display: 'flex', flexDirection: 'column', gap: 0, minWidth: 0 }}>
 
           {/* Preview window */}
-          <div style={{
+          <div className="media-surface" style={{
             position: 'relative', borderRadius: 20, overflow: 'hidden',
             aspectRatio: '16/9', background: '#0D1525',
-            boxShadow: '0 24px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06)',
+            boxShadow: '0 24px 80px rgba(var(--shadow-rgb),0.6), 0 0 0 1px rgba(255,255,255,0.06)',
           }}>
             <video
               ref={videoRef}
@@ -509,10 +509,10 @@ export default function DeviceCheckScreen() {
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             gap: 12, marginTop: 20,
           }}>
-            <MediaBtn on={camOn} onClick={toggleCam} offColor="#FF5555">
+            <MediaBtn on={camOn} onClick={toggleCam} offColor="var(--danger)">
               <CamIcon on={camOn} size={22} />
             </MediaBtn>
-            <MediaBtn on={micOn} onClick={toggleMic} offColor="#FF5555">
+            <MediaBtn on={micOn} onClick={toggleMic} offColor="var(--danger)">
               <MicIcon on={micOn} size={18} />
             </MediaBtn>
           </div>
@@ -525,13 +525,13 @@ export default function DeviceCheckScreen() {
 
           {/* Header */}
           <div style={{ marginBottom: 28 }}>
-            <p style={{ margin: '0 0 4px', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)' }}>
+            <p style={{ margin: '0 0 4px', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
               Phòng họp
             </p>
-            <h1 style={{ margin: 0, fontSize: 28, fontWeight: 900, color: '#fff', letterSpacing: '0.05em', lineHeight: 1.1 }}>
+            <h1 style={{ margin: 0, fontSize: 28, fontWeight: 900, color: 'var(--heading)', letterSpacing: '0.05em', lineHeight: 1.1 }}>
               {roomCode}
             </h1>
-            <p style={{ margin: '8px 0 0', fontSize: 13, color: 'rgba(255,255,255,0.3)' }}>
+            <p style={{ margin: '8px 0 0', fontSize: 13, color: 'var(--text-muted)' }}>
               Kiểm tra thiết bị trước khi tham gia
             </p>
           </div>
@@ -540,9 +540,9 @@ export default function DeviceCheckScreen() {
           {permError && (
             <div style={{
               padding: '12px 14px', borderRadius: 12, marginBottom: 20,
-              background: 'rgba(255,69,69,0.08)', border: '1px solid rgba(255,69,69,0.2)',
+              background: 'rgba(var(--danger-rgb),0.08)', border: '1px solid rgba(var(--danger-rgb),0.2)',
             }}>
-              <p style={{ fontSize: 12, color: '#FF5555', margin: 0, lineHeight: 1.5 }}>{permError}</p>
+              <p style={{ fontSize: 12, color: 'var(--danger)', margin: 0, lineHeight: 1.5 }}>{permError}</p>
             </div>
           )}
 
@@ -571,18 +571,18 @@ export default function DeviceCheckScreen() {
           {/* Mic level */}
           <div style={{ marginBottom: 28 }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-              <span style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+              <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
                 Âm lượng mic
               </span>
-              <span style={{ fontSize: 11, color: micOn ? '#00C9B8' : 'rgba(255,255,255,0.2)', fontWeight: 600 }}>
+              <span style={{ fontSize: 11, color: micOn ? 'var(--accent)' : 'var(--text-faint)', fontWeight: 600 }}>
                 {micOn ? (micLevel > 5 ? 'Đang nghe...' : 'Sẵn sàng') : 'Đã tắt'}
               </span>
             </div>
-            <div style={{ height: 5, background: 'rgba(255,255,255,0.06)', borderRadius: 999, overflow: 'hidden' }}>
+            <div style={{ height: 5, background: 'rgba(var(--ink-rgb),0.06)', borderRadius: 999, overflow: 'hidden' }}>
               <div style={{
                 height: '100%',
                 width: `${micOn ? micLevel : 0}%`,
-                background: 'linear-gradient(90deg, #00C9B8, #00FFD1)',
+                background: 'linear-gradient(90deg, var(--accent), #00FFD1)',
                 borderRadius: 999, transition: 'width 0.07s',
               }} />
             </div>
@@ -592,11 +592,11 @@ export default function DeviceCheckScreen() {
           {joinError && (
             <div style={{
               padding: '10px 14px', borderRadius: 11, marginBottom: 12,
-              background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.2)',
+              background: 'rgba(var(--danger-rgb),0.08)', border: '1px solid rgba(var(--danger-rgb),0.2)',
               display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8,
             }}>
-              <span style={{ fontSize: 12, color: '#F87171', flex: 1 }}>{joinError}</span>
-              <button onClick={() => setJoinError('')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(248,113,113,0.5)', padding: 2, lineHeight: 1, fontSize: 14 }}>✕</button>
+              <span style={{ fontSize: 12, color: 'var(--danger)', flex: 1 }}>{joinError}</span>
+              <button onClick={() => setJoinError('')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(var(--danger-rgb),0.5)', padding: 2, lineHeight: 1, fontSize: 14 }}>✕</button>
             </div>
           )}
 
@@ -607,12 +607,12 @@ export default function DeviceCheckScreen() {
             style={{
               width: '100%', padding: '15px', borderRadius: 14, border: 'none',
               background: joining
-                ? 'rgba(0,201,184,0.2)'
-                : 'linear-gradient(135deg, #00C9B8, #009E8A)',
-              color: joining ? 'rgba(255,255,255,0.5)' : '#fff',
+                ? 'rgba(var(--accent-rgb),0.2)'
+                : 'linear-gradient(135deg, var(--button-start), var(--button-end))',
+              color: joining ? 'var(--text-secondary)' : 'var(--on-accent)',
               fontSize: 15, fontWeight: 800, letterSpacing: '-0.2px',
               cursor: joining ? 'default' : 'pointer', fontFamily: 'inherit',
-              boxShadow: joining ? 'none' : '0 8px 28px rgba(0,201,184,0.3)',
+              boxShadow: joining ? 'none' : '0 8px 28px rgba(var(--accent-rgb),0.3)',
               transition: 'all 0.2s',
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 9,
               marginBottom: 10,
@@ -640,14 +640,14 @@ export default function DeviceCheckScreen() {
             onClick={() => navigate('/home')}
             style={{
               width: '100%', padding: '13px', borderRadius: 14,
-              border: '1px solid rgba(255,255,255,0.07)',
+              border: '1px solid rgba(var(--ink-rgb),0.07)',
               background: 'transparent',
-              color: 'rgba(255,255,255,0.38)', fontSize: 13,
+              color: 'var(--text-muted)', fontSize: 13,
               cursor: 'pointer', fontFamily: 'inherit', fontWeight: 600,
               transition: 'all 0.15s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.14)'; e.currentTarget.style.color = 'rgba(255,255,255,0.6)' }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'; e.currentTarget.style.color = 'rgba(255,255,255,0.38)' }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb),0.14)'; e.currentTarget.style.color = 'var(--text-secondary)' }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(var(--ink-rgb),0.07)'; e.currentTarget.style.color = 'var(--text-muted)' }}
           >
             Quay lại
           </button>
@@ -678,10 +678,10 @@ function MediaBtn({ children, on, onClick, offColor }) {
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         transition: 'all 0.15s',
         background: on
-          ? (hovered ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.07)')
-          : (hovered ? 'rgba(255,69,69,0.28)' : 'rgba(255,69,69,0.15)'),
-        color: on ? 'rgba(255,255,255,0.85)' : offColor,
-        boxShadow: on ? 'none' : '0 4px 16px rgba(255,69,69,0.12)',
+          ? (hovered ? 'rgba(var(--ink-rgb),0.12)' : 'rgba(var(--ink-rgb),0.07)')
+          : (hovered ? 'rgba(var(--danger-rgb),0.28)' : 'rgba(var(--danger-rgb),0.15)'),
+        color: on ? 'var(--text)' : offColor,
+        boxShadow: on ? 'none' : '0 4px 16px rgba(var(--danger-rgb),0.12)',
       }}
     >
       {children}
@@ -695,7 +695,7 @@ function DeviceSelect({ icon, value, onChange, devices, placeholder }) {
     <div style={{ position: 'relative' }}>
       <div style={{
         position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)',
-        color: 'rgba(255,255,255,0.3)', pointerEvents: 'none', display: 'flex',
+        color: 'var(--text-muted)', pointerEvents: 'none', display: 'flex',
       }}>
         {icon}
       </div>
@@ -704,24 +704,24 @@ function DeviceSelect({ icon, value, onChange, devices, placeholder }) {
         onChange={e => onChange(e.target.value)}
         style={{
           width: '100%', padding: '11px 36px 11px 34px', borderRadius: 11,
-          background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)',
-          color: '#fff', fontSize: 13, outline: 'none', cursor: 'pointer',
+          background: 'rgba(var(--ink-rgb),0.05)', border: '1px solid rgba(var(--ink-rgb),0.08)',
+          color: 'var(--heading)', fontSize: 13, outline: 'none', cursor: 'pointer',
           fontFamily: '"Be Vietnam Pro", sans-serif', appearance: 'none',
           transition: 'border-color 0.15s',
         }}
-        onFocus={e => e.target.style.borderColor = 'rgba(0,201,184,0.35)'}
-        onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
+        onFocus={e => e.target.style.borderColor = 'rgba(var(--accent-rgb),0.35)'}
+        onBlur={e => e.target.style.borderColor = 'rgba(var(--ink-rgb),0.08)'}
       >
-        <option value="" style={{ background: '#0D1525', color: '#fff' }}>{placeholder}</option>
+        <option value="" style={{ background: 'var(--surface-alt)', color: 'var(--heading)' }}>{placeholder}</option>
         {devices.map(d => (
-          <option key={d.deviceId} value={d.deviceId} style={{ background: '#0D1525', color: '#fff' }}>
+          <option key={d.deviceId} value={d.deviceId} style={{ background: 'var(--surface-alt)', color: 'var(--heading)' }}>
             {d.label || `Thiết bị ${devices.indexOf(d) + 1}`}
           </option>
         ))}
       </select>
       <div style={{
         position: 'absolute', right: 11, top: '50%', transform: 'translateY(-50%)',
-        color: 'rgba(255,255,255,0.3)', pointerEvents: 'none',
+        color: 'var(--text-muted)', pointerEvents: 'none',
       }}>
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
           <polyline points="6 9 12 15 18 9"/>

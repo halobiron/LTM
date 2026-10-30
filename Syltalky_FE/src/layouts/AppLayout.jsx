@@ -26,12 +26,12 @@ export default function AppLayout() {
   }
 
   return (
-    <div style={{ display: 'flex', height: '100%', background: '#07090F', overflow: 'hidden' }}>
+    <div style={{ display: 'flex', height: '100%', background: 'var(--bg)', overflow: 'hidden' }}>
       {/* Mobile top bar */}
       {isMobile && (
         <div style={{
           position: 'fixed', top: 0, left: 0, right: 0, height: 52, zIndex: 300,
-          background: '#080B14', borderBottom: '1px solid rgba(255,255,255,0.06)',
+          background: 'var(--surface-alt)', borderBottom: '1px solid rgba(var(--ink-rgb),0.06)',
           display: 'flex', alignItems: 'center', padding: '0 16px', gap: 12,
           fontFamily: '"Be Vietnam Pro", sans-serif',
         }}>
@@ -39,7 +39,7 @@ export default function AppLayout() {
             onClick={() => setSidebarOpen(true)}
             style={{
               width: 36, height: 36, borderRadius: 10, border: 'none',
-              background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.7)',
+              background: 'rgba(var(--ink-rgb),0.06)', color: 'var(--text-secondary)',
               cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
           >

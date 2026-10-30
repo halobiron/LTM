@@ -10,8 +10,8 @@ export default function AppearancePanel() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
 
-      <Section title="Giao diện" desc="Màu sắc và chủ đề hiển thị của ứng dụng">
-        <div style={{ display: 'flex', gap: 12 }}>
+      <Section title="Giao diện" desc="Chọn chế độ phù hợp với bạn. Lựa chọn được lưu trên trình duyệt này.">
+        <div role="group" aria-label="Chế độ giao diện" style={{ display: 'flex', gap: 12 }}>
           {[
             {
               id: 'dark', label: 'Tối',
@@ -24,30 +24,33 @@ export default function AppearancePanel() {
           ].map(opt => (
             <button
               key={opt.id}
+              type="button"
+              aria-pressed={theme === opt.id}
+              aria-label={`Chế độ ${opt.label.toLowerCase()}`}
               onClick={() => setTheme(opt.id)}
               style={{
                 flex: 1, padding: 16, borderRadius: 12, cursor: 'pointer', textAlign: 'left',
-                fontFamily: 'inherit', border: `2px solid ${theme === opt.id ? '#00C9B8' : 'rgba(255,255,255,0.08)'}`,
-                background: theme === opt.id ? 'rgba(0,201,184,0.06)' : 'rgba(255,255,255,0.03)',
+                fontFamily: 'inherit', border: `2px solid ${theme === opt.id ? 'var(--accent)' : 'var(--border)'}`,
+                background: theme === opt.id ? 'rgba(var(--accent-rgb),0.06)' : 'var(--surface-raised)',
                 transition: 'all 0.15s',
               }}
             >
               {/* Mini preview */}
               <div style={{
                 height: 52, borderRadius: 8, background: opt.preview.bg,
-                border: '1px solid rgba(255,255,255,0.06)', marginBottom: 10,
+                border: '1px solid rgba(100,116,139,0.15)', marginBottom: 10,
                 padding: 8, display: 'flex', flexDirection: 'column', gap: 4, overflow: 'hidden',
               }}>
                 <div style={{ height: 8, borderRadius: 4, width: '60%', background: opt.preview.accent, opacity: 0.8 }}/>
                 <div style={{ height: 6, borderRadius: 3, width: '80%', background: opt.preview.card }}/>
                 <div style={{ height: 6, borderRadius: 3, width: '50%', background: opt.preview.card }}/>
               </div>
-              <div style={{ fontSize: 13, fontWeight: 600, color: theme === opt.id ? '#00C9B8' : 'rgba(255,255,255,0.6)' }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: theme === opt.id ? 'var(--accent)' : 'var(--text)' }}>
                 {opt.label}
               </div>
-              {opt.id === 'light' && (
-                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)', marginTop: 2 }}>Sắp ra mắt</div>
-              )}
+              <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 5 }}>
+                {theme === opt.id ? '✓ Đang sử dụng' : opt.id === 'light' ? 'Nền sáng, dịu mắt' : 'Nền tối, tập trung'}
+              </div>
             </button>
           ))}
         </div>
@@ -65,17 +68,17 @@ export default function AppearancePanel() {
               style={{
                 flex: 1, padding: '12px 16px', borderRadius: 10, cursor: 'pointer',
                 fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 10,
-                border: `1.5px solid ${language === opt.id ? '#00C9B8' : 'rgba(255,255,255,0.08)'}`,
-                background: language === opt.id ? 'rgba(0,201,184,0.08)' : 'rgba(255,255,255,0.03)',
+                border: `1.5px solid ${language === opt.id ? 'var(--accent)' : 'var(--border)'}`,
+                background: language === opt.id ? 'rgba(var(--accent-rgb),0.08)' : 'var(--surface-raised)',
                 transition: 'all 0.15s',
               }}
             >
               <span style={{ fontSize: 20 }}>{opt.flag}</span>
-              <span style={{ fontSize: 13, fontWeight: 600, color: language === opt.id ? '#00C9B8' : 'rgba(255,255,255,0.5)' }}>
+              <span style={{ fontSize: 13, fontWeight: 600, color: language === opt.id ? 'var(--accent)' : 'var(--text-secondary)' }}>
                 {opt.label}
               </span>
               {language === opt.id && (
-                <span style={{ marginLeft: 'auto', fontSize: 11, color: '#00C9B8' }}>✓</span>
+                <span style={{ marginLeft: 'auto', fontSize: 11, color: 'var(--accent)' }}>✓</span>
               )}
             </button>
           ))}

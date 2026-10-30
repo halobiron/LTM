@@ -54,7 +54,7 @@ export default function NotesPanel({ notes, isHostOrCohost, meetingId, accessTok
       {notes.length > 0 && (
         <div style={{
           display: 'flex', alignItems: 'center', gap: 3,
-          padding: '6px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)',
+          padding: '6px 10px', borderBottom: '1px solid rgba(var(--ink-rgb),0.06)',
           overflowX: 'auto', flexShrink: 0, minHeight: 44,
         }}>
           {notes.map(n => (
@@ -75,8 +75,8 @@ export default function NotesPanel({ notes, isHostOrCohost, meetingId, accessTok
               title="Tạo ghi chú mới"
               style={{
                 width: 28, height: 28, borderRadius: 8, flexShrink: 0,
-                border: '1px dashed rgba(255,255,255,0.2)',
-                background: 'transparent', color: 'rgba(255,255,255,0.45)',
+                border: '1px dashed rgba(var(--ink-rgb),0.2)',
+                background: 'transparent', color: 'var(--text-muted)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 cursor: 'pointer', marginLeft: notes.length ? 2 : 0,
                 opacity: creating ? 0.5 : 1,
@@ -154,8 +154,8 @@ function NoteTab({ note, active, isHostOrCohost, onSelect, onRename, onDelete })
         onBlur={commitRename}
         style={{
           padding: '4px 8px', borderRadius: 7, width: 130, flexShrink: 0,
-          border: '1px solid rgba(0,201,184,0.45)',
-          background: 'rgba(0,201,184,0.08)', color: '#fff',
+          border: '1px solid rgba(var(--accent-rgb),0.45)',
+          background: 'rgba(var(--accent-rgb),0.08)', color: 'var(--heading)',
           fontSize: 12, fontFamily: 'inherit', outline: 'none',
         }}
       />
@@ -171,10 +171,10 @@ function NoteTab({ note, active, isHostOrCohost, onSelect, onRename, onDelete })
           display: 'flex', alignItems: 'center', gap: 5,
           padding: `5px ${isHostOrCohost ? '22px' : '10px'} 5px 10px`,
           borderRadius: 8, border: 'none',
-          background: active ? 'rgba(0,201,184,0.12)' : 'rgba(255,255,255,0.04)',
-          color: active ? '#00C9B8' : 'rgba(255,255,255,0.5)',
+          background: active ? 'rgba(var(--accent-rgb),0.12)' : 'rgba(var(--ink-rgb),0.04)',
+          color: active ? 'var(--accent)' : 'var(--text-secondary)',
           fontSize: 12, fontWeight: active ? 700 : 500, fontFamily: 'inherit',
-          cursor: 'pointer', outline: active ? '1px solid rgba(0,201,184,0.3)' : 'none',
+          cursor: 'pointer', outline: active ? '1px solid rgba(var(--accent-rgb),0.3)' : 'none',
           maxWidth: 160,
         }}
       >
@@ -194,7 +194,7 @@ function NoteTab({ note, active, isHostOrCohost, onSelect, onRename, onDelete })
             style={{
               position: 'absolute', right: 3, top: '50%', transform: 'translateY(-50%)',
               width: 16, height: 16, borderRadius: 4, border: 'none',
-              background: 'transparent', color: 'rgba(255,255,255,0.35)',
+              background: 'transparent', color: 'var(--text-muted)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               cursor: 'pointer', padding: 0,
             }}
@@ -206,9 +206,9 @@ function NoteTab({ note, active, isHostOrCohost, onSelect, onRename, onDelete })
           {menuPos && (
             <div ref={menuRef} style={{
               position: 'fixed', top: menuPos.top, left: menuPos.left, zIndex: 9999,
-              background: '#11141C', border: '1px solid rgba(255,255,255,0.08)',
+              background: 'var(--surface-raised)', border: '1px solid rgba(var(--ink-rgb),0.08)',
               borderRadius: 9, padding: 4, minWidth: 130,
-              boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
+              boxShadow: '0 8px 24px rgba(var(--shadow-rgb),0.5)',
               animation: 'noteMenuIn 0.15s cubic-bezier(0.22,1,0.36,1)',
             }}>
               <style>{`@keyframes noteMenuIn { from { opacity:0; transform:translateY(-4px) scale(0.97) } to { opacity:1; transform:translateY(0) scale(1) } }`}</style>
@@ -309,20 +309,20 @@ function NoteEditor({ note, meetingId, accessToken, currentUser, isHostOrCohost,
   return (
     <div style={{ display: 'flex', flexDirection: 'column', flex: 1, overflow: 'hidden' }}>
       <style>{`
-        .note-editor-content { outline: none; min-height: 120px; padding: 16px 20px; color: #E2E8F5; font-size: 14px; line-height: 1.7; font-family: "Be Vietnam Pro", sans-serif; }
+        .note-editor-content { outline: none; min-height: 120px; padding: 16px 20px; color: var(--text); font-size: 14px; line-height: 1.7; font-family: "Be Vietnam Pro", sans-serif; }
         .note-editor-content p { margin: 0 0 6px; }
-        .note-editor-content p.is-editor-empty:first-child::before { content: attr(data-placeholder); color: rgba(255,255,255,0.18); pointer-events: none; height: 0; float: left; }
-        .note-editor-content h1 { font-size: 22px; font-weight: 800; color: #fff; margin: 16px 0 6px; letter-spacing: -0.4px; }
-        .note-editor-content h2 { font-size: 17px; font-weight: 700; color: #fff; margin: 14px 0 5px; }
-        .note-editor-content h3 { font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.85); margin: 12px 0 4px; }
+        .note-editor-content p.is-editor-empty:first-child::before { content: attr(data-placeholder); color: var(--text-faint); pointer-events: none; height: 0; float: left; }
+        .note-editor-content h1 { font-size: 22px; font-weight: 800; color: var(--heading); margin: 16px 0 6px; letter-spacing: -0.4px; }
+        .note-editor-content h2 { font-size: 17px; font-weight: 700; color: var(--heading); margin: 14px 0 5px; }
+        .note-editor-content h3 { font-size: 15px; font-weight: 700; color: var(--text); margin: 12px 0 4px; }
         .note-editor-content ul, .note-editor-content ol { padding-left: 22px; margin: 4px 0 8px; }
         .note-editor-content li { margin-bottom: 3px; }
-        .note-editor-content blockquote { margin: 8px 0; padding: 6px 14px; border-left: 3px solid rgba(0,201,184,0.5); color: rgba(255,255,255,0.6); font-style: italic; background: rgba(0,201,184,0.04); border-radius: 0 6px 6px 0; }
-        .note-editor-content code { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08); border-radius: 4px; padding: 1px 5px; font-family: monospace; font-size: 12px; color: #7dd3fc; }
-        .note-editor-content pre { background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.07); border-radius: 9px; padding: 12px 14px; overflow-x: auto; margin: 8px 0; }
-        .note-editor-content pre code { background: none; border: none; padding: 0; color: #a5f3fc; }
-        .note-editor-content strong { color: #fff; font-weight: 700; }
-        .note-editor-content em { color: rgba(255,255,255,0.85); }
+        .note-editor-content blockquote { margin: 8px 0; padding: 6px 14px; border-left: 3px solid rgba(var(--accent-rgb),0.5); color: var(--text-secondary); font-style: italic; background: rgba(var(--accent-rgb),0.04); border-radius: 0 6px 6px 0; }
+        .note-editor-content code { background: var(--surface-alt); border: 1px solid rgba(var(--ink-rgb),0.08); border-radius: 4px; padding: 1px 5px; font-family: monospace; font-size: 12px; color: var(--blue); }
+        .note-editor-content pre { background: var(--surface-alt); border: 1px solid rgba(var(--ink-rgb),0.07); border-radius: 9px; padding: 12px 14px; overflow-x: auto; margin: 8px 0; }
+        .note-editor-content pre code { background: none; border: none; padding: 0; color: var(--blue); }
+        .note-editor-content strong { color: var(--heading); font-weight: 700; }
+        .note-editor-content em { color: var(--text); }
         .collaboration-cursor__caret { position: relative; margin-left: -1px; margin-right: -1px; border-left: 1px solid; border-right: 1px solid; word-break: normal; pointer-events: none; }
         .collaboration-cursor__label { position: absolute; top: -1.4em; left: -1px; font-size: 10px; font-weight: 700; line-height: normal; color: #fff; padding: 1px 6px; border-radius: 4px 4px 4px 0; white-space: nowrap; user-select: none; pointer-events: none; }
         .note-editor-content .ProseMirror-focused { outline: none; }
@@ -331,7 +331,7 @@ function NoteEditor({ note, meetingId, accessToken, currentUser, isHostOrCohost,
       {/* ── Title row ── */}
       <div style={{
         display: 'flex', alignItems: 'center', gap: 10,
-        padding: '10px 16px', borderBottom: '1px solid rgba(255,255,255,0.05)',
+        padding: '10px 16px', borderBottom: '1px solid rgba(var(--ink-rgb),0.05)',
         flexShrink: 0,
       }}>
         {renamingTitle ? (
@@ -346,8 +346,8 @@ function NoteEditor({ note, meetingId, accessToken, currentUser, isHostOrCohost,
             onBlur={commitTitle}
             style={{
               flex: 1, padding: '4px 8px', borderRadius: 7,
-              border: '1px solid rgba(0,201,184,0.4)',
-              background: 'rgba(0,201,184,0.06)', color: '#fff',
+              border: '1px solid rgba(var(--accent-rgb),0.4)',
+              background: 'rgba(var(--accent-rgb),0.06)', color: 'var(--heading)',
               fontSize: 14, fontWeight: 700, fontFamily: 'inherit', outline: 'none',
             }}
           />
@@ -356,7 +356,7 @@ function NoteEditor({ note, meetingId, accessToken, currentUser, isHostOrCohost,
             onDoubleClick={() => isHostOrCohost && setRenamingTitle(true)}
             title={isHostOrCohost ? 'Double-click để đổi tên' : ''}
             style={{
-              flex: 1, fontSize: 14, fontWeight: 700, color: '#fff',
+              flex: 1, fontSize: 14, fontWeight: 700, color: 'var(--heading)',
               overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
               cursor: isHostOrCohost ? 'text' : 'default',
             }}
@@ -374,14 +374,14 @@ function NoteEditor({ note, meetingId, accessToken, currentUser, isHostOrCohost,
               background: u.color, color: '#fff',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: 10, fontWeight: 700,
-              border: '1.5px solid #0B0D12',
+              border: '1.5px solid var(--surface)',
               marginLeft: i === 0 ? 4 : -6,
             }}>
               {(u.name || '?')[0]?.toUpperCase()}
             </span>
           ))}
           {others.length > 3 && (
-            <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', marginLeft: 6 }}>
+            <span style={{ fontSize: 10, color: 'var(--text-muted)', marginLeft: 6 }}>
               +{others.length - 3}
             </span>
           )}
@@ -391,7 +391,7 @@ function NoteEditor({ note, meetingId, accessToken, currentUser, isHostOrCohost,
       {/* ── Toolbar ── */}
       <div style={{
         display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 2,
-        padding: '5px 10px', borderBottom: '1px solid rgba(255,255,255,0.05)',
+        padding: '5px 10px', borderBottom: '1px solid rgba(var(--ink-rgb),0.05)',
         flexShrink: 0,
       }}>
         <TBtn editor={editor} cmd={() => editor?.chain().focus().toggleBold().run()} active={editor?.isActive('bold')} title="Bold (Ctrl+B)"><strong>B</strong></TBtn>
@@ -439,10 +439,10 @@ function EmptyState({ isHostOrCohost, creating, onCreate }) {
     }}>
       <div style={{
         width: 52, height: 52, borderRadius: 14,
-        background: 'rgba(0,201,184,0.07)', border: '1px solid rgba(0,201,184,0.15)',
+        background: 'rgba(var(--accent-rgb),0.07)', border: '1px solid rgba(var(--accent-rgb),0.15)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00C9B8" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
           <polyline points="14 2 14 8 20 8"/>
           <line x1="12" y1="12" x2="12" y2="18"/>
@@ -450,11 +450,11 @@ function EmptyState({ isHostOrCohost, creating, onCreate }) {
         </svg>
       </div>
       <div>
-        <p style={{ margin: '0 0 5px', fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.45)' }}>
+        <p style={{ margin: '0 0 5px', fontSize: 14, fontWeight: 700, color: 'var(--text-muted)' }}>
           Chưa có ghi chú
         </p>
         {isHostOrCohost && (
-          <p style={{ margin: 0, fontSize: 12, color: 'rgba(255,255,255,0.22)', lineHeight: 1.6 }}>
+          <p style={{ margin: 0, fontSize: 12, color: 'var(--text-faint)', lineHeight: 1.6 }}>
             Nhấn nút + ở trên để tạo ghi chú đầu tiên
           </p>
         )}
@@ -466,8 +466,8 @@ function EmptyState({ isHostOrCohost, creating, onCreate }) {
           style={{
             display: 'flex', alignItems: 'center', gap: 6,
             padding: '8px 18px', borderRadius: 9,
-            border: '1px solid rgba(0,201,184,0.3)',
-            background: 'rgba(0,201,184,0.1)', color: '#00C9B8',
+            border: '1px solid rgba(var(--accent-rgb),0.3)',
+            background: 'rgba(var(--accent-rgb),0.1)', color: 'var(--accent)',
             fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
             opacity: creating ? 0.6 : 1,
           }}
@@ -484,7 +484,7 @@ function EmptyState({ isHostOrCohost, creating, onCreate }) {
 
 /* ── Status dot ───────────────────────────────────────────────────────────── */
 function StatusDot({ status }) {
-  const color = status === 'connected' ? '#34D399' : status === 'connecting' ? '#FBBF24' : '#F87171'
+  const color = status === 'connected' ? 'var(--success)' : status === 'connecting' ? 'var(--warning)' : 'var(--danger)'
   const label = status === 'connected' ? 'Đã kết nối' : status === 'connecting' ? 'Đang kết nối…' : 'Mất kết nối'
   return (
     <span title={label} style={{
@@ -499,9 +499,9 @@ function TBtn({ editor, cmd, active, title, children }) {
   return (
     <button onClick={cmd} disabled={!editor} title={title} style={{
       minWidth: 26, height: 26, borderRadius: 6, padding: '0 5px',
-      border: '1px solid ' + (active ? 'rgba(0,201,184,0.4)' : 'transparent'),
-      background: active ? 'rgba(0,201,184,0.12)' : 'transparent',
-      color: active ? '#00C9B8' : 'rgba(255,255,255,0.5)',
+      border: '1px solid ' + (active ? 'rgba(var(--accent-rgb),0.4)' : 'transparent'),
+      background: active ? 'rgba(var(--accent-rgb),0.12)' : 'transparent',
+      color: active ? 'var(--accent)' : 'var(--text-secondary)',
       fontSize: 12, fontFamily: 'inherit', cursor: 'pointer',
       display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
       transition: 'all 0.12s',
@@ -511,7 +511,7 @@ function TBtn({ editor, cmd, active, title, children }) {
   )
 }
 function TSep() {
-  return <div style={{ width: 1, height: 16, background: 'rgba(255,255,255,0.07)', margin: '0 2px' }} />
+  return <div style={{ width: 1, height: 16, background: 'rgba(var(--ink-rgb),0.07)', margin: '0 2px' }} />
 }
 
 function MenuItem({ onClick, danger, children }) {
@@ -524,8 +524,8 @@ function MenuItem({ onClick, danger, children }) {
       style={{
         display: 'block', width: '100%', padding: '7px 12px',
         textAlign: 'left', border: 'none', borderRadius: 6,
-        background: hovered ? (danger ? 'rgba(248,113,113,0.1)' : 'rgba(255,255,255,0.06)') : 'transparent',
-        color: danger ? '#F87171' : (hovered ? '#fff' : 'rgba(255,255,255,0.8)'),
+        background: hovered ? (danger ? 'rgba(var(--danger-rgb),0.1)' : 'rgba(var(--ink-rgb),0.06)') : 'transparent',
+        color: danger ? 'var(--danger)' : (hovered ? 'var(--heading)' : 'var(--text)'),
         fontSize: 12, fontFamily: 'inherit', cursor: 'pointer',
         transition: 'background 0.12s, color 0.12s',
       }}
