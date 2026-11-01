@@ -1,0 +1,5 @@
+[
+  {"email": "an@example.com", "display_name": "Nguyễn Văn An", "gender": "male", "password": "password123"},
+  {"email": "binh@example.com", "display_name": "Trần Thị Bình", "gender": "female", "password": "password123"},
+  {"email": "chi@example.com", "display_name": "Lê Minh Chi", "gender": "female", "password": "password123"}
+]

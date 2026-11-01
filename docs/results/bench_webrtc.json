@@ -1,0 +1,86 @@
+{
+  "started_at": "2026-11-01 10:05:18",
+  "environment": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "cpu": "Intel(R) Core(TM) i5-14400F",
+    "cores_logical": 16,
+    "ram_gb": "31.8",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti, 16311 MiB",
+    "python": "3.14.7",
+    "network": "localhost (client, backend, AI API cùng một máy)"
+  },
+  "duration_s": 30,
+  "livekit_url": "wss://syltalky-m8z79nb5.livekit.cloud",
+  "sent": {
+    "audio_frames": 3101,
+    "video_frames": 450
+  },
+  "audio_frames_received_by_subscribers": [
+    3549,
+    3550
+  ],
+  "rtt_ms_to_livekit": {
+    "publisher": {
+      "n": 6,
+      "min": 329.0,
+      "p50": 329.5,
+      "p95": 332.25,
+      "mean": 330.0,
+      "max": 333.0
+    },
+    "sub1": {
+      "n": 6,
+      "min": 335.0,
+      "p50": 335.5,
+      "p95": 337.0,
+      "mean": 335.833,
+      "max": 337.0
+    },
+    "sub2": {
+      "n": 6,
+      "min": 321.0,
+      "p50": 325.0,
+      "p95": 327.5,
+      "mean": 324.667,
+      "max": 328.0
+    }
+  },
+  "subscribers_inbound": [
+    {
+      "audio": {
+        "packets_received": 1580,
+        "packets_lost": 0,
+        "jitter_ms": 6.0,
+        "frames_decoded": 0,
+        "fps": 0.0,
+        "loss_pct": 0.0
+      },
+      "video": {
+        "packets_received": 1312,
+        "packets_lost": 0,
+        "jitter_ms": 4.0,
+        "frames_decoded": 459,
+        "fps": 0.0,
+        "loss_pct": 0.0
+      }
+    },
+    {
+      "audio": {
+        "packets_received": 1581,
+        "packets_lost": 0,
+        "jitter_ms": 5.0,
+        "frames_decoded": 0,
+        "fps": 0.0,
+        "loss_pct": 0.0
+      },
+      "video": {
+        "packets_received": 1311,
+        "packets_lost": 0,
+        "jitter_ms": 4.0,
+        "frames_decoded": 458,
+        "fps": 0.0,
+        "loss_pct": 0.0
+      }
+    }
+  ]
+}

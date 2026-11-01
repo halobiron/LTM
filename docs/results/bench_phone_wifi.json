@@ -1,0 +1,114 @@
+{
+  "started_at": "2026-11-01 10:42:57",
+  "site": "https://syltalky.pages.dev",
+  "backend": "https://rgb.tail27fd0e.ts.net",
+  "pc_environment": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "cpu": "Intel(R) Core(TM) i5-14400F",
+    "cores_logical": 16,
+    "ram_gb": "31.8",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti, 16311 MiB",
+    "python": "3.14.7",
+    "network": "localhost (client, backend, AI API cùng một máy)"
+  },
+  "phone": {
+    "model": "2312DRA50G",
+    "android": "14",
+    "active_network": "WIFI",
+    "wifi_ip": "192.168.1.8/24"
+  },
+  "duration_s": 60,
+  "steps": {
+    "phone_localstorage_keys_backed_up": 13,
+    "pc_login_ok": true,
+    "login_pc_and_phone_s": 2.5,
+    "join_room_pc_and_phone_s": 2.83,
+    "phone_localstorage_restored": true
+  },
+  "pc_browser": "156.0.8078.76",
+  "phone_browser": "156.0.8078.73",
+  "stats": {
+    "pc": {
+      "rtt_ms": [
+        338
+      ],
+      "audio_in": {
+        "packetsReceived": 2619,
+        "packetsLost": 0,
+        "jitter_ms": 32,
+        "framesDecoded": null,
+        "framesPerSecond": null,
+        "freezeCount": null,
+        "frameWidth": null,
+        "frameHeight": null
+      },
+      "video_in": {
+        "packetsReceived": 9694,
+        "packetsLost": 0,
+        "jitter_ms": 31,
+        "framesDecoded": 1622,
+        "framesPerSecond": 23,
+        "freezeCount": 1,
+        "frameWidth": 720,
+        "frameHeight": 1280
+      },
+      "audio_out": {
+        "packetsSent": 3238,
+        "framesSent": null,
+        "frameWidth": null,
+        "frameHeight": null
+      },
+      "video_out": {
+        "packetsSent": 4093,
+        "framesSent": 867,
+        "frameWidth": 1280,
+        "frameHeight": 720
+      },
+      "pcs": 1,
+      "videos": 2,
+      "playing_videos": 2
+    },
+    "phone": {
+      "rtt_ms": [
+        369
+      ],
+      "audio_in": {
+        "packetsReceived": 3035,
+        "packetsLost": 0,
+        "jitter_ms": 21,
+        "framesDecoded": null,
+        "framesPerSecond": null,
+        "freezeCount": null,
+        "frameWidth": null,
+        "frameHeight": null
+      },
+      "video_in": {
+        "packetsReceived": 4068,
+        "packetsLost": 0,
+        "jitter_ms": 21,
+        "framesDecoded": 1215,
+        "framesPerSecond": 18,
+        "freezeCount": 1,
+        "frameWidth": 1280,
+        "frameHeight": 720
+      },
+      "audio_out": {
+        "packetsSent": 2684,
+        "framesSent": null,
+        "frameWidth": null,
+        "frameHeight": null
+      },
+      "video_out": {
+        "packetsSent": 3550,
+        "framesSent": 1209,
+        "frameWidth": 360,
+        "frameHeight": 640
+      },
+      "pcs": 1,
+      "videos": 2,
+      "playing_videos": 2
+    }
+  },
+  "phone_network_after": "WIFI",
+  "page_errors": []
+}

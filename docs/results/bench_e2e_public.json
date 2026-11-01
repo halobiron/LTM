@@ -1,0 +1,249 @@
+{
+  "started_at": "2026-11-01 10:10:44",
+  "silence_after_speech_s": 3.0,
+  "environment": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "cpu": "Intel(R) Core(TM) i5-14400F",
+    "cores_logical": 16,
+    "ram_gb": "31.8",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti, 16311 MiB",
+    "python": "3.14.7",
+    "network": "localhost (client, backend, AI API cùng một máy)"
+  },
+  "n_sentences": 20,
+  "tts_first_call_s": 1.24,
+  "tts": {
+    "generate_s": {
+      "n": 20,
+      "min": 1.063,
+      "p50": 1.174,
+      "p95": 1.273,
+      "mean": 1.175,
+      "max": 1.278
+    },
+    "request_to_listener_s": {
+      "n": 20,
+      "min": 1.063,
+      "p50": 1.173,
+      "p95": 1.272,
+      "mean": 1.175,
+      "max": 1.278
+    }
+  },
+  "stt": {
+    "latency_end_of_speech_to_caption_s": {
+      "n": 20,
+      "min": 1.752,
+      "p50": 1.977,
+      "p95": 2.029,
+      "mean": 1.961,
+      "max": 2.036
+    },
+    "answered": "20/20",
+    "wer_mean": 0.004,
+    "cer_mean": 0.004,
+    "wer_p50": 0.0,
+    "rows": [
+      {
+        "ref": "Xin chào mọi người, cuộc họp bắt đầu bây giờ.",
+        "hyp": "Xin chào mọi người. Cuộc họp bắt đầu bây giờ.",
+        "audio_s": 2.64,
+        "tts_sr": 24000,
+        "latency_s": 2.018,
+        "wer": 0.0,
+        "cer": 0.0
+      },
+      {
+        "ref": "Tôi đồng ý với đề xuất này, xin mời bạn tiếp tục.",
+        "hyp": "Tôi đồng ý với đề xuất này. Xin mời bạn tiếp tục.",
+        "audio_s": 2.78,
+        "tts_sr": 24000,
+        "latency_s": 1.93,
+        "wer": 0.0,
+        "cer": 0.0
+      },
+      {
+        "ref": "Chúng ta sẽ chốt lịch báo cáo vào thứ Sáu tuần sau.",
+        "hyp": "Chúng ta sẽ chốt lịch báo cáo vào thứ sáu tuần sau.",
+        "audio_s": 2.96,
+        "tts_sr": 24000,
+        "latency_s": 1.961,
+        "wer": 0.0,
+        "cer": 0.0
+      },
+      {
+        "ref": "Cảm ơn mọi người đã tham dự, hẹn gặp lại.",
+        "hyp": "Cảm ơn mọi người đã tham dự. Hẹn gặp lại.",
+        "audio_s": 2.48,
+        "tts_sr": 24000,
+        "latency_s": 1.752,
+        "wer": 0.0,
+        "cer": 0.0
+      },
+      {
+        "ref": "Hôm nay chúng ta sẽ thảo luận về kế hoạch phát triển sản phẩm.",
+        "hyp": "Hôm nay, chúng ta sẽ thảo luận về kế hoạch phát triển sản. Phẩm.",
+        "audio_s": 3.47,
+        "tts_sr": 24000,
+        "latency_s": 2.008,
+        "wer": 0.0,
+        "cer": 0.0
+      },
+      {
+        "ref": "Bạn có thể chia sẻ màn hình để cả nhóm cùng xem không?",
+        "hyp": "Có thể chia sẻ màn hình để cả nhóm cùng xem không?",
+        "audio_s": 3.0,
+        "tts_sr": 24000,
+        "latency_s": 1.98,
+        "wer": 0.077,
+        "cer": 0.073
+      },
+      {
+        "ref": "Tôi sẽ gửi tài liệu cho mọi người qua email sau buổi họp.",
+        "hyp": "Tôi sẽ gửi tài liệu cho mọi người qua email sau buổi họp.",
+        "audio_s": 3.02,
+        "tts_sr": 24000,
+        "latency_s": 1.953,
+        "wer": 0.0,
+        "cer": 0.0
+      },
+      {
+        "ref": "Vấn đề này cần được giải quyết trước cuối tuần.",
+        "hyp": "Vấn đề này cần được giải quyết trước cuối tuần.",
+        "audio_s": 2.74,
+        "tts_sr": 24000,
+        "latency_s": 1.757,
+        "wer": 0.0,
+        "cer": 0.0
+      },
+      {
+        "ref": "Mọi người có câu hỏi nào về phần vừa trình bày không?",
+        "hyp": "Mọi người có câu hỏi nào về phần vừa trình bày không?",
+        "audio_s": 2.91,
+        "tts_sr": 24000,
+        "latency_s": 1.98,
+        "wer": 0.0,
+        "cer": 0.0
+      },
+      {
+        "ref": "Chúng tôi đã hoàn thành chức năng đăng nhập và phòng chờ.",
+        "hyp": "Chúng tôi đã hoàn thành chức năng đăng nhập và phòng chờ.",
+        "audio_s": 3.01,
+        "tts_sr": 24000,
+        "latency_s": 2.036,
+        "wer": 0.0,
+        "cer": 0.0
+      },
+      {
+        "ref": "Xin lỗi, tôi nghe không rõ, bạn nhắc lại giúp tôi được không?",
+        "hyp": "Xin lỗi, tôi nghe không rõ. Bạn nhắc lại. Giúp tôi, được không?",
+        "audio_s": 3.43,
+        "tts_sr": 24000,
+        "latency_s": 2.001,
+        "wer": 0.0,
+        "cer": 0.0
+      },
+      {
+        "ref": "Nhóm sẽ kiểm thử hệ thống với nhiều người dùng cùng lúc.",
+        "hyp": "Nhóm sẽ kiểm thử hệ thống với nhiều người dùng cùng lúc.",
+        "audio_s": 3.03,
+        "tts_sr": 24000,
+        "latency_s": 1.973,
+        "wer": 0.0,
+        "cer": 0.0
+      },
+      {
+        "ref": "Cuộc họp tiếp theo sẽ diễn ra vào sáng thứ Hai.",
+        "hyp": "Cuộc họp tiếp theo sẽ diễn ra vào sáng thứ hai.",
+        "audio_s": 2.57,
+        "tts_sr": 24000,
+        "latency_s": 1.974,
+        "wer": 0.0,
+        "cer": 0.0
+      },
+      {
+        "ref": "Tôi đề nghị chúng ta bỏ phiếu để chọn phương án tốt nhất.",
+        "hyp": "Tôi đề nghị chúng ta bỏ phiếu để chọn phương án tốt nhất.",
+        "audio_s": 3.01,
+        "tts_sr": 24000,
+        "latency_s": 1.958,
+        "wer": 0.0,
+        "cer": 0.0
+      },
+      {
+        "ref": "Độ trễ của phụ đề hiện tại là khoảng một đến hai giây.",
+        "hyp": "Độ trễ của phụ đề hiện tại là khoảng một đến hai giây.",
+        "audio_s": 3.07,
+        "tts_sr": 24000,
+        "latency_s": 1.975,
+        "wer": 0.0,
+        "cer": 0.0
+      },
+      {
+        "ref": "Xin hãy tắt micro khi không phát biểu để tránh tiếng ồn.",
+        "hyp": "Xin hãy tắt micro khi không phát biểu để tránh tiếng ồn.",
+        "audio_s": 3.34,
+        "tts_sr": 24000,
+        "latency_s": 1.968,
+        "wer": 0.0,
+        "cer": 0.0
+      },
+      {
+        "ref": "Báo cáo tiến độ đã được cập nhật lên thư mục chung.",
+        "hyp": "Báo cáo tiến độ đã được cập nhật lên thư mục chung.",
+        "audio_s": 2.67,
+        "tts_sr": 24000,
+        "latency_s": 1.98,
+        "wer": 0.0,
+        "cer": 0.0
+      },
+      {
+        "ref": "Chúng ta cần thêm thời gian để hoàn thiện phần kiểm thử.",
+        "hyp": "Chúng ta cần thêm thời gian để hoàn thiện phần kiểm thử.",
+        "audio_s": 3.01,
+        "tts_sr": 24000,
+        "latency_s": 2.029,
+        "wer": 0.0,
+        "cer": 0.0
+      },
+      {
+        "ref": "Cảm ơn bạn đã đóng góp ý kiến rất hữu ích.",
+        "hyp": "Cảm ơn. Bạn đã đóng góp ý kiến rất hữu ích.",
+        "audio_s": 2.23,
+        "tts_sr": 24000,
+        "latency_s": 1.984,
+        "wer": 0.0,
+        "cer": 0.0
+      },
+      {
+        "ref": "Tôi xin phép kết thúc cuộc họp tại đây, chúc mọi người một ngày tốt lành.",
+        "hyp": "Tôi xin phép kết thúc cuộc họp tại đây, chúc mọi người một ngày tốt lành.",
+        "audio_s": 3.98,
+        "tts_sr": 24000,
+        "latency_s": 2.006,
+        "wer": 0.0,
+        "cer": 0.0
+      }
+    ]
+  },
+  "fanout": {
+    "clients": 10,
+    "received": 10,
+    "spread_first_to_last_ms": 0.3
+  },
+  "notes_debounce_save_s": 2.09,
+  "end_meeting": {
+    "transcript_lines": 42,
+    "transcript_ready_s": 4.3,
+    "summary_ready_s": 6.3,
+    "summary_chars": 782
+  },
+  "http_health_local_s": {
+    "n": 20,
+    "min": 0.016,
+    "p50": 0.018,
+    "p95": 0.033,
+    "mean": 0.02,
+    "max": 0.043
+  }
+}

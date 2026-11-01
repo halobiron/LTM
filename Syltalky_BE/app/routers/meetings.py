@@ -638,7 +638,7 @@ async def meeting_tts(
                 else:
                     raise HTTPException(status_code=400, detail="No active voice profile found")
             else:
-                instruct = (voice_config.design_instruct if voice_config else None) or "female, adult, moderate pitch"
+                instruct = (voice_config.design_instruct if voice_config else None) or "female, young adult, moderate pitch"
                 resp = await client.post(
                     f"{settings.AI_API_URL}/tts/design",
                     json={"instruct": instruct, "text": text},
