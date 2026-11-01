@@ -65,7 +65,7 @@ class TTSEngine:
         return voice_id, prompt.ref_text
 
     def synthesize_with_voice(self, voice_id: str, text: str,
-                               num_step: int = 32, speed: float = 1.0) -> bytes:
+                               num_step: int = 16, speed: float = 1.0) -> bytes:
         prompt = self._voices.get(voice_id)
         if not prompt:
             raise ValueError(f"Voice '{voice_id}' not found.")
@@ -75,7 +75,7 @@ class TTSEngine:
         return self._to_wav_bytes(audios[0])
 
     def synthesize(self, text: str, ref_audio: str = None, ref_text: str = None,
-                   instruct: str = None, num_step: int = 32, speed: float = 1.0) -> bytes:
+                   instruct: str = None, num_step: int = 16, speed: float = 1.0) -> bytes:
         kwargs = {"text": text, "num_step": num_step, "speed": speed}
         if ref_audio:
             kwargs["ref_audio"] = ref_audio

@@ -65,13 +65,13 @@ async def _summarize(transcript_text: str) -> str:
         ])
 
     chunks = [transcript_text[i:i + CHUNK_SIZE] for i in range(0, len(transcript_text), CHUNK_SIZE)]
-    partial_summaries = []
-    for i, chunk in enumerate(chunks):
-        partial = await _llm([
+    partial_summaries = await asyncio.gather(*(
+        _llm([
             {"role": "system", "content": _SYSTEM_CHUNK},
             {"role": "user", "content": f"Phần {i + 1}/{len(chunks)}:\n\n{chunk}"},
         ])
-        partial_summaries.append(partial)
+        for i, chunk in enumerate(chunks)
+    ))
 
     combined = "\n\n".join(f"[Phần {i + 1}]\n{s}" for i, s in enumerate(partial_summaries))
     return await _llm([
@@ -110,7 +110,7 @@ async def _finalize_extras(meeting_id):
 
 async def run_post_processing(meeting_id, host_id):
     """Run in background after meeting.ended_at is set."""
-    await asyncio.sleep(2)  # let DB writes settle
+    await asyncio.sleep(0.5)  # let DB writes settle
 
     await _finalize_extras(meeting_id)
 

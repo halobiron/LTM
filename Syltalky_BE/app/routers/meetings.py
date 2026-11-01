@@ -976,7 +976,11 @@ async def livekit_webhook(request: Request, db: AsyncSession = Depends(get_db)):
             meeting = result.scalar_one_or_none()
             if meeting:
                 meeting.ended_at = datetime.now(timezone.utc)
+                meeting_id_val, host_id = meeting.id, meeting.host_id
                 await db.commit()
                 print(f"[webhook] {meeting.room_code} ended")
+                # Room emptied without the host pressing "end": still build transcript + summary
+                from app.services.post_processing import run_post_processing
+                asyncio.create_task(run_post_processing(meeting_id_val, host_id))
 
     return {"ok": True}

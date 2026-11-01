@@ -1,4 +1,5 @@
 import asyncio
+import os
 import json
 import uuid
 from concurrent.futures import ThreadPoolExecutor
@@ -9,6 +10,8 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
 from app.tts.inference import TTSEngine, SPEAKERS
+
+DEFAULT_STEPS = int(os.environ.get("TTS_NUM_STEP", "16"))
 
 router   = APIRouter()
 engine   = TTSEngine()
@@ -37,13 +40,13 @@ _VALID_TAGS = """
 class DesignRequest(BaseModel):
     text:     str   = Field(..., description="Vietnamese text to synthesize")
     instruct: str   = Field(..., description=_VALID_TAGS, example="female, young adult, high pitch")
-    num_step: int   = Field(32,  ge=1, le=128)
+    num_step: int   = Field(DEFAULT_STEPS,  ge=1, le=128)
     speed:    float = Field(1.0, ge=0.5, le=2.0)
 
 class SynthesizeRequest(BaseModel):
     voice_id: str   = Field(..., description="Voice ID returned by POST /tts/voice")
     text:     str   = Field(..., description="Vietnamese text to synthesize")
-    num_step: int   = Field(32,  ge=1, le=128)
+    num_step: int   = Field(DEFAULT_STEPS,  ge=1, le=128)
     speed:    float = Field(1.0, ge=0.5, le=2.0)
 
 

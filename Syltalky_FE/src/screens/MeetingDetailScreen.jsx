@@ -35,25 +35,40 @@ export default function MeetingDetailScreen() {
   const [meeting, setMeeting] = useState(null)
   const [loading, setLoading] = useState(true)
   const [tab, setTab] = useState('summary')
+  const [shortConfirmed, setShortConfirmed] = useState(false)
 
   useEffect(() => {
     let cancelled = false
     let timer = null
+    let shortPolls = 0
+    let failures = 0
+    setShortConfirmed(false)
 
     async function fetchMeeting() {
       try {
         const data = await meetingsApi.get(meetingId, accessToken)
         if (cancelled) return
+        failures = 0
         setMeeting(data)
         setLoading(false)
-        // Poll until summary arrives; stop early if meeting ended with < 5 transcript entries
+        // Backend sets ended_at first and writes transcript/summary in a background task, so a
+        // short/empty transcript right after the meeting ends may just not be saved yet.
+        // Only conclude "too short" after several consecutive polls (~20s) still say so.
         const transcriptLen = data.transcript?.length ?? 0
-        const tooShort = !!data.ended_at && transcriptLen < 5
+        const looksShort = !!data.ended_at && transcriptLen < 5
+        if (looksShort && !data.summary) shortPolls += 1
+        else shortPolls = 0
+        const tooShort = looksShort && shortPolls > 10
+        setShortConfirmed(tooShort)
         if (!data.summary && !tooShort) {
-          timer = setTimeout(fetchMeeting, 4000)
+          timer = setTimeout(fetchMeeting, 2000)
         }
       } catch {
-        if (!cancelled) navigate('/library', { replace: true })
+        if (cancelled) return
+        // Transient errors (e.g. while backend is busy) must not kick the user out mid-polling
+        failures += 1
+        if (failures >= 3) navigate('/library', { replace: true })
+        else timer = setTimeout(fetchMeeting, 2000)
       }
     }
 
@@ -80,7 +95,7 @@ export default function MeetingDetailScreen() {
 
   const transcript = meeting.transcript || []
   const summary = meeting.summary || ''
-  const summaryTooShort = !!meeting.ended_at && transcript.length < 5 && !summary
+  const summaryTooShort = shortConfirmed && !summary
 
   return (
     <div style={{

@@ -449,49 +449,95 @@ function RoomInner({ roomCode, meetingId, hostId, isHost, accessToken, localUser
       .replace('https://', 'wss://')
       + `/meetings/${meetingId}/captions?token=${accessToken}`
 
-    const ws = new WebSocket(wsUrl)
-    captionsWsRef.current = ws
+    let stopped = false
+    let ws = null
+    let retryTimer = null
+    let retryDelay = 1000
+    let micStarted = false
+    const seen = new Set()
 
-    ws.onmessage = (e) => {
-      try {
-        const msg = JSON.parse(e.data)
-        if (msg.type === 'join_request') {
-          setWaitingRequests(prev => {
-            if (prev.find(r => r.request_id === msg.request_id)) return prev
-            return [...prev, msg]
-          })
-        } else if (msg.type === 'join_cancelled') {
-          setWaitingRequests(prev => prev.filter(r => r.request_id !== msg.request_id))
-        } else if (msg.type === 'tts' || msg.is_tts) {
-          setTtsMessages(prev => [...prev.slice(-49), { id: Date.now() + Math.random(), ...msg }])
-        } else if (msg.speaker_id && msg.text) {
-          setCaptions(prev => [...prev.slice(-99), { id: Date.now() + Math.random(), ...msg }])
-        }
-      } catch {}
-    }
-
-    ws.onopen = async () => {
+    async function startMicrophone() {
+      if (micStarted) return
+      micStarted = true
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+        if (stopped) { stream.getTracks().forEach(t => t.stop()); return }
         micStreamRef.current = stream
         const ctx = new AudioContext({ sampleRate: 16000 })
         audioCtxRef.current = ctx
         await ctx.audioWorklet.addModule('/pcm-processor.js')
+        if (stopped) return
         const source = ctx.createMediaStreamSource(stream)
         const worklet = new AudioWorkletNode(ctx, 'pcm-processor')
         processorRef.current = worklet
         worklet.port.onmessage = (e) => {
-          if (ws.readyState !== WebSocket.OPEN) return
+          if (stopped || ws?.readyState !== WebSocket.OPEN) return
           if (!localParticipantRef.current?.isMicrophoneEnabled) return
           ws.send(e.data.buffer)
         }
         source.connect(worklet)
         worklet.connect(ctx.destination)
-      } catch {}
+      } catch {
+        if (stopped) return
+        micStreamRef.current?.getTracks().forEach(t => t.stop())
+        micStreamRef.current = null
+        audioCtxRef.current?.close()
+        audioCtxRef.current = null
+        micStarted = false
+      }
     }
 
+    function connect() {
+      if (stopped) return
+      const socket = new WebSocket(wsUrl)
+      let openedAt = null
+      ws = socket
+      captionsWsRef.current = socket
+      socket.onmessage = (e) => {
+        try {
+          const msg = JSON.parse(e.data)
+          // Reconnect sends history again: avoid duplicate captions/TTS entries.
+          if (msg.speaker_id && msg.text) {
+            const key = JSON.stringify([msg.speaker_id, msg.timestamp_ms, msg.text])
+            if (msg.is_history && seen.has(key)) return
+            seen.add(key)
+          }
+          if (msg.type === 'join_request') {
+            setWaitingRequests(prev => {
+              if (prev.find(r => r.request_id === msg.request_id)) return prev
+              return [...prev, msg]
+            })
+          } else if (msg.type === 'join_cancelled') {
+            setWaitingRequests(prev => prev.filter(r => r.request_id !== msg.request_id))
+          } else if (msg.type === 'tts' || msg.is_tts) {
+            setTtsMessages(prev => [...prev.slice(-49), { id: Date.now() + Math.random(), ...msg }])
+          } else if (msg.speaker_id && msg.text) {
+            setCaptions(prev => [...prev.slice(-99), { id: Date.now() + Math.random(), ...msg }])
+          }
+        } catch {}
+      }
+      socket.onclose = (event) => {
+        if (captionsWsRef.current === socket) captionsWsRef.current = null
+        if (stopped || [1000, 1008, 4001, 4004].includes(event.code)) return
+        // Reset backoff only after a stable connection, not a rapid open/close loop.
+        if (openedAt && Date.now() - openedAt >= 10000) retryDelay = 1000
+        retryTimer = setTimeout(connect, retryDelay)
+        retryDelay = Math.min(retryDelay * 2, 15000)
+      }
+      socket.onopen = () => {
+        openedAt = Date.now()
+        startMicrophone()
+      }
+    }
+    connect()
+
     return () => {
-      ws.close()
+      stopped = true
+      clearTimeout(retryTimer)
+      if (ws) {
+        ws.onopen = ws.onmessage = ws.onclose = null
+        ws.close()
+      }
       captionsWsRef.current = null
       if (processorRef.current) { processorRef.current.disconnect(); processorRef.current.port.onmessage = null; processorRef.current = null }
       if (audioCtxRef.current) { audioCtxRef.current.close(); audioCtxRef.current = null }

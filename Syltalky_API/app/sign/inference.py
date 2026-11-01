@@ -17,6 +17,9 @@ from datasets import S2T_Dataset_online
 import utils as uni_utils
 
 
+NUM_BEAMS = int(os.environ.get("SIGN_NUM_BEAMS", "2"))
+
+
 class _Args:
     seed = 42
     hidden_dim = 256
@@ -41,6 +44,14 @@ class SignTranslator:
             backend="onnxruntime",
             device="cuda",
         )
+
+        # rtmlib passes only the CUDA provider; if the CUDA/cuDNN libs are missing
+        # onnxruntime silently falls back to CPU and pose extraction becomes ~10x slower.
+        for det in (self.wholebody.pose_model, self.wholebody.det_model):
+            used = det.session.get_providers()
+            print(f"[inference] ONNX providers: {used}")
+            if used and used[0] != "CUDAExecutionProvider":
+                print("[inference] WARNING: pose model is NOT running on GPU (check LD_LIBRARY_PATH / onnxruntime-gpu)")
 
         checkpoint = os.environ.get(
             "CHECKPOINT_PATH",
@@ -78,14 +89,14 @@ class SignTranslator:
             sampler=torch.utils.data.SequentialSampler(online_data),
         )
 
-        with torch.no_grad():
+        with torch.inference_mode():
             for src_input, tgt_input in dataloader:
                 for k in src_input:
                     if isinstance(src_input[k], torch.Tensor):
                         src_input[k] = src_input[k].to(torch.bfloat16).cuda()
 
                 stack_out = self.model(src_input, tgt_input)
-                output = self.model.generate(stack_out, max_new_tokens=100, num_beams=4)
+                output = self.model.generate(stack_out, max_new_tokens=100, num_beams=NUM_BEAMS)
 
                 tokenizer = self.model.mt5_tokenizer
                 return tokenizer.batch_decode(output, skip_special_tokens=True)[0]

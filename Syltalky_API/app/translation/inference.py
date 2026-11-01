@@ -15,13 +15,13 @@ class Translator:
         self.tokenizer = PreTrainedTokenizerFast.from_pretrained(MODEL_DIR)
         self.model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_DIR)
         self.model.eval()
-        self.model.cuda()
+        self.model.to(torch.bfloat16).cuda()
         print("[translation] Ready.")
 
     def en_to_vi(self, text: str) -> str:
         inputs = self.tokenizer(f"en: {text}", return_tensors="pt", padding=True).input_ids.cuda()
-        with torch.no_grad():
-            output = self.model.generate(inputs, max_length=512)
+        with torch.inference_mode():
+            output = self.model.generate(inputs, max_length=256, num_beams=1, do_sample=False)
         result = self.tokenizer.decode(output[0], skip_special_tokens=True)
         if result.startswith("vi: "):
             result = result[4:]

@@ -54,6 +54,14 @@ class SpeechTranscriber:
         print("[stt] Loading punctuation model...")
         self.punct_model = PunctuationModel()
 
+        try:  # move punctuation model to GPU (defaults to CPU, slow)
+            import torch
+            pipe = self.punct_model.pipe
+            pipe.model.to("cuda")
+            pipe.device = torch.device("cuda")
+        except Exception as e:
+            print(f"[stt] Punctuation stays on CPU: {e}")
+
         print("[stt] Loading NER model...")
         self.ner = pipeline(
             "ner",
@@ -62,6 +70,11 @@ class SpeechTranscriber:
             device=0,
         )
         self.ner.tokenizer.model_max_length = 512
+        # warm-up so the first real request doesn't pay CUDA init / kernel compile
+        try:
+            self._postprocess("xin chào mọi người cuộc họp bắt đầu")
+        except Exception:
+            pass
 
         print("[stt] Ready.")
 
