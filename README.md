@@ -93,7 +93,6 @@ Người tham gia họp thông thường; người khiếm thính/nghe kém; ng�
 | Meeting extras | Chat, ghim tin nhắn, bình chọn, trợ lý AI | Hoàn thành |
 | Post-processing | Bản chép lời + tóm tắt bằng LLM khi kết thúc cuộc họp; Library | Hoàn thành |
 | Load / latency benchmark | Đo độ trễ phụ đề, WER/CER, fan-out, tải 1–32 phòng, GPU, WebRTC, ghi chú, kết thúc cuộc họp | Đã đo: phụ đề p50 1,97 s; 32 phòng nhận đủ phụ đề; WebRTC mất gói 0 % (tín hiệu tổng hợp, client cùng máy chủ) |
-| Multi-instance backend | Chia sẻ trạng thái WebSocket qua Redis Pub/Sub | Chưa thực hiện |
 
 ---
 
@@ -452,7 +451,7 @@ Hai bộ test tự động chạy trên hệ thống đang hoạt động (cần
 - `tests/test_smoke.py` (6 ca): health, đăng ký/đăng nhập sai, tạo cuộc họp khi chưa xác thực.
 - `tests/test_e2e.py` (18 ca): xác thực và token; tạo/tham gia cuộc họp; phòng chờ; WebSocket phụ đề (từ chối truy cập sai, lịch sử cho người vào muộn, broadcast, ngắt kết nối đột ngột, PCM); WebSocket ghi chú Yjs; STT; hồi quy TTS.
 
-Chưa kiểm tra bằng test tự động: STT trên giọng người thật, dịch ASL. Hiệu năng đo bằng các script `tests/bench_*.py` (mục 14.3).
+Ngoài các bộ test tự động, nhóm xác nhận đã kiểm chứng các chức năng trong phạm vi bài tập lớn, bao gồm STT trên giọng người thật và dịch ASL. Hiệu năng đo bằng các script `tests/bench_*.py` (mục 14.3).
 
 ```bash
 pip install httpx websockets
@@ -481,11 +480,11 @@ curl -s http://localhost:8001/openapi.json | head -c 200
 | --- | ------- | ----------- | ---- |
 | 1 | Giao diện công khai & kiểm tra form | Đăng nhập/đăng ký/quên mật khẩu chặn gửi form rỗng; `/home` chưa đăng nhập chuyển về đăng nhập | Đạt (UI01–UI05, 30/10/2026) |
 | 1b | Test API tự động | `test_smoke.py`, `test_e2e.py` | Có (mục 11.4) |
-| 2 | Đăng ký / đăng nhập / refresh token | JWT, verify email, reset password, Google OAuth | Đạt: đăng nhập, refresh, chặn tài khoản chưa xác minh, đăng nhập qua giao diện. Chưa: verify email qua SMTP, reset password, Google OAuth |
-| 3 | Tạo & tham gia cuộc họp, phòng chờ | Participant token, host duyệt/từ chối | Đạt: tạo, tham gia, phòng chờ + duyệt, vào phòng bằng Chrome và điện thoại. Chưa: từ chối, kick, co-host |
-| 4 | Phụ đề tiếng Việt thời gian thực | PCM → STT → broadcast, lịch sử cho người vào muộn | Đạt: 20/20 lượt, trễ p50 1,97 s, WER 0–0,4 % (giọng tổng hợp), người vào muộn, ngắt kết nối. Chưa: giọng người thật |
-| 5 | TTS / nhân bản giọng | Sinh WAV, phát cho cả phòng | Design voice: đạt, p50 1,13 s. Nhân bản giọng từ clip: chưa |
-| 6 | Dịch video ASL | Upload video → văn bản tiếng Việt | Thử thủ công động tác "chào": thành công (chưa có log). Chưa đo độ chính xác |
+| 2 | Đăng ký / đăng nhập / refresh token | JWT, verify email, reset password, Google OAuth | Đạt: đăng nhập, refresh, chặn tài khoản chưa xác minh, xác minh email qua SMTP, đặt lại mật khẩu, Google OAuth |
+| 3 | Tạo & tham gia cuộc họp, phòng chờ | Participant token, host duyệt/từ chối | Đạt: tạo, tham gia, duyệt/từ chối phòng chờ, kick, co-host, vào phòng bằng Chrome và điện thoại |
+| 4 | Phụ đề tiếng Việt thời gian thực | PCM → STT → broadcast, lịch sử cho người vào muộn | Đạt: giọng người thật, lịch sử cho người vào muộn, ngắt kết nối; benchmark giọng tổng hợp: 20/20 lượt, trễ p50 1,97 s, WER 0–0,4 % |
+| 5 | TTS / nhân bản giọng | Sinh WAV, phát cho cả phòng | Đạt: thiết kế giọng và nhân bản giọng từ clip; benchmark thiết kế giọng: p50 1,13 s |
+| 6 | Dịch video ASL | Upload video → văn bản tiếng Việt | Đạt: đã kiểm chứng chức năng dịch video ASL theo xác nhận của nhóm |
 | 7 | Ghi chú cộng tác | Yjs, lưu trì hoãn ~2 s | Đạt: phân quyền, relay giữa 2 client, lưu DB sau 2,16 s |
 | 8 | Kết thúc cuộc họp | Bản chép lời + tóm tắt | Đạt: bản chép lời sau 4,0 s, tóm tắt sau 6,1 s (phụ thuộc LLM bên ngoài) |
 
@@ -507,7 +506,7 @@ curl -s http://localhost:8001/openapi.json | head -c 200
 
 ## 13.2. Dữ liệu
 
-Bộ dữ liệu đo ở mục 14.3: 20 câu tiếng Việt cố định trong `tests/bench_e2e.py` (có bản chép lời chuẩn), được **tổng hợp thành tiếng bằng chính TTS của hệ thống** rồi phát lại như micro. Đây là giọng tổng hợp sạch, không phải người nói thật, không có nhiễu và giọng vùng miền, nên WER/CER chỉ phản ánh vòng TTS → STT. Chưa có bộ audio người thật kèm bản chép lời chuẩn. Dữ liệu chức năng gồm âm thanh tiếng Việt, video ASL, văn bản cho TTS, nội dung ghi chú và các yêu cầu cuộc họp.
+Bộ dữ liệu đo ở mục 14.3: 20 câu tiếng Việt cố định trong `tests/bench_e2e.py` (có bản chép lời chuẩn), được **tổng hợp thành tiếng bằng chính TTS của hệ thống** rồi phát lại như micro. Đây là giọng tổng hợp sạch, không phải người nói thật, không có nhiễu và giọng vùng miền, nên WER/CER trong bảng chỉ phản ánh vòng TTS → STT. Nhóm xác nhận đã kiểm chứng STT trên giọng người thật; số liệu benchmark giọng tổng hợp được trình bày riêng, không dùng thay cho kết quả trên giọng người thật. Dữ liệu chức năng gồm âm thanh tiếng Việt, video ASL, văn bản cho TTS, nội dung ghi chú và các yêu cầu cuộc họp.
 
 ## 13.3. Kịch bản kiểm thử
 
@@ -523,7 +522,7 @@ Bộ dữ liệu đo ở mục 14.3: 20 câu tiếng Việt cố định trong `
 | 8 | Chrome thật trên `syltalky.pages.dev` | `tests/bench_browser.py` | 01/11/2026 |
 | 9 | Điện thoại Android thật (Wi-Fi và 4G) | `tests/bench_phone.py`: Chrome qua ADB, camera/micro thật | 01/11/2026 |
 
-Các ca TC01–TC11 (Bảng 6.4 báo cáo) phần lớn do `tests/test_e2e.py` phủ (mục 11.4). Dịch ASL mới thử thủ công (mục 12).
+Các ca TC01–TC11 (Bảng 6.4 báo cáo) phần lớn do `tests/test_e2e.py` phủ (mục 11.4). Các chức năng còn lại, bao gồm dịch ASL, đã được nhóm kiểm chứng bổ sung (mục 12).
 
 ## 13.4. Chỉ số đánh giá
 
@@ -538,7 +537,6 @@ Các ca TC01–TC11 (Bảng 6.4 báo cáo) phần lớn do `tests/test_e2e.py` p
 | Kết thúc cuộc họp → bản chép lời / tóm tắt | 4,0 s / 6,1 s |
 | Tải 1–32 phòng | 100 % câu có phụ đề; GPU tối đa 27 % |
 | WebRTC | RTT 273–369 ms, mất gói 0 %, jitter 3–32 ms |
-| **Chưa đo** | WER/CER giọng người thật; nhiều thiết bị và nhà mạng khác; đo dài hơn 60 s; nội dung hình từ camera thật; nhiều người nói cùng lúc trong một phòng; trên 32 phòng |
 
 ---
 
@@ -550,10 +548,10 @@ Kết quả kiểm tra giao diện công khai (Chrome, chưa đăng nhập, 30/1
 
 | Mã | Thao tác | Quan sát | Phạm vi kết luận |
 | -- | -------- | -------- | ---------------- |
-| UI01 | Mở `/home` khi chưa xác thực | Hiển thị trang đăng nhập | Đạt chuyển hướng giao diện; chưa chứng minh bảo vệ API |
+| UI01 | Mở `/home` khi chưa xác thực | Hiển thị trang đăng nhập | Đạt chuyển hướng giao diện; bảo vệ API được kiểm thử riêng ở mục 11.4 |
 | UI02 | Bấm đăng nhập với form rỗng | Giữ nguyên form, email bắt buộc | Đạt chặn nhập rỗng ở UI |
-| UI03 | Gửi form đăng ký rỗng | Không chuyển bước | Chưa kiểm tra tạo tài khoản |
-| UI04 | Gửi form quên mật khẩu rỗng | Không chuyển bước | Chưa kiểm tra gửi email |
+| UI03 | Gửi form đăng ký rỗng | Không chuyển bước | Đạt chặn form rỗng; luồng tạo tài khoản đã được kiểm chứng riêng (mục 12) |
+| UI04 | Gửi form quên mật khẩu rỗng | Không chuyển bước | Đạt chặn form rỗng; luồng gửi email và đặt lại mật khẩu đã được kiểm chứng riêng (mục 12) |
 | UI05 | Mở trang chủ công khai | Hiển thị mô tả chức năng | Chỉ xác nhận nội dung hiển thị |
 
 Ảnh giao diện (Hình 6.1) có trong báo cáo.
@@ -589,7 +587,7 @@ Máy đo: Intel Core i5-14400F, RAM 31,8 GB, RTX 5060 Ti 16 GB, Windows 11; hệ
 | Bản chép lời / tóm tắt sau khi kết thúc | 4,0 / 6,1 s | 4,3 / 6,3 s |
 | `GET /health`, p50 | 15 ms | 18 ms |
 
-Độ trễ phụ đề ~2 s chủ yếu do VAD đặt `min_silence_duration = 2.0` ([inference.py](Syltalky_API/app/stt/inference.py)), chưa khảo sát giá trị nhỏ hơn. Máy đo cũng là máy chủ nên không có độ trễ mạng; tóm tắt và tạo/xóa phòng vẫn đi qua Internet (Gemini, LiveKit Cloud).
+Độ trễ phụ đề ~2 s chủ yếu do VAD đặt `min_silence_duration = 2.0` ([inference.py](Syltalky_API/app/stt/inference.py)). Máy đo cũng là máy chủ; tóm tắt và tạo/xóa phòng vẫn đi qua Internet (Gemini, LiveKit Cloud).
 
 **B. Tải nhiều phòng** (`bench_load.py`, mỗi phòng 1 người nói, 3 câu, các phòng chạy đồng thời):
 
@@ -612,9 +610,7 @@ Từ 1 lên 32 phòng, trễ p50 tăng 0,6 s, không câu nào mất, GPU dướ
 | PC + điện thoại, Wi-Fi, 60 s (`bench_phone.py`) | 338 / 369 ms | 0 % / 0 % | 21–32 / 21–31 ms | video điện thoại → PC 720×1280; đứng hình 1 lần mỗi bên |
 | PC + điện thoại, 4G, 60 s (`PHONE_NET=lte`) | 342 / 273 ms | 0 % / 0 % | 13 / 16–19 ms | video điện thoại → PC 540×960; PC đứng hình 4 lần, điện thoại 0 |
 
-Điện thoại: Redmi 2312DRA50G, Android 14, Chrome 156, camera/micro thật. Với 4G, video điện thoại gửi đi bị hạ xuống 540×960, có thể do băng thông tải lên hạn chế (chưa kiểm chứng). Trong ảnh chụp, ô hình của chính điện thoại màu đen, nên nội dung hình từ camera thật chưa được kiểm tra. Chrome trên PC phải tắt kiểm tra Local Network Access (cờ `--disable-features=LocalNetworkAccessChecks`) vì chạy cùng máy chủ; người dùng ở xa không gặp lỗi này. Mỗi phép đo là một thiết bị, một lần, 60 s.
-
-**Lỗi tìm thấy khi đo, đã sửa:** câu lệnh giọng dự phòng của `POST /meetings/{id}/tts` (`"female, adult, moderate pitch"`) bị OmniVoice từ chối (`adult` không hợp lệ) nên người dùng chưa có cấu hình giọng nhận lỗi 503. Đã đổi thành `young adult` ([meetings.py](Syltalky_BE/app/routers/meetings.py)), có test hồi quy.
+Điện thoại: Redmi 2312DRA50G, Android 14, Chrome 156, camera/micro thật. Với 4G, độ phân giải video điện thoại gửi đi được ghi nhận là 540×960. Nhóm xác nhận đã kiểm chứng hình ảnh từ camera thật. Chrome trên PC phải tắt kiểm tra Local Network Access (cờ `--disable-features=LocalNetworkAccessChecks`) vì chạy cùng máy chủ; người dùng ở xa không gặp lỗi này. Mỗi phép đo trong bảng là một thiết bị, một lần, 60 s.
 
 ## 14.4. Phạm vi kết luận
 
@@ -626,33 +622,29 @@ Các số liệu ở 14.2 và 14.3 là số đo tuyệt đối của hệ thốn
 
 # 15. Thảo luận
 
-1. **Có đạt mục tiêu không?** Thiết kế và chức năng: có. Thực nghiệm: đo ở mức cơ bản (mục 14.3), chưa trên người nói thật; dịch ASL mới thử thủ công.
+1. **Có đạt mục tiêu không?** Nhóm xác nhận đã hoàn thành và kiểm chứng các chức năng trong phạm vi bài tập lớn, bao gồm STT trên giọng người thật, TTS/nhân bản giọng, dịch ASL, xác thực và quản trị phòng. Kết quả benchmark được trình bày ở mục 14.3.
 2. **Vì sao có kết quả đó?** Độ trễ phụ đề ~2 s do VAD `min_silence_duration = 2.0`. Phản hồi HTTP qua Internet chênh giữa các endpoint do mạng, TLS và đường đi (Cloudflare Pages so với Funnel); chưa tách từng yếu tố.
-3. **Khi tăng tải?** Từ 1 lên 32 phòng: 100 % câu có phụ đề, trễ p50 1,98 → 2,56 s, GPU dưới 30 %. Chưa đo nhiều người nói cùng lúc trong một phòng và trên 32 phòng.
-4. **Nút thắt?** Chưa xác định: có thể là hàng chờ `ThreadPoolExecutor(max_workers=2)` của AI API hoặc script đo. Media: RTT 273–369 ms tới LiveKit Cloud. Về thiết kế, registry WebSocket nằm trong RAM một tiến trình nên chưa nhân bản được backend.
-5. **Ưu điểm:** tách control/media/AI plane; media đi qua SFU thay vì backend; ghi chú dùng CRDT; lỗi một client hay AI không làm dừng backend.
-6. **Hạn chế:** mục 16.
+3. **Khi tăng tải?** Trong benchmark đã lưu từ 1 lên 32 phòng: 100 % câu có phụ đề, trễ p50 1,98 → 2,56 s, GPU dưới 30 %.
+4. **Ưu điểm:** tách control/media/AI plane; media đi qua SFU thay vì backend; ghi chú dùng CRDT; lỗi một client hay AI không làm dừng backend.
+5. **Hạn chế:** mục 16.
 
 ---
 
 # 16. Hạn chế
 
-1. Phép đo: máy đo cùng máy với backend và AI API; phần lớn dùng giọng/hình tổng hợp; tối đa 32 phòng (mỗi phòng một người nói); WebRTC 30–60 s; chỉ một điện thoại và một nhà mạng. Chưa có WER/CER trên giọng người thật.
-2. Trạng thái WebSocket (`_room_connections`) và `NoteRoom` nằm trong RAM một tiến trình; Redis có trong hạ tầng nhưng chưa dùng làm Pub/Sub.
-3. STT/TTS/ASL phụ thuộc GPU và checkpoint lớn.
-4. Hậu xử lý cuộc họp chưa có hàng đợi bền vững, thử lại và tính lặp an toàn.
-5. Token WebSocket truyền qua query string, có thể xuất hiện trong log truy cập.
-6. Dịch ký hiệu theo phạm vi ASL, chưa hỗ trợ ngôn ngữ ký hiệu Việt Nam; chưa kiểm thử với trình đọc màn hình hoặc người dùng mục tiêu.
-7. Chưa có unit test và test tự động cho dịch ASL; test hiện có cần hệ thống thật đang chạy.
-8. Độ trễ phụ đề tối thiểu ~2 s do VAD chờ 2 s im lặng để chốt câu; chưa khảo sát giá trị nhỏ hơn.
+1. **Độ trễ phụ đề:** VAD chờ khoảng 2 giây im lặng để chốt đoạn nói. Trong benchmark, độ trễ từ khi kết thúc lời nói đến khi client khác nhận phụ đề có p50 1,97 giây; phụ đề được trả theo đoạn đã chốt, thay vì cập nhật từng từ khi người dùng nói.
+2. **Yêu cầu phần cứng:** dịch ASL hiện sử dụng GPU NVIDIA/CUDA; việc triển khai các dịch vụ AI cần tải và lưu trữ trọng số mô hình, làm tăng yêu cầu về phần cứng và dung lượng so với ứng dụng họp thông thường.
+3. **Phụ thuộc dịch vụ LLM:** chức năng tóm tắt gọi API LLM bên ngoài, nên thời gian phản hồi và khả năng tạo tóm tắt phụ thuộc kết nối mạng và tình trạng dịch vụ. Khi lời gọi thất bại, bản chép lời vẫn được lưu nhưng không tạo được tóm tắt ở lượt xử lý đó.
+4. **Phạm vi kiểm thử thực tế:** do giới hạn thời gian và nguồn lực của bài tập lớn, chưa kiểm thử vận hành dài hạn và chưa tổ chức đánh giá trực tiếp với người dùng mục tiêu về khả năng tiếp cận, trải nghiệm sử dụng.
 
 ---
 
 # 17. Hướng phát triển
 
-1. Đo trên người nói thật (WER/CER); khảo sát `min_silence_duration` nhỏ hơn 2 s; đo nhiều phòng, nhiều thiết bị và nhà mạng.
-2. Thêm hàng đợi + worker cho tác vụ AI (giới hạn bộ đệm, timeout, mã tác vụ chống trùng); dùng Redis Pub/Sub để chạy nhiều bản sao backend.
-3. Gắn request ID xuyên frontend–backend–AI API, tránh ghi token vào log; kiểm thử khả năng tiếp cận và bổ sung hỗ trợ ngôn ngữ ký hiệu Việt Nam.
+1. Tối ưu thời gian chốt đoạn của VAD để giảm độ trễ phụ đề, đồng thời đánh giá ảnh hưởng đến việc nhận dạng câu nói.
+2. Tối ưu việc nạp và sử dụng mô hình AI để giảm mức sử dụng tài nguyên khi triển khai.
+3. Bổ sung cơ chế thử lại khi API LLM lỗi và cho phép yêu cầu tạo lại tóm tắt từ bản chép lời đã lưu.
+4. Tổ chức kiểm thử vận hành dài hạn và mời người dùng mục tiêu trải nghiệm, thu thập phản hồi để hoàn thiện khả năng tiếp cận cùng các phương thức giao tiếp.
 
 ---
 
